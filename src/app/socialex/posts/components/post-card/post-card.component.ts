@@ -1,4 +1,4 @@
-import { I18nPluralPipe, NgClass } from '@angular/common';
+import { I18nPluralPipe, NgClass, NgOptimizedImage } from '@angular/common';
 import {
   Component,
   inject,
@@ -11,10 +11,9 @@ import { Post } from '@socialex/posts/interfaces/posts.interface';
 import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
 import { PostsService } from '@socialex/posts/services/posts.service';
 
-
 @Component({
   selector: 'post-card',
-  imports: [PostDatePipe, I18nPluralPipe, NgClass, RouterLink],
+  imports: [PostDatePipe, I18nPluralPipe, NgClass, RouterLink, NgOptimizedImage],
   templateUrl: './post-card.component.html',
 })
 export class PostCardComponent {

@@ -2,7 +2,7 @@ import { Post } from '../interfaces/posts.interface';
 
 export const posts: Post[] = [
   {
-    id: "post-001",
+    id: "p-001",
     authorId: 1,
     content: "Hoy probé una receta de pastel de zanahoria y salió increíble 🤩. Creo que voy a compartir la receta en un próximo post.",
     categories: ["cocina", "repostería", "recetas"],
@@ -31,7 +31,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-002",
+    id: "p-002",
     authorId: 4,
     content: "Estoy experimentando con una IA que genera ilustraciones, es increíble cómo la tecnología puede ayudar también en el arte 🎨🤖.",
     categories: ["tecnología", "IA", "arte"],
@@ -60,7 +60,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-003",
+    id: "p-003",
     authorId: 3,
     content: "Hoy me encontré un paisaje increíble en las afueras de la ciudad. Amanecía y la niebla cubría los árboles como un manto. 🌲🌫️",
     categories: ["fotografía", "naturaleza", "paisajes"],
@@ -89,7 +89,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-004",
+    id: "p-004",
     authorId: 12,
     content: "Acabo de volver de mi viaje a la Patagonia y las vistas fueron una locura. Adjunto una foto del Glaciar Perito Moreno. La fotografía es un arte que te permite revivir momentos. ¿Cuál es su lugar favorito para fotografiar?",
     categories: ["viajes", "fotografia", "naturaleza"],
@@ -118,7 +118,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-005",
+    id: "p-005",
     authorId: 65,
     content: "El auge de la Inteligencia Artificial en la generación de código está llevando a una crisis de programadores junior. Sinceramente, no creo que haya trabajo para todos en 5 años. La habilidad humana se está volviendo obsoleta, y como ingeniero de software, lo digo con preocupación.",
     categories: ["tecnologia", "ia", "programacion", "empleo"],
@@ -147,7 +147,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-006",
+    id: "p-006",
     authorId: 22,
     content: "Finalmente terminé la composición de mi nueva pieza para violonchelo. Siento que esta tiene un toque más melancólico de lo habitual, quizás influenciado por la lluvia de esta semana. La música clásica sigue viva. ¿Algún músico en la sala que quiera compartir sus proyectos?",
     categories: ["arte", "musica", "composicion"],
@@ -176,7 +176,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-007",
+    id: "p-007",
     authorId: 41,
     content: "La burbuja de las criptomonedas va a explotar, y lo digo como analista financiero con 20 años de experiencia. Quienes invierten en 'memecoins' simplemente están jugando a la ruleta. Es un fraude que solo beneficia a los primeros. ¿Por qué la gente no invierte en activos reales y tangibles?",
     categories: ["finanzas", "economia", "inversion", "polemica"],
@@ -205,7 +205,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-008",
+    id: "p-008",
     authorId: 14,
     content: "Mi primer maratón fue un éxito rotundo. El entrenamiento de 6 meses dio sus frutos. Para todos los que inician, no subestimen la importancia de un buen calzado y, sobre todo, la hidratación. ¡Vamos por el siguiente! También soy fisioterapeuta y me ofrezco a responder dudas sobre prevención de lesiones.",
     categories: ["salud", "ejercicio", "deporte", "maraton"],
@@ -234,7 +234,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-009",
+    id: "p-009",
     authorId: 54,
     content: "El descubrimiento de nuevos fósiles en África está reescribiendo partes de la historia evolutiva humana. Es fascinante cómo cada hallazgo desafía lo que creíamos saber sobre el género *Homo*. Como paleontóloga, creo que aún hay muchísimos eslabones perdidos por encontrar. ¿Qué opinan de la teoría de la 'isla de los hobbits'?",
     categories: ["biologia", "evolucion", "paleontologia", "ciencia"],
@@ -263,7 +263,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-010",
+    id: "p-010",
     authorId: 13,
     content: "Es hora de dejar de glorificar a ciertas figuras históricas. La historia no es blanco y negro. Muchos de nuestros 'héroes' nacionales participaron en atrocidades o tuvieron posturas éticamente dudosas. Como historiador, creo que necesitamos una mirada más crítica y menos mitológica. ¿Qué personaje creen que merece ser revisado?",
     categories: ["historia", "politica", "polemica", "sociedad"],
@@ -292,7 +292,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-011",
+    id: "p-011",
     authorId: 20,
     content: "El debate de 'lo análogo vs. lo digital' en la producción musical está muerto. Los mejores *tracks* de la última década usan una mezcla de ambos. El sonido no es solo tecnología, es emoción. Si eres productor musical, ¿cuál es tu *plugin* VST 'secreto' favorito para bajos?",
     categories: ["musica", "produccion", "tecnologia", "arte"],
@@ -321,7 +321,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-012",
+    id: "p-012",
     authorId: 49,
     content: "Sigo pensando que la inversión masiva en la colonización de Marte es una distracción peligrosa. Tenemos problemas urgentes aquí en la Tierra: cambio climático, pobreza... Como ecólogo, no creo que debamos exportar nuestros problemas a otros planetas antes de solucionarlos en casa. ¿Deberíamos priorizar la Tierra o el espacio?",
     categories: ["ciencia", "astronomia", "ecologia", "politica"],
@@ -350,7 +350,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-013",
+    id: "p-013",
     authorId: 44,
     content: "Los últimos avances en la técnica CRISPR para la edición genética son prometedores, pero la ética de la biología molecular avanza más rápido que la ley. Abrir la puerta a la modificación de la línea germinal humana es un riesgo que debemos debatir seriamente. Como genetista, me emociona la ciencia, pero me preocupa su mal uso.",
     categories: ["biologia", "ciencia", "salud", "etica"],
@@ -379,7 +379,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-014",
+    id: "p-014",
     authorId: 69,
     content: "Es increíble cómo la gente gasta fortunas en el 'nuevo' superalimento X por puro *marketing*. No hay evidencia científica *robusta* que justifique esos precios. Como nutricionista, lo digo: una manzana sigue siendo más útil que cualquier baya exótica de moda. Pero, claro, ¿quién quiere 'simple' cuando puede tener 'detox milagroso'?",
     categories: ["salud", "ciencia", "nutricion", "polemica"],
@@ -408,7 +408,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-015",
+    id: "p-015",
     authorId: 53,
     content: "Los coches autónomos son la próxima catástrofe social. Entregar el juicio moral de un accidente a un algoritmo es una receta para el caos. El 'Problema del Tranvía' no se resuelve con más líneas de código. ¿De verdad creen que un ingeniero de software de 25 años es más apto para decidir quién vive o muere que un conductor humano?",
     categories: ["tecnologia", "etica", "ia", "polemica"],
@@ -437,7 +437,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-016",
+    id: "p-016",
     authorId: 10,
     content: "Es un chiste que los museos occidentales sigan aferrándose a artefactos y reliquias robados durante la época colonial. No son 'tesoros universales'; son propiedad cultural de las naciones que fueron saqueadas. Como curadora de arte no colonial, me da vergüenza la hipocresía. ¿Por qué el 'Museo Británico' aún tiene el mármol del Partenón?",
     categories: ["historia", "cultura", "etica", "polemica"],
@@ -466,7 +466,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-017",
+    id: "p-017",
     authorId: 32,
     content: "La Renta Básica Universal (RBU) es la solución que el capitalismo no quiere admitir que necesita. El trabajo se automatizará, la desigualdad es insostenible. Dar dinero incondicionalmente a la gente no es 'regalar', es invertir en la economía del futuro. ¿O preferimos tener una masa de gente desempleada y sin poder adquisitivo? Como economista, lo veo clarísimo.",
     categories: ["economia", "politica", "futuro", "polemica"],
@@ -495,7 +495,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-018",
+    id: "p-018",
     authorId: 58,
     content: "El modelo educativo tradicional, enfocado en memorizar y hacer exámenes estandarizados, está obsoleto. Estamos educando 'máquinas de prueba' en lugar de pensadores críticos. La educación debe priorizar la creatividad y la resolución de problemas. Como pedagoga, creo que el sistema mata la curiosidad innata de los niños.",
     categories: ["educacion", "sociedad", "polemica", "aprendizaje"],
@@ -524,7 +524,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-019",
+    id: "p-019",
     authorId: 14,
     content: "Acabo de terminar mi investigación sobre la comunicación química entre hongos y plantas. Es fascinante cómo las redes de micorrizas pueden conectar bosques enteros, compartiendo nutrientes e información. Literalmente, internet natural 🍄🌲 #Biología",
     categories: ["biología", "ecología", "investigación"],
@@ -559,7 +559,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-020",
+    id: "p-020",
     authorId: 61,
     content: "Controversial take: Los libros de historia que enseñamos en secundaria siguen perpetuando el mito del 'descubrimiento' de América. No se puede 'descubrir' un continente habitado por millones de personas. Es hora de cambiar la narrativa colonialista 📚⚖️",
     categories: ["historia", "educación", "decolonización"],
@@ -594,7 +594,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-021",
+    id: "p-021",
     authorId: 33,
     content: "Llevo 20 años como musicólogo y todavía me emociona descubrir cómo Bach escondía mensajes matemáticos en sus composiciones. El Arte de la Fuga es prácticamente un tratado de geometría musical 🎼🔢 #MúsicaClásica",
     categories: ["música", "matemáticas", "arte"],
@@ -629,7 +629,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-022",
+    id: "p-022",
     authorId: 47,
     content: "Unpopular opinion en física: El multiverso es la nueva 'teoría de cuerdas' - suena fascinante pero es prácticamente imposible de probar. Estamos gastando recursos en especulación matemática cuando tenemos problemas reales que resolver 🔬⚛️",
     categories: ["física", "ciencia", "opinión"],
@@ -664,7 +664,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-023",
+    id: "p-023",
     authorId: 23,
     content: "TIL que las abejas pueden reconocer rostros humanos y recordar quién las trata bien. Su cerebro tiene solo 960,000 neuronas vs nuestros 86 mil millones, pero son increíblemente eficientes procesando información visual 🐝🧠 #Neurobiología",
     categories: ["biología", "neurociencia", "insectos"],
@@ -699,7 +699,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-024",
+    id: "p-024",
     authorId: 58,
     content: "Nuevo estudio demuestra que el trabajo remoto reduce la productividad en un 13%. Pero claro, sigamos creyendo que trabajar en pijama desde la cama es el futuro 🙄 Link: nature.com/articles/remote-work-productivity-2025 #RemoteWork",
     categories: ["trabajo", "productividad", "estudios"],
@@ -740,7 +740,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-025",
+    id: "p-025",
     authorId: 29,
     content: "Meta-análisis de 50 estudios confirma: los videojuegos violentos NO causan agresión en la vida real. Pero seguro los medios van a seguir vendiendo el pánico moral de siempre 🎮 Fuente: journals.sagepub.com/gaming-violence-meta-2025",
     categories: ["psicología", "videojuegos", "sociedad"],
@@ -781,7 +781,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-026",
+    id: "p-026",
     authorId: 13,
     content: "Estudio longitudinal de 20 años demuestra que la homeopatía tiene la misma eficacia que el placebo. Agua cara, básicamente. Pero hey, al menos tu billetera adelgaza 💸 Paper: bmj.com/homeopathy-efficacy-review-2025",
     categories: ["medicina", "pseudociencia", "salud"],
@@ -822,7 +822,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-027",
+    id: "p-027",
     authorId: 40,
     content: "Investigación del IPCC revela que las emisiones individuales son irrelevantes comparadas con las corporativas. Pero sigamos sintiéndonos culpables por usar pajitas de plástico mientras ExxonMobil quema el planeta 🔥🌍 Source: ipcc.ch/corporate-emissions-2025",
     categories: ["clima", "ambiente", "política"],
@@ -863,7 +863,7 @@ export const posts: Post[] = [
     ]
   },
   {
-    id: "post-028",
+    id: "p-028",
     authorId: 25,
     content: "Nuevo paper demuestra que la inteligencia artificial ya supera a radiólogos en detectar cáncer. Pero tranquilos, seguro los médicos van a seguir cobrando 200€ por 'interpretar' lo que la máquina ya diagnosticó 🤖💰 Link: lancet.com/ai-radiology-superiority-2025",
     categories: ["inteligencia artificial", "medicina", "tecnología"],

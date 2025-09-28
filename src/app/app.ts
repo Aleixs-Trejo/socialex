@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 // Lenis
@@ -18,10 +18,8 @@ export class App implements OnInit {
       this.rootLenis.raf(time);
       requestAnimationFrame(animate);
     }
-
     requestAnimationFrame(animate);
   }
-
 
   ngOnDestroy(): void {
     this.rootLenis?.destroy();

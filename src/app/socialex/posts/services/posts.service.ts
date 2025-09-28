@@ -74,4 +74,22 @@ export class PostsService {
 
     return of(joined);
   }
+
+  getAllPostsFromUser(userId: number): Observable<Post[] | null> {
+    const user = this.users.find((u) => u.id === userId);
+    if (!user) return of(null);
+
+    const postsFromUser = this.posts.filter((p) => p.authorId === userId);
+    console.log('postsFromUser: ', postsFromUser);
+    return of(postsFromUser);
+  }
+
+  getAllCommentsPostsFromUser(userId: number): Observable<Post[] | null> {
+    const user = this.users.find((u) => u.id === userId);
+    if (!user) return of(null);
+
+    const postsCommentsFromUser = this.posts.filter(p => p.comments.some(c => c.authorId === userId));
+    console.log('postsCommentsFromUser: ', postsCommentsFromUser);
+    return of(postsCommentsFromUser);
+  }
 }

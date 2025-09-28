@@ -1,25 +1,107 @@
-<div class="container-alesis">
-  <h2 class="text-lg">Perfil de {{ user()?.name }}</h2>
+<div class="w-9/10 max-w-xl mx-auto overflow-hidden py-8">
   <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4">
-      <img
-        class="w-16 h-16 aspect-square rounded-full"
-        [src]="user()?.avatar"
-        alt="Avatar"
-        draggable="false"
-      />
-      <div class="flex flex-col">
-        <span class="text-xl font-semibold">{{ user()?.name }}</span>
-        <span class="text-xs text-gray-500">{{ user()?.profession }}</span>
+    <div
+      class="flex flex-col items-center gap-4 md:gap-8 bg-bg-tertiary p-4 rounded-xl"
+    >
+      <div
+        class="w-42 h-42 rounded-full bg-white p-1 flex-shrink-0 flex justify-center items-center relative"
+      >
+        <img
+          class="w-40 h-40 aspect-square rounded-full"
+          [ngSrc]="user()?.avatar || '/assets/img/avatar-empty.webp'"
+          width="160"
+          height="160"
+          alt="Avatar"
+          draggable="false"
+        />
+        <div
+          class="absolute w-8 h-8 bg-white p-1 rounded-full bottom-1/20 right-1/10"
+        >
+          <span
+            class="block w-full h-full rounded-full"
+            [class.bg-green-500]="user()?.status === 'online'"
+            [class.bg-gray-700]="user()?.status === 'offline'"
+          ></span>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col text-center md:text-start">
+          <h2 class="text-2xl font-semibold">{{ user()?.name }}</h2>
+          <h3 class="text-base text-gray-200">{{ user()?.profession }}</h3>
+        </div>
+        <div class="flex items-center gap-4 text-center md:text-start">
+          <span class="text-sm">{{
+            postsUserResource.value()?.length
+              | i18nPlural : i18nPluralProfilePosts
+          }}</span>
+          <span class="text-xs text-gray-400">|</span>
+          <span class="text-sm">{{
+            commentsPostUserResource.value()?.length
+              | i18nPlural : i18nPluralProfileComments
+          }}</span>
+        </div>
       </div>
     </div>
     <div class="flex flex-col gap-2">
-      <span class="text-sm font-semibold">Fecha de nacimiento</span>
-      <span class="text-xs text-gray-500">{{ user()?.birthdate }}</span>
+      <div class="flex flex-col gap-4 bg-bg-tertiary p-4 rounded-xl">
+        <h3 class="text-xl font-semibold">Acerca de</h3>
+        <div class="flex flex-col gap-4">
+          <div
+            class="flex flex-col flex-wrap lg:flex-row lg:gap-4 lg:flex-nowrap"
+          >
+            <h4 class="text-lg font-semibold">Información:</h4>
+            <p class="text-base text-gray-200">{{ user()?.description }}</p>
+          </div>
+        </div>
+        <div
+          class="flex items-center gap-x-4 flex-wrap lg:flex-row lg:gap-4 lg:flex-nowrap"
+        >
+          <h4 class="text-lg font-semibold">Fecha de nacimiento:</h4>
+          <span class="text-sm text-gray-200">{{ user()?.birthdate }}</span>
+        </div>
+      </div>
     </div>
     <div class="flex flex-col gap-2">
-      <span class="text-sm font-semibold">Estado</span>
-      <span class="text-xs text-gray-500">{{ user()?.status }}</span>
+      <div class="flex flex-col gap-4 bg-bg-tertiary p-4 rounded-xl">
+        <h3 class="text-xl font-semibold">Actividad:</h3>
+        <div class="flex gap-2 flex-wrap items-center">
+          <button
+            type="button"
+            class="btn btn-sm sm:btn-md md:btn-lg"
+            [class.btn-primary]="showActivity() === 'posts'"
+            (click)="showActivity.set('posts')"
+          >
+            Publicaciones
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm sm:btn-md md:btn-lg"
+            [class.btn-primary]="showActivity() === 'comments'"
+            (click)="showActivity.set('comments')"
+          >
+            Comentarios
+          </button>
+        </div>
+        <div class="flex flex-col gap-2">
+          @if (showActivity() === 'posts') {
+            @if (postsUserResource.hasValue()) {
+              <section class="flex flex-col gap-4">
+                @for (post of postsUserResource.value() | slice: 0:2; track post.id) {
+                  <post-card [post]="post" />
+                }
+              </section>
+            }
+          } @else {
+            @if (commentsPostUserResource.hasValue()) {
+              <section class="flex flex-col gap-4">
+                @for (post of commentsPostUserResource.value() | slice: 0:2; track post.id) {
+                  <post-card [post]="post" />
+                }
+              </section>
+            }
+          }
+        </div>
+      </div>
     </div>
   </div>
 </div>
