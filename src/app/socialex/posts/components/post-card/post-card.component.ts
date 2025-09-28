@@ -6,6 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { Post } from '@socialex/posts/interfaces/posts.interface';
 import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
 import { PostsService } from '@socialex/posts/services/posts.service';
@@ -13,7 +14,7 @@ import { PostsService } from '@socialex/posts/services/posts.service';
 
 @Component({
   selector: 'post-card',
-  imports: [PostDatePipe, I18nPluralPipe, NgClass],
+  imports: [PostDatePipe, I18nPluralPipe, NgClass, RouterLink],
   templateUrl: './post-card.component.html',
 })
 export class PostCardComponent {

@@ -1,6 +1,6 @@
 import { Component, inject, linkedSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { usersData } from '@socialex/data/users.data';
+import { usersData } from '@socialex/users/data/users.data';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 

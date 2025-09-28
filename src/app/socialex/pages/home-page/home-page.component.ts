@@ -9,7 +9,7 @@ import { Post } from '@socialex/posts/interfaces/posts.interface';
 import { PostsService } from '@socialex/posts/services/posts.service';
 
 // Components
-import { SectionComponentComponent } from '@socialex/components/section-component/section-component.component';
+import { SectionComponentComponent } from '@socialex/shared/section-component/section-component.component';
 import { PostCardComponent } from '@socialex/posts/components/post-card/post-card.component';
 
 @Component({

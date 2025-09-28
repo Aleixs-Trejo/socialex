@@ -1,4 +1,4 @@
-import { User } from '@socialex/interfaces/user.interface';
+import { User } from '@socialex/users/interfaces/user.interface';
 
 export const usersData: User[] = [
   {

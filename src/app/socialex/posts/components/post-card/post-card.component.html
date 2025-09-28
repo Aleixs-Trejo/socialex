@@ -7,9 +7,9 @@
         class="w-10 h-10 rounded-full"
       />
       <div class="flex flex-col">
-        <h4 class="text-sm font-semibold">
+        <a [routerLink]="['/socialex/profile', userPostResource.value()?.id]" class="text-sm font-semibold hover:underline">
           {{ userPostResource.value()?.name }}
-        </h4>
+        </a>
         <span class="text-xxs text-gray-400">{{
           userPostResource.value()?.profession
         }}</span>
@@ -48,7 +48,7 @@
         </svg>
       </div>
     </div>
-    <p class="text-base px-3">{{ post().content }}</p>
+    <div class="text-base px-3">{{ post().content }}</div>
     <div class="w-full flex justify-between items-center px-3 py-2">
       @if (totalReactionsResource.hasValue() && totalReactionsResource.value() >
       0) {
@@ -145,33 +145,35 @@
     <div
       class="comments-container px-3 opacity-0"
       [ngClass]="{
-        'h-1 opacity-0': !openComments().has(post().id),
-        'h-auto py-2 opacity-100': openComments().has(post().id)
+        'h-1 opacity-0 pointer-events-none': !openComments().has(post().id),
+        'h-auto py-2 opacity-100 pointer-events-auto': openComments().has(post().id)
       }"
     >
       <ul class="flex flex-col gap-4">
         @if (commentsWithUsersResource.value(); as comments) { @for (item of
         comments; track item.comment.id) {
-        <li class="flex items-start gap-2 w-full hover:bg-gray-700 rounded">
-          <img
-            [src]="item.user.avatar"
-            alt="avatar"
-            class="w-10 h-10 rounded-full"
-          />
-          <div class="w-full flex flex-col">
-            <div class="flex items-start justify-between">
-              <div class="flex flex-col leading-4">
-                <span class="font-semibold">{{ item.user.name }}</span>
-                <span class="text-xs text-gray-400">{{
-                  item.user.profession
-                }}</span>
+        <li class="flex flex-col items-start w-full hover:bg-gray-700 rounded">
+          <div class="flex gap-2">
+            <img
+              [src]="item.user.avatar"
+              alt="avatar"
+              class="w-8 h-8 rounded-full"
+            />
+            <div class="w-full flex flex-col bg-bg-tertiary rounded-lg p-2">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center flex-wrap leading-2">
+                  <span class="font-semibold text-sm mr-2">{{ item.user.name }}</span>
+                  <span class="text-xxs text-gray-400">{{
+                    item.user.profession
+                  }}</span>
+                </div>
               </div>
-              <span class="text-xxs text-gray-400">{{
-                item.comment.createdAt | postDate
-              }}</span>
+              <div class="text-base text-white">{{ item.comment.content }}</div>
             </div>
-            <p class="text-sm text-gray-300">{{ item.comment.content }}</p>
           </div>
+          <span class="text-xxs text-gray-400 ml-12">{{
+            item.comment.createdAt | postDate
+          }}</span>
         </li>
         } }
       </ul>

@@ -3,7 +3,7 @@ import { AfterViewInit, Component, computed, effect, ElementRef, signal, viewChi
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // Interfaces | Types
-import { User } from '@socialex/interfaces/user.interface';
+import { User } from '@socialex/users/interfaces/user.interface';
 import { FilterUsersStatus } from '@socialex/types/filter-users-status.type';
 
 // Pipes
@@ -11,7 +11,7 @@ import { FilterAsideUsersByPipe } from '@socialex/pipes/filter-aside-users-by.pi
 import { SearchUserByPipe } from '@socialex/pipes/search-user-by.pipe';
 
 // Data
-import { usersData } from '@socialex/data/users.data';
+import { usersData } from '@socialex/users/data/users.data';
 
 // Lenis
 import Lenis from 'lenis';

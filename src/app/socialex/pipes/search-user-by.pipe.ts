@@ -1,5 +1,5 @@
 import { Pipe, type PipeTransform } from '@angular/core';
-import { User } from '@socialex/interfaces/user.interface';
+import { User } from '@socialex/users/interfaces/user.interface';
 
 @Pipe({
   name: 'searchUserBy',

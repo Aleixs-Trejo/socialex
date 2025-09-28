@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { posts } from '../data/posts.data';
-import { Comment, Post, Reaction, Reactions } from '../interfaces/posts.interface';
+import { Comment, Post, Reaction } from '../interfaces/posts.interface';
 import { Observable, of } from 'rxjs';
-import { User } from '@socialex/interfaces/user.interface';
-import { usersData } from '@socialex/data/users.data';
+import { User } from '@socialex/users/interfaces/user.interface';
+import { usersData } from '@socialex/users/data/users.data';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
