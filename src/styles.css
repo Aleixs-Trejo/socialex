@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+@theme {
+  /* Spacing */
+  --spacing-header: 4rem;
+  --spacing-body: calc(100dvh - var(--spacing-header));
+  --spacing-body-mobile: calc(100dvh - (var(--spacing-header) * 2));
+  --spacing-aside: 4rem;
+  --spacing-aside-active: 16rem;
+  --spacing-aside-users: clamp(12rem, 20dvw, 18rem);
+
+  /* Font Size */
+  --text-title-splash: clamp(1.5rem, 10dvw, 3.75rem);
+  --text-paragraph-content: clamp(0.875rem, 5dvw, 1.25rem);
+  --text-xxs: clamp(10px, 3dvw, 12px);
+
+  /* Colors */
+  --color-bg-primary: #1C1C1D;
+  --color-bg-secondary: #252728;
+}
+
+.body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.container-alesis {
+  @apply w-9/10 max-w-2xl mx-auto overflow-hidden;
+}
+
+.comments-container {
+  interpolate-size: allow-keywords;
+}

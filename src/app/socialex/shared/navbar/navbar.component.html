@@ -1,0 +1,19 @@
+<header class="h-header fixed w-full z-10 border-b border-zinc-700 bg-bg-secondary">
+  <div class="container-alesis h-full flex items-center justify-center">
+    <nav class="">
+      <ul class="w-full flex items-center justify-center gap-2">
+        @for (link of links; track link.path) {
+          <li class="navbar-item">
+            <a
+              class="btn btn-sm rounded-btn"
+              [routerLink]="link.path"
+              routerLinkActive="btn-primary"
+            >
+              {{ link.title }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

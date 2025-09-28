@@ -1,0 +1,77 @@
+import { Injectable } from '@angular/core';
+import { posts } from '../data/posts.data';
+import { Comment, Post, Reaction, Reactions } from '../interfaces/posts.interface';
+import { Observable, of } from 'rxjs';
+import { User } from '@socialex/interfaces/user.interface';
+import { usersData } from '@socialex/data/users.data';
+
+@Injectable({ providedIn: 'root' })
+export class PostsService {
+  users: User[] = usersData;
+  posts: Post[] = posts;
+
+  getPosts(page: number, pageSize: number): Observable<Post[]> {
+    const start = (page - 1) * pageSize;
+    const paginated = this.posts.slice(start, start + pageSize);
+    return of(paginated);
+  }
+
+  getAuhtorPost(authorId: number): Observable<User | null> {
+    const author = this.users.find((u) => u.id === authorId);
+    if (!author) return of(null);
+    return of(author);
+  }
+
+  getUsersComments(postId: string): Observable<User[] | null> {
+    const post = this.posts.find((p) => p.id === postId);
+    if (!post) return of(null);
+    const comments = post.comments
+      .map((c) => this.users.find((u) => u.id === c.authorId))
+      .filter((u): u is User => u !== undefined);
+
+    const unique = Array.from(new Map(comments.map((u) => [u.id, u])).values());
+    return of(unique);
+  }
+
+  getUsersReactions(postId: string): Observable<User[] | null> {
+    const post = this.posts.find((p) => p.id === postId);
+    if (!post) return of(null);
+    const allReactions: Reaction[] = Object.values(post.reactions).flat();
+
+    const users = allReactions
+      .map((r) => this.users.find((u) => u.id === r.authorId))
+      .filter((u): u is User => u !== undefined);
+
+    const unique = Array.from(new Map(users.map((u) => [u.id, u])).values());
+    return of(unique);
+  }
+
+  getTotalReactions(postId: string): Observable<number> {
+    const post = this.posts.find((p) => p.id === postId);
+    if (!post) return of(0);
+    const total = Object.values(post.reactions).reduce(
+      (acc, cur) => acc + cur.length,
+      0
+    );
+    return of(total);
+  }
+
+  getTotalComments(postId: string): Observable<number> {
+    const post = this.posts.find((p) => p.id === postId);
+    if (!post) return of(0);
+    const total = post.comments.length;
+    return of(total);
+  }
+
+  getCommentsWithUsers(postId: string): Observable<{ comment: Comment; user: User }[]> {
+    const post = this.posts.find((p) => p.id === postId);
+    if (!post) return of([]);
+
+    const joined = post.comments.map(c => {
+      const user = this.users.find(u => u.id === c.authorId);
+      return user ? { comment: c, user } : null;
+    }).filter((item): item is { comment: Comment; user: User } => item !== null);
+
+    return of(joined);
+  }
+}

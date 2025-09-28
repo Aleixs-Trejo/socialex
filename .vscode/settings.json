@@ -1,0 +1,13 @@
+{
+  "material-icon-theme.activeIconPack": "angular",
+  "explorer.compactFolders": false,
+  "angular-schematics.schematicsDefaultOptions": {
+    "angular-*": {
+      "externalTemplate": true,
+      "skipStyle": true
+    },
+    "angular-component": {
+      "skipChangeDetectionOnPush": true
+    }
+  }
+}

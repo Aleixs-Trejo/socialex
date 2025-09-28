@@ -1,0 +1,1 @@
+export type FilterUsersStatus = 'all' | 'online' | 'offline';

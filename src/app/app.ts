@@ -1,5 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+// Lenis
+import Lenis from 'lenis';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +10,20 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('ale-social');
+export class App implements OnInit {
+  rootLenis = new Lenis();
+
+  ngOnInit(): void {
+    const animate = (time: number) => {
+      this.rootLenis.raf(time);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+
+  ngOnDestroy(): void {
+    this.rootLenis?.destroy();
+  }
 }
