@@ -1,7 +1,7 @@
 <div class="w-9/10 max-w-xl mx-auto overflow-hidden py-8">
   <div class="flex flex-col gap-4">
     <div
-      class="flex flex-col items-center gap-4 md:gap-8 bg-bg-tertiary p-4 rounded-xl"
+      class="flex flex-col items-center gap-4 lg:flex-row lg:gap-8 bg-bg-tertiary p-4 rounded-xl"
     >
       <div
         class="w-42 h-42 rounded-full bg-white p-1 flex-shrink-0 flex justify-center items-center relative"
@@ -20,16 +20,16 @@
           <span
             class="block w-full h-full rounded-full"
             [class.bg-green-500]="user()?.status === 'online'"
-            [class.bg-gray-700]="user()?.status === 'offline'"
+            [class.bg-zinc-500]="user()?.status === 'offline'"
           ></span>
         </div>
       </div>
       <div class="flex flex-col gap-2">
-        <div class="flex flex-col text-center md:text-start">
+        <div class="flex flex-col text-center lg:text-start">
           <h2 class="text-2xl font-semibold">{{ user()?.name }}</h2>
           <h3 class="text-base text-gray-200">{{ user()?.profession }}</h3>
         </div>
-        <div class="flex items-center gap-4 text-center md:text-start">
+        <div class="flex items-center gap-4 text-center lg:text-start">
           <span class="text-sm">{{
             postsUserResource.value()?.length
               | i18nPlural : i18nPluralProfilePosts
@@ -67,7 +67,7 @@
         <div class="flex gap-2 flex-wrap items-center">
           <button
             type="button"
-            class="btn btn-sm sm:btn-md md:btn-lg"
+            class="btn btn-sm sm:btn-md"
             [class.btn-primary]="showActivity() === 'posts'"
             (click)="showActivity.set('posts')"
           >
@@ -75,7 +75,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-sm sm:btn-md md:btn-lg"
+            class="btn btn-sm sm:btn-md"
             [class.btn-primary]="showActivity() === 'comments'"
             (click)="showActivity.set('comments')"
           >

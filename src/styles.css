@@ -39,3 +39,9 @@
 .comments-container {
   interpolate-size: allow-keywords;
 }
+
+.content-post,
+.content-comment {
+  white-space: pre-wrap;
+  word-break: break-word;
+}

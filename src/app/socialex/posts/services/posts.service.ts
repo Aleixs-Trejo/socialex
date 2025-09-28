@@ -80,7 +80,6 @@ export class PostsService {
     if (!user) return of(null);
 
     const postsFromUser = this.posts.filter((p) => p.authorId === userId);
-    console.log('postsFromUser: ', postsFromUser);
     return of(postsFromUser);
   }
 
@@ -89,7 +88,6 @@ export class PostsService {
     if (!user) return of(null);
 
     const postsCommentsFromUser = this.posts.filter(p => p.comments.some(c => c.authorId === userId));
-    console.log('postsCommentsFromUser: ', postsCommentsFromUser);
     return of(postsCommentsFromUser);
   }
 }

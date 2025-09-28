@@ -57,7 +57,7 @@
     <div class="overflow-auto scroll-auto" #lenisWrapper>
       <ul class="flex flex-col">
         @for(user of users() | filterAsideUsersBy: filterBy() | searchUserBy: debouncedSearch(); track user.id) {
-        <li class="flex items-center gap-2 w-full hover:bg-gray-700">
+        <li class="flex items-center gap-2 w-full transition-colors hover:bg-zinc-700">
           <a
             [routerLink]="['profile', user.id]"
             class="w-full flex items-center gap-2 p-2 md:px-4 lg:px-6"
@@ -81,7 +81,7 @@
           </a>
         </li>
         } @empty {
-          <li class="flex items-center gap-2 w-full px-2 hover:bg-gray-700">
+          <li class="flex items-center">
             <span class="text-gray-500">No hay usuarios</span>
           </li>
         }
