@@ -103,7 +103,6 @@ export class PostsService {
         (item): item is { user: User; type: keyof Reactions; icon: string } =>
           item !== null
       );
-    console.log(result);
     return of(result);
   }
 
