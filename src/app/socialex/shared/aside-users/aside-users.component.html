@@ -2,30 +2,16 @@
   <div class="h-full w-full flex flex-col gap-4 py-2 md:py-4 lg:py-6">
     <h4 class="text-sm px-2 md:px-4 lg:px-6">Todos los usuarios ({{ filteredUsers().length }})</h4>
     <div class="flex items-center gap-2 px-2 md:px-4">
-      <button
-        type="button"
-        class="btn btn-xs"
-        [class.btn-primary]="filterBy() === 'all'"
-        (click)="filterBy.set('all')"
-      >
-        All
-      </button>
-      <button
-        type="button"
-        class="btn btn-xs"
-        [class.btn-primary]="filterBy() === 'online'"
-        (click)="filterBy.set('online')"
-      >
-        Online
-      </button>
-      <button
-        type="button"
-        class="btn btn-xs"
-        [class.btn-primary]="filterBy() === 'offline'"
-        (click)="filterBy.set('offline')"
-      >
-        Offline
-      </button>
+      @for (btn of btnsOptions; track btn) {
+        <button
+          type="button"
+          class="btn btn-xs"
+          [class.btn-primary]="filterBy() === btn"
+          (click)="filterBy.set(btn)"
+        >
+          {{btn | titlecase}}
+        </button>
+      }
     </div>
     <div class="px-2 md:px-4">
       <label class="input">

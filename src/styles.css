@@ -11,8 +11,9 @@
   --spacing-aside: 4rem;
   --spacing-aside-active: 16rem;
   --spacing-aside-users: clamp(12rem, 20dvw, 18rem);
-  --spacing-reactions: clamp(1rem, 4.5vw, 2rem);
+  --spacing-reactions: clamp(1rem, 4.5vw, 1.5rem);
   --spacing-modal-reactions: 50dvh;
+  --spacing-gap-4-vw-16: clamp(0.25rem, 1dvw, 1rem);
 
   /* Font Size */
   --text-title-splash: clamp(1.5rem, 10dvw, 3.75rem);
@@ -23,6 +24,22 @@
   --color-bg-primary: #1C1C1D;
   --color-bg-secondary: #252728;
   --color-bg-tertiary: #333334;
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.2s ease-in-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.html {
+  scrollbar-gutter: stable;
 }
 
 .body {

@@ -1,4 +1,4 @@
-// Angular
+// Angular 20
 import { Injectable } from '@angular/core';
 
 // Data
@@ -6,11 +6,19 @@ import { posts } from '../data/posts.data';
 import { usersData } from '@socialex/users/data/users.data';
 
 // Interfaces
-import { Comment, Post, Reaction, Reactions } from '../interfaces/posts.interface';
+import {
+  Comment,
+  Post,
+  Reaction,
+  Reactions,
+} from '../interfaces/posts.interface';
 import { User } from '@socialex/users/interfaces/user.interface';
 
 // RxJS
 import { Observable, of } from 'rxjs';
+
+// Helpers
+import { getReactionIcon } from '@socialex/posts/helpers/reaction.helper';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
@@ -63,28 +71,39 @@ export class PostsService {
     return of(total);
   }
 
-  getEveryReactionByUsers(postId: string): Observable<{ user: User, type: keyof Reactions }[]> {
+  getAllReactionsByUsers(
+    postId: string
+  ): Observable<{ user: User; type: keyof Reactions, icon: string }[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
 
-    const result: { user: User, type: keyof Reactions }[] = [];
-    (Object.keys(post.reactions) as (keyof Reactions)[]).forEach(type => {
-      post.reactions[type].forEach(reaction => {
-        const user = this.users.find(u => u.id === reaction.authorId);
-        if (user) result.push({ user, type });
+    const result: { user: User; type: keyof Reactions, icon: string }[] = [];
+    (Object.keys(post.reactions) as (keyof Reactions)[]).forEach((type) => {
+      post.reactions[type].forEach((reaction) => {
+        const user = this.users.find((u) => u.id === reaction.authorId);
+        if (user) result.push({ user, type, icon: getReactionIcon(type) });
       });
     });
     return of(result);
   }
 
-  getReactionsTypeByUser(postId: string, reactionType: keyof Reactions): Observable<{ user: User, type: keyof Reactions }[]> {
+  getReactionsTypeByUser(
+    postId: string,
+    type: keyof Reactions
+  ): Observable<{ user: User; type: keyof Reactions; icon: string }[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
 
-    const result: { user: User, type: keyof Reactions }[] = post.reactions[reactionType].map(r => {
-      const user = this.users.find(u => u.id === r.authorId);
-      return user ? { user, type: reactionType } : null;
-    }).filter((item): item is { user: User, type: keyof Reactions } => item !== null);
+    const result = post.reactions[type]
+      .map((r) => {
+        const user = this.users.find((u) => u.id === r.authorId);
+        return user ? { user, type, icon: getReactionIcon(type) } : null;
+      })
+      .filter(
+        (item): item is { user: User; type: keyof Reactions; icon: string } =>
+          item !== null
+      );
+    console.log(result);
     return of(result);
   }
 
@@ -95,14 +114,20 @@ export class PostsService {
     return of(total);
   }
 
-  getCommentsWithUsers(postId: string): Observable<{ comment: Comment; user: User }[]> {
+  getCommentsWithUsers(
+    postId: string
+  ): Observable<{ comment: Comment; user: User }[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
 
-    const joined = post.comments.map(c => {
-      const user = this.users.find(u => u.id === c.authorId);
-      return user ? { comment: c, user } : null;
-    }).filter((item): item is { comment: Comment; user: User } => item !== null);
+    const joined = post.comments
+      .map((c) => {
+        const user = this.users.find((u) => u.id === c.authorId);
+        return user ? { comment: c, user } : null;
+      })
+      .filter(
+        (item): item is { comment: Comment; user: User } => item !== null
+      );
 
     return of(joined);
   }
@@ -119,7 +144,9 @@ export class PostsService {
     const user = this.users.find((u) => u.id === userId);
     if (!user) return of([]);
 
-    const postsCommentsFromUser = this.posts.filter(p => p.comments.some(c => c.authorId === userId));
+    const postsCommentsFromUser = this.posts.filter((p) =>
+      p.comments.some((c) => c.authorId === userId)
+    );
     return of(postsCommentsFromUser);
   }
 }

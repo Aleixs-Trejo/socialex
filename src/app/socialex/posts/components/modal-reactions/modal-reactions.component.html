@@ -1,120 +1,29 @@
 <section
-  class="bg-black/80 fixed inset-0 w-dvw h-dvh z-50 flex items-center justify-center"
+  class="bg-black/80 fixed inset-0 w-dvw h-dvh z-50 flex items-center justify-center animate-fade-in"
   (click)="closeModal()"
 >
   <div class="bg-bg-secondary rounded-lg overflow-hidden h-modal-reactions w-9/10 max-w-xl mx-auto" (click)="$event.stopPropagation()">
     <div class="w-full px-2 h-12 flex gap-1 items-center bg-bg-tertiary">
-      <button
-        type="button"
-        class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2"
-        (click)="changeReactionType('like')"
-        [class.border-blue-500]="showReactionType() === 'like'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="w-reactions h-reactions"
+      @for (btn of btnsReactions; track btn.type) {
+        <button
+          type="button"
+          class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2 cursor-pointer rounded-tl-lg rounded-tr-lg hover:bg-bg-secondary relative"
+          (click)="changeReactionType(btn.type)" 
+          [ngClass]="{
+            'border-blue-500 bg-bg-secondary': showReactionType() === btn.type
+          }"
+          title="like"
         >
-          <rect fill="none" />
-          <g fill="none">
-            <path
-              fill="currentColor"
-              d="m15 10l-.74-.123a.75.75 0 0 0 .74.873zM4 10v-.75a.75.75 0 0 0-.75.75zm16.522 2.392l.735.147zM6 20.75h11.36v-1.5H6zm12.56-11.5H15v1.5h3.56zm-2.82.873l.806-4.835l-1.48-.247l-.806 4.836zm-.92-6.873h-.214v1.5h.213zm-3.335 1.67L8.97 8.693l1.248.832l2.515-3.773zM7.93 9.25H4v1.5h3.93zM3.25 10v8h1.5v-8zm16.807 8.54l1.2-6l-1.47-.295l-1.2 6zM8.97 8.692a1.25 1.25 0 0 1-1.04.557v1.5c.92 0 1.778-.46 2.288-1.225zm7.576-3.405A1.75 1.75 0 0 0 14.82 3.25v1.5a.25.25 0 0 1 .246.291zm2.014 5.462c.79 0 1.38.722 1.226 1.495l1.471.294A2.75 2.75 0 0 0 18.56 9.25zm-1.2 10a2.75 2.75 0 0 0 2.697-2.21l-1.47-.295a1.25 1.25 0 0 1-1.227 1.005zm-2.754-17.5a3.75 3.75 0 0 0-3.12 1.67l1.247.832a2.25 2.25 0 0 1 1.873-1.002zM6 19.25c-.69 0-1.25-.56-1.25-1.25h-1.5A2.75 2.75 0 0 0 6 20.75z"
-            />
-            <path stroke="currentColor" stroke-width="1.5" d="M8 10v10" />
-          </g>
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2"
-        (click)="changeReactionType('love')"
-        [class.border-blue-500]="showReactionType() === 'love'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="w-reactions h-reactions"
-        >
-          <rect fill="none" />
-          <path
-            fill="currentColor"
-            d="m12.1 18.55l-.1.1l-.11-.1C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5c1.54 0 3.04 1 3.57 2.36h1.86C13.46 6 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5c0 2.89-3.14 5.74-7.9 10.05M16.5 3c-1.74 0-3.41.81-4.5 2.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5c0 3.77 3.4 6.86 8.55 11.53L12 21.35l1.45-1.32C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3"
-          />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2"
-        (click)="changeReactionType('laugh')"
-        [class.border-blue-500]="showReactionType() === 'laugh'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          class="w-reactions h-reactions"
-        >
-          <rect fill="none" />
-          <path
-            fill="currentColor"
-            d="M16 3C8.832 3 3 8.832 3 16s5.832 13 13 13s13-5.832 13-13S23.168 3 16 3m0 2c6.065 0 11 4.935 11 11s-4.935 11-11 11S5 22.065 5 16S9.935 5 16 5m-5 7c-2.094 0-3.61 1.207-3.61 1.207l1.22 1.586S9.692 14 11.001 14s2.39.793 2.39.793l1.22-1.586C14.608 13.207 13.093 12 11 12m10 0c-2.094 0-3.61 1.207-3.61 1.207l1.22 1.586S19.692 14 21.001 14s2.39.793 2.39.793l1.22-1.586C24.608 13.207 23.093 12 21 12M9 19s1.605 5 7 5s7-5 7-5z"
-          />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2"
-        (click)="changeReactionType('wow')"
-        [class.border-blue-500]="showReactionType() === 'wow'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="w-reactions h-reactions"
-        >
-          <rect fill="none" />
-          <path
-            fill="currentColor"
-            d="M12 2.004c5.523 0 10 4.477 10 10s-4.477 10-10 10s-10-4.477-10-10s4.477-10 10-10m0 1.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 0 0 0-17m0 9.495a2.25 2.25 0 1 1 0 4.5a2.25 2.25 0 0 1 0-4.5M9 8.75a1.25 1.25 0 1 1 0 2.499A1.25 1.25 0 0 1 9 8.75m6 0a1.25 1.25 0 1 1 0 2.499a1.25 1.25 0 0 1 0-2.499"
-          />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2"
-        (click)="changeReactionType('sad')"
-        [class.border-blue-500]="showReactionType() === 'sad'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="w-reactions h-reactions"
-        >
-          <rect fill="none" />
-          <path
-            fill="currentColor"
-            d="M12 2c5.523 0 10 4.477 10 10c0 .727-.078 1.435-.225 2.118l-1.782-1.783Q20 12.17 20 12a8 8 0 1 0-4.381 7.137q.232.37.553.691c.302.303.64.547 1.001.732A9.96 9.96 0 0 1 12 22C6.477 22 2 17.523 2 12S6.477 2 12 2m7 12.172l1.414 1.414a2 2 0 1 1-2.93.11l.102-.11zM12 15c1.466 0 2.785.631 3.7 1.637l-.945.86C13.965 17.182 13.018 17 12 17s-1.965.183-2.755.496l-.945-.86A5 5 0 0 1 12 15m-3.5-5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3m7 0a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3"
-          />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="flex-1 h-9/10 m-auto transition-colors flex items-center justify-center gap-x-2 border-b-2"
-        (click)="changeReactionType('angry')"
-        [class.border-blue-500]="showReactionType() === 'angry'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="w-reactions h-reactions"
-        >
-          <rect fill="none" />
-          <path
-            fill="currentColor"
-            d="M10 11a1 1 0 0 0 .89-.55a1 1 0 0 0-.44-1.34l-2-1a1 1 0 1 0-.9 1.78l2 1A.93.93 0 0 0 10 11m2-9a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8m-3.64-4.67a1 1 0 0 0-.13 1.4a1 1 0 0 0 1.41.13a3.76 3.76 0 0 1 4.72 0a1 1 0 0 0 .64.23a1 1 0 0 0 .64-1.76a5.81 5.81 0 0 0-7.28 0m7.19-7.22l-2 1a1 1 0 0 0-.44 1.34A1 1 0 0 0 14 11a.93.93 0 0 0 .45-.11l2-1a1 1 0 0 0-.9-1.78"
-          />
-        </svg>
-      </button>
+          <div class="flex items-center gap-gap-4-vw-16">
+            <img
+              [src]="btn.icon"
+              [alt]="'icon: ' + btn.type"
+              class="w-reactions h-reactions flex-shrink-0 object-contain object-center"
+              />
+              <span class="text-xs">{{ btn.count }}</span>
+          </div>
+        </button>
+      }
     </div>
     <div class="w-full h-full overflow-auto">
       <div class="w-full h-full flex flex-col gap-2">
@@ -127,22 +36,27 @@
           <ul class="w-full flex flex-col gap-4 py-2">
             @for (reaction of reactionsResource.value(); track reaction.user.id) {
               <li class="flex items-center gap-2 px-2 md:px-4 lg:px-6">
-                <img
-                  [src]="reaction.user.avatar"
-                  alt="avatar"
-                  class="w-8 h-8 rounded-full"
-                />
-                <div class="w-full">
-                  <div class="flex flex-col leading-2">
-                    <a
-                      [routerLink]="['/socialex/profile', reaction.user.id]"
-                      class="font-semibold text-sm mr-2 hover:underline"
-                      >{{ reaction.user.name }}</a
-                    >
-                    <span class="text-xxs text-gray-400">{{
-                      reaction.user.profession
-                    }}</span>
-                  </div>
+                <div class="relative flex-shrink-0 w-9 h-9 rounded-full">
+                  <img
+                    [src]="reaction.user.avatar"
+                    alt="avatar"
+                    class="w-full h-full rounded-full object-contain object-center"
+                  />
+                  <img
+                    [src]="reaction.icon"
+                    alt="icon"
+                    class="absolute bottom-0 -right-1/10 object-contain object-center w-4 h-4"
+                    />
+                </div>
+                <div class="w-full h-full flex flex-col leading-2">
+                  <a
+                    [routerLink]="['/socialex/profile', reaction.user.id]"
+                    class="font-semibold text-sm hover:underline"
+                    >{{ reaction.user.name }}</a
+                  >
+                  <span class="text-xxs text-gray-400">{{
+                    reaction.user.profession
+                  }}</span>
                 </div>
               </li>
             } @empty {

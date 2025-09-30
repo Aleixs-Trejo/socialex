@@ -15,6 +15,7 @@ import { usersData } from '@socialex/users/data/users.data';
 
 // Lenis
 import Lenis from 'lenis';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'aside-users',
@@ -23,6 +24,7 @@ import Lenis from 'lenis';
     RouterLinkActive,
     FilterAsideUsersByPipe,
     SearchUserByPipe,
+    TitleCasePipe
   ],
   templateUrl: './aside-users.component.html',
 })
@@ -35,6 +37,8 @@ export class AsideUsersComponent implements AfterViewInit {
   searchQuery = signal('');
   debouncedSearch = signal('');
   filterBy = signal<FilterUsersStatus>('all');
+
+  btnsOptions: FilterUsersStatus[] = ['all', 'online', 'offline'];
 
   filteredUsers = computed(() =>
     this.users()
