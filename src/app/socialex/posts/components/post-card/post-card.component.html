@@ -62,6 +62,7 @@
       0) {
       <div
         class="flex items-center gap-2 mr-auto cursor-pointer hover:underline relative group z-5"
+        (click)="openReactionsModal(post().id)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +90,7 @@
       <div
         class="flex items-center gap-2 ml-auto cursor-pointer hover:underline relative group z-5"
       >
-        <span (click)="toggleComments(post().id)">{{
+        <span (click)="toggleCommentPost(post().id)">{{
           totalCommentsResource.value() | i18nPlural : i18nPluralPipeComments
         }}</span>
         <div
@@ -125,7 +126,7 @@
       <button
         type="button"
         class="text-sm flex items-center justify-center gap-2 text-gray-300 p-1.5 grow cursor-pointer transition-colors rounded-lg hover:bg-zinc-800"
-        (click)="toggleComments(post().id)"
+        (click)="toggleCommentPost(post().id)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -148,15 +149,13 @@
     </div>
     <div
       class="border-b border-gray-600 mx-3"
-      [class.hidden]="!openComments().has(post().id)"
+      [class.hidden]="openCommentPostId() === null"
     ></div>
     <div
       class="comments-container px-3 opacity-0"
       [ngClass]="{
-        'h-1 opacity-0 pointer-events-none': !openComments().has(post().id),
-        'h-auto py-2 opacity-100 pointer-events-auto': openComments().has(
-          post().id
-        )
+        'h-1 opacity-0 pointer-events-none': openCommentPostId() === null,
+        'h-auto py-2 opacity-100 pointer-events-auto': openCommentPostId() === post().id
       }"
     >
       <ul class="flex flex-col gap-4">
@@ -193,4 +192,7 @@
       </ul>
     </div>
   </div>
+  @if (openModalReactionsByPostId() === post().id) {
+    <modal-reactions [postId]="post().id" class="modal-reactions fixed inset-0 z-50" (closeModalReactions)="closeReactionsModal()" />
+  }
 </article>

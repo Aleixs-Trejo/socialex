@@ -11,6 +11,8 @@
   --spacing-aside: 4rem;
   --spacing-aside-active: 16rem;
   --spacing-aside-users: clamp(12rem, 20dvw, 18rem);
+  --spacing-reactions: clamp(1rem, 4.5vw, 2rem);
+  --spacing-modal-reactions: 50dvh;
 
   /* Font Size */
   --text-title-splash: clamp(1.5rem, 10dvw, 3.75rem);
@@ -28,7 +30,11 @@
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
-    display: none;
+    @apply hidden;
+  }
+
+  &:has(.modal-reactions) {
+    @apply overflow-hidden;
   }
 }
 
