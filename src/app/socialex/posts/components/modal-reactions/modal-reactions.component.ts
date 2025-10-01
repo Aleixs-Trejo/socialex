@@ -1,6 +1,6 @@
 // Angular 20
 import { Component, inject, input, output, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 // Services
@@ -18,7 +18,7 @@ import { btnsReactions } from '@socialex/posts/helpers/reaction.helper';
 
 @Component({
   selector: 'modal-reactions',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, NgOptimizedImage],
   templateUrl: './modal-reactions.component.html',
 })
 export class ModalReactionsComponent {

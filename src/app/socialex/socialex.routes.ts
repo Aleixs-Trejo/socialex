@@ -12,13 +12,22 @@ const socialexRoutes: Routes = [
       },
       {
         path: 'my-profile',
-        title: 'Perfil',
+        title: 'Mi Perfil',
         loadComponent: () => import('./pages/profile-page/profile-page.component')
       },
       {
         path: 'my-reactions',
-        title: 'Reacciones',
+        title: 'Mis Reacciones',
         loadComponent: () => import('./pages/reactions-page/reactions-page.component')
+      },
+      {
+        path: 'comments',
+        title: 'Mis Comentarios',
+        loadComponent: () => import('./pages/comments-page/comments-page.component')
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('../auth/auth.routes')
       },
       {
         path: 'profile/:userId',

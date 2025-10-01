@@ -16,7 +16,7 @@
         >
           <div class="flex items-center gap-gap-4-vw-16">
             <img
-              [src]="btn.icon"
+              [ngSrc]="btn.icon"
               [alt]="'icon: ' + btn.type"
               class="w-reactions h-reactions flex-shrink-0 object-contain object-center"
               />
@@ -38,12 +38,12 @@
               <li class="flex items-center gap-2 px-2 md:px-4 lg:px-6">
                 <div class="relative flex-shrink-0 w-9 h-9 rounded-full">
                   <img
-                    [src]="reaction.user.avatar"
+                    [ngSrc]="reaction.user.avatar"
                     alt="avatar"
                     class="w-full h-full rounded-full object-contain object-center"
                   />
                   <img
-                    [src]="reaction.icon"
+                    [ngSrc]="reaction.icon"
                     alt="icon"
                     class="absolute bottom-0 -right-1/10 object-contain object-center w-4 h-4"
                     />

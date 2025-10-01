@@ -1,11 +1,21 @@
+// Angular 20
 import { I18nPluralPipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { Post } from '@socialex/posts/interfaces/posts.interface';
-import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
+
+// Services
 import { PostsService } from '@socialex/posts/services/posts.service';
+
+// Interfaces
+import { Post } from '@socialex/posts/interfaces/posts.interface';
+
+// Pipes
+import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
+
+// Components
 import { ModalReactionsComponent } from '../modal-reactions/modal-reactions.component';
+import { LenisService } from '@socialex/shared/services/lenis.service';
 
 @Component({
   selector: 'post-card',
@@ -21,6 +31,8 @@ import { ModalReactionsComponent } from '../modal-reactions/modal-reactions.comp
 })
 export class PostCardComponent {
   postsService = inject(PostsService);
+  lenisService = inject(LenisService);
+
   post = input.required<Post>();
   openModalReactionsByPostId = signal<string | null>(null);
 
@@ -66,9 +78,11 @@ export class PostCardComponent {
 
   openReactionsModal(postId: string) {
     this.openModalReactionsByPostId.set(postId);
+    this.lenisService.stopScroll();
   }
 
   closeReactionsModal() {
     this.openModalReactionsByPostId.set(null);
+    this.lenisService.startScroll();
   }
 }

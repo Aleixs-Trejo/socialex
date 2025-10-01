@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AsideService } from '../aside.service';
+import { AsideService } from '../services/aside.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({

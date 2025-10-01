@@ -15,7 +15,7 @@ import { usersData } from '@socialex/users/data/users.data';
 
 // Lenis
 import Lenis from 'lenis';
-import { TitleCasePipe } from '@angular/common';
+import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'aside-users',
@@ -24,7 +24,8 @@ import { TitleCasePipe } from '@angular/common';
     RouterLinkActive,
     FilterAsideUsersByPipe,
     SearchUserByPipe,
-    TitleCasePipe
+    TitleCasePipe,
+    NgOptimizedImage
   ],
   templateUrl: './aside-users.component.html',
 })
