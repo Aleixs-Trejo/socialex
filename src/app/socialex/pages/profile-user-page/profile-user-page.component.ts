@@ -1,18 +1,26 @@
+// Angular
 import { Component, inject, linkedSignal, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { usersData } from '@socialex/users/data/users.data';
-
-import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import {
   I18nPluralPipe,
   NgOptimizedImage,
   SlicePipe,
 } from '@angular/common';
-import { PostsService } from '@socialex/posts/services/posts.service';
-import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
-import { PostCardComponent } from '@socialex/posts/components/post-card/post-card.component';
 
-type ShowAvtivity = 'posts' | 'comments';
+// RxJS
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+
+// Services
+import { PostsService } from '@socialex/posts/services/posts.service';
+
+// Types
+import { Activity } from '@socialex/users/types/activity.types';
+
+// Data
+import { usersData } from '@socialex/users/data/users.data';
+
+// Components
+import { PostCardComponent } from '@socialex/posts/components/post-card/post-card.component';
 
 @Component({
   selector: 'app-profile-user-page',
@@ -29,7 +37,7 @@ export default class ProfileUserPageComponent {
   postsService = inject(PostsService);
   queryParamId = toSignal(this.activatedRoute.paramMap, { initialValue: null });
 
-  showActivity = signal<ShowAvtivity>('posts');
+  showActivity = signal<Activity>('posts');
 
   i18nPluralProfilePosts = {
     '=0': 'No tiene publicaciones',

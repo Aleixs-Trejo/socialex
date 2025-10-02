@@ -24,7 +24,6 @@ export class NewsService {
     const cachedLastNews = this.newsCache.get(cacheKeyNews);
 
     if (cachedLastNews) {
-      console.log('Cargado de la cache: ', cachedLastNews);
       return of(cachedLastNews);
     }
 
@@ -37,7 +36,6 @@ export class NewsService {
         }
       })
       .pipe(
-        tap((res) => console.log(res.data['all_articles'])),
         tap(res => this.newsCache.set(cacheKeyNews, res.data['all_articles'])),
         map(res => res.data['all_articles'])
       );

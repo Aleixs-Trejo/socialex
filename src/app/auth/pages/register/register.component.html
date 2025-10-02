@@ -8,7 +8,7 @@
   </div>
   <div class="flex flex-col gap-4 sm:grid sm:grid-cols-2 md:flex">
     @for (inputField of inputsFields; track inputField.title) {
-      <input-field [inputField]="inputField" [registerFormInput]="registerForm" />
+      <input-field [inputField]="inputField" [formInput]="registerForm" />
     }
     <div class="flex flex-col md:gap-1">
       <span
@@ -39,7 +39,7 @@
     <div class="flex flex-col md:gap-1">
       <span
         class="text-xs"
-        [class.text-error]="formUtils.isValidField(registerForm, 'birthDate')"
+        [class.text-error]="formUtils.isValidField(registerForm, 'birthdate')"
       >
         Fecha de nacimiento
       </span>
@@ -47,17 +47,17 @@
         type="date"
         class="w-full bg-bg-quaternary p-2 rounded-md focus:outline-primary outline-none placeholder:text-gray-400"
         [ngClass]="{
-          'border border-transparent': !formUtils.isValidField(registerForm, 'birthDate'),
-          'border border-error': formUtils.isValidField(registerForm, 'birthDate')
+          'border border-transparent': !formUtils.isValidField(registerForm, 'birthdate'),
+          'border border-error': formUtils.isValidField(registerForm, 'birthdate')
         }"
         max="{{minBirthDate() | date:'yyyy-MM-dd'}}"
         value="{{minBirthDate() | date:'yyyy-MM-dd'}}"
         min="1990-01-01"
-        name="birthDate"
-        formControlName="birthDate"
+        name="birthdate"
+        formControlName="birthdate"
         (change)="dateChange($event)"
       />
-      <form-error-label [control]="registerForm.get('birthDate')!" />
+      <form-error-label [control]="registerForm.get('birthdate')!" />
     </div>
     <div class="flex flex-col md:gap-1">
       <span

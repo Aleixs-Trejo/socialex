@@ -59,7 +59,7 @@
 }
 
 .container-alesis {
-  @apply w-9/10 max-w-2xl mx-auto overflow-hidden;
+  @apply w-9/10 max-w-2xl mx-auto;
 }
 
 .comments-container {

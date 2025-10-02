@@ -23,7 +23,7 @@ const inputsFields = [
     type: 'text',
     icon: 'assets/icon/icon-user.svg',
     placeholder: 'Ej: Alesis Makanaki',
-    formControlName: 'username',
+    formControlName: 'name',
   },
   {
     title: 'Contraseña',
@@ -50,7 +50,14 @@ const inputsFields = [
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, DatePipe, ReactiveFormsModule, FormErrorLabelComponent, NgClass, InputFieldComponent],
+  imports: [
+    RouterLink,
+    DatePipe,
+    ReactiveFormsModule,
+    FormErrorLabelComponent,
+    NgClass,
+    InputFieldComponent,
+  ],
   templateUrl: './register.component.html',
 })
 export default class RegisterComponent {
@@ -63,13 +70,19 @@ export default class RegisterComponent {
   hasError = signal(false);
 
   selectedFile = signal<File | undefined>(undefined);
-  fileName = computed(() => this.selectedFile()?.name || 'Click para subir una foto');
+  fileName = computed(
+    () => this.selectedFile()?.name || 'Click para subir una foto'
+  );
 
   birthDate = signal<Date | null>(null);
   maxBirhDate = signal<Date>(new Date());
   minBirthDate = computed(() => {
     const today = new Date();
-    const date18YearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const date18YearsAgo = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate()
+    );
     return date18YearsAgo;
   });
 
@@ -80,24 +93,32 @@ export default class RegisterComponent {
 
   registerForm = this.fb.group(
     {
-      email: ['', [Validators.required, Validators.pattern(this.formUtils.emailPattern)]],
-      username: ['', [Validators.required, Validators.pattern(this.formUtils.namePattern)]],
+      email: [
+        '',
+        [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
+      ],
+      name: [
+        '',
+        [Validators.required, Validators.pattern(this.formUtils.namePattern)],
+      ],
       password: ['', [Validators.required, Validators.minLength(4)]],
       password2: ['', [Validators.required, Validators.minLength(4)]],
       profession: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
-      birthDate: this.fb.control<Date | null>(null, [Validators.required]),
+      birthdate: this.fb.control<Date | null>(null, [Validators.required]),
       avatar: this.fb.control<File | null>(null, [Validators.required]),
     },
     {
-      validators: this.formUtils.matchPasswordsValidator('password', 'password2'),
+      validators: this.formUtils.matchPasswordsValidator(
+        'password',
+        'password2'
+      ),
     }
   );
 
   fileChange(e: Event) {
-    console.log('fileChange', (e.target as HTMLInputElement).value);
     const fileList = (e.target as HTMLInputElement).files;
-    const file = fileList?.length? fileList[0] : null;
+    const file = fileList?.length ? fileList[0] : null;
 
     if (!file) {
       this.selectedFile.set(undefined);
@@ -108,7 +129,9 @@ export default class RegisterComponent {
 
     const maxSize = 2 * 1024 * 1024;
     if (!file.type.startsWith('image/')) {
-      this.registerForm.controls['avatar']?.setErrors({ invalidFileType: true });
+      this.registerForm.controls['avatar']?.setErrors({
+        invalidFileType: true,
+      });
       this.selectedFile.set(undefined);
       return;
     }
@@ -124,11 +147,9 @@ export default class RegisterComponent {
     this.registerForm.controls['avatar']?.markAsTouched();
 
     this.registerForm.controls['avatar']?.markAsTouched();
-    console.log('archivo seleccionado', this.selectedFile());
   }
 
   async onSubmit() {
-    console.log(this.registerForm.value);
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.invalid) {
@@ -137,16 +158,16 @@ export default class RegisterComponent {
       return;
     }
 
-    const {
-      avatar,
-      ...userPayload
-    } = this.registerForm.value as any;
+    const { avatar, ...userPayload } = this.registerForm.value as any;
 
     if (userPayload.birthDate instanceof Date) {
       userPayload.birthDate = userPayload.birthDate.toISOString();
     }
 
-    const result = await this.authService.register(userPayload, this.selectedFile());
+    const result = await this.authService.register(
+      userPayload,
+      this.selectedFile()
+    );
     if (result) {
       this.router.navigateByUrl('/socialex/home');
       return;

@@ -1,1 +1,15 @@
-<p>login works!</p>,
+<form class="w-full h-full flex flex-col gap-8 justify-center md:p-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col gap-4">
+    <h2 class="text-title-section text-center">Inicia Sesión</h2>
+    <span class="text-sm text-gray-300">
+      ¿No tienes una cuenta?
+      <a class="text-blue-500 underline" [routerLink]="['/auth/register']">Registrate aquí</a>
+    </span>
+  </div>
+  <div class="flex flex-col gap-6">
+    @for (inputField of inputsFields; track inputField.title) {
+      <input-field [inputField]="inputField" [formInput]="loginForm" />
+    }
+  </div>
+  <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+</form>

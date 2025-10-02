@@ -53,15 +53,19 @@ export class AuthService {
   async login(email: string, password: string) {
     const authUser = authUsers.find(user => user.email === email && user.password === password);
     if (!authUser) return this.handleAuthError();
+    authUser.status = 'online';
     return this.handleAuthSuccess(authUser);
   }
   
   getUser(): AuthUser | null {
     const user = sessionStorage.getItem(storageSessionKey);
+    const parsedUser = user ? (JSON.parse(user) as AuthUser) : null;
     return user ? (JSON.parse(user) as AuthUser) : null;
   }
   
   logout() {
+    const currentUser = this.getUser();
+    if (currentUser) currentUser.status = 'offline';
     sessionStorage.removeItem(storageSessionKey);
     this._user.set(null);
     this._authStatus.set('not-authenticated');
@@ -84,6 +88,7 @@ export class AuthService {
 
     this.authUsers.push(newUser);
     this._user.set(newUser);
+    newUser.status = 'online';
     return this.handleAuthSuccess(newUser);
   }
 

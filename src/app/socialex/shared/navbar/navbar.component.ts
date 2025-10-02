@@ -14,7 +14,7 @@ import socialexRoutes from '@socialex/socialex.routes';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
 
   private baseLinks = socialexRoutes
     .map(route => route.children ?? [])

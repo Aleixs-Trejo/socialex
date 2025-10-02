@@ -24,6 +24,6 @@ interface InputField {
 })
 export class InputFieldComponent {
   inputField = input.required<InputField>();
-  registerFormInput = input.required<FormGroup>();
+  formInput = input.required<FormGroup>();
   formUtils = FormUtils;
 }
