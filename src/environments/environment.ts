@@ -7,4 +7,5 @@ export const environment = {
   newsApiKeyUrl: 'https://newsapi.org/v2/everything?q=all&apiKey=6bf11ce5d0fd4c0fb0845b2a5c942fdb',
 
   storageSessionKey: 'auth_user',
+  storageUsersKey: 'auth_users',
 };

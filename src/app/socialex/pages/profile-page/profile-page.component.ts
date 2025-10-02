@@ -23,7 +23,7 @@ export default class ProfilePageComponent {
   postsService = inject(PostsService);
   showActivity = signal<Activity>('posts');
 
-  user = linkedSignal(() => this.authService.getUser());
+  user = linkedSignal(() => this.authService.user());
 
   i18nPluralProfilePosts = {
     '=0': 'No tiene publicaciones',

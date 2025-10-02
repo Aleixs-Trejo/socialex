@@ -53,17 +53,19 @@ export default class LoginComponent {
   });
 
   async onSubmit() {
-    if (this.loginForm.invalid) {
-      this.hasError.set(true);
-      setTimeout(() => this.hasError.set(false), 2000);
-      return;
-    }
+    this.loginForm.markAllAsTouched();
+    if (this.loginForm.invalid) return this.throwError();
 
     const { email = '', password = '' } = this.loginForm.value;
     const result = await this.authService.login(email!, password!);
-    if (result) {
-      this.router.navigateByUrl('/socialex/home');
-      return;
-    }
+    if (!result) return this.throwError();
+    this.router.navigateByUrl('/socialex/home');
+    return;
+  }
+
+  throwError() {
+    this.hasError.set(true);
+    setTimeout(() => this.hasError.set(false), 3000);
+    return;
   }
 }
