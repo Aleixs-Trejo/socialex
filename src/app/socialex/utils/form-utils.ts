@@ -33,14 +33,23 @@ export class FormUtils {
           return `Valor mínimo de ${errors['min'].min}`;
 
         case 'email':
-          return `El valor ingresado no es un correo electrónico`;
+          return `Ingresa un correo electrónico válido`;
 
         case 'emailTaken':
           return `El correo electrónico ya está siendo usado por otro usuario`;
 
+        case 'passwordsNotEqual':
+          return 'Las contraseñas no coinciden';
+
+        case 'invalidFileType':
+          return 'El archivo no es de tipo imagen';
+
+        case 'fileTooBig':
+          return 'El archivo es demasiado grande';
+
         case 'pattern':
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
-            return 'El valor ingresado no luce como un correo electrónico';
+            return 'Ingresa un correo electrónico válido';
           }
 
           return 'Error de patrón contra expresión regular';
@@ -84,12 +93,20 @@ export class FormUtils {
     return FormUtils.getTextError(errors);
   }
 
-  static isFieldOneEqualFieldTwo(field1: string, field2: string) {
+  static matchPasswordsValidator(field1: string, field2: string) {
     return (formGroup: AbstractControl) => {
-      const field1Value = formGroup.get(field1)?.value;
-      const field2Value = formGroup.get(field2)?.value;
+      const field1Value = formGroup.get(field1);
+      const field2Value = formGroup.get(field2);
 
-      return field1Value === field2Value ? null : { passwordsNotEqual: true };
+      if (field1Value && field2Value && field1Value.value !== field2Value.value) {
+        field2Value.setErrors({ ...field2Value.errors, passwordsNotEqual: true });
+      } else {
+        if (field2Value?.hasError('passwordsNotEqual')) {
+          const { passwordsNotEqual, ...rest } = field2Value.errors || {};
+          field2Value.setErrors(Object.keys(rest).length ? rest : null);
+        }
+      }
+      return null;
     };
   }
 
@@ -109,11 +126,5 @@ export class FormUtils {
     }
 
     return null;
-  }
-
-  static notStrider(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-
-    return value === 'strider' ? { noStrider: true } : null;
   }
 }

@@ -1,4 +1,8 @@
+// Angular
 import { Routes } from "@angular/router";
+
+// Guards
+import { AuthenticatedGuard } from "@auth/guards/authenticated.guard";
 
 const socialexRoutes: Routes = [
   {
@@ -13,26 +17,26 @@ const socialexRoutes: Routes = [
       {
         path: 'my-profile',
         title: 'Mi Perfil',
-        loadComponent: () => import('./pages/profile-page/profile-page.component')
+        loadComponent: () => import('./pages/profile-page/profile-page.component'),
+        canMatch: [AuthenticatedGuard]
       },
       {
         path: 'my-reactions',
         title: 'Mis Reacciones',
-        loadComponent: () => import('./pages/reactions-page/reactions-page.component')
+        loadComponent: () => import('./pages/reactions-page/reactions-page.component'),
+        canMatch: [AuthenticatedGuard]
       },
       {
         path: 'comments',
         title: 'Mis Comentarios',
-        loadComponent: () => import('./pages/comments-page/comments-page.component')
-      },
-      {
-        path: 'auth',
-        loadChildren: () => import('../auth/auth.routes')
+        loadComponent: () => import('./pages/comments-page/comments-page.component'),
+        canMatch: [AuthenticatedGuard]
       },
       {
         path: 'profile/:userId',
         title: 'Perfil de usuario',
-        loadComponent: () => import('./pages/profile-user-page/profile-user-page.component')
+        loadComponent: () => import('./pages/profile-user-page/profile-user-page.component'),
+        canMatch: [AuthenticatedGuard]
       },
       {
         path: 'post/:postId',

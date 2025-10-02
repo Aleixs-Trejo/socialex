@@ -1,11 +1,14 @@
 <navbar class="block w-full h-header" />
 <app-aside class="w-16 hidden md:block" />
 <section
-  class="min-h-body pb-16 md:pb-0 transition-all md:mr-aside-users"
+  class="min-h-body pb-16 md:pb-0 transition-all"
+  [class.md:mr-aside-users]="authService.authStatus() === 'authenticated'"
   [class.md:ml-aside]="!asideService.isAsideActiveService()"
   [class.md:ml-aside-active]="asideService.isAsideActiveService()"
 >
   <router-outlet />
 </section>
-<aside-users class="hidden md:block" />
+@if (authService.authStatus() === 'authenticated') {
+  <aside-users class="aside-users hidden md:block" />
+}
 <footer-aside class="block md:hidden" />

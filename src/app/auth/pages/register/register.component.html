@@ -1,1 +1,92 @@
-<p>register works!</p>,
+<form class="flex flex-col gap-8" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col gap-4">
+    <h2 class="text-title-section text-center">Registrate en Socialex</h2>
+    <span class="text-sm text-gray-300">
+      ¿Ya tienes una cuenta?
+      <a class="text-blue-500 underline" [routerLink]="['/auth/login']">Inicia sesión</a>
+    </span>
+  </div>
+  <div class="flex flex-col gap-4 sm:grid sm:grid-cols-2 md:flex">
+    @for (inputField of inputsFields; track inputField.title) {
+      <input-field [inputField]="inputField" [registerFormInput]="registerForm" />
+    }
+    <div class="flex flex-col md:gap-1">
+      <span
+        class="text-xs"
+        [class.text-error]="formUtils.isValidField(registerForm, 'description')"
+      >
+        Descripción
+      </span>
+      <label
+        class="flex items-start gap-2 bg-bg-quaternary p-2 rounded-md focus:outline-primary"
+        [ngClass]="{
+          'border border-transparent': !formUtils.isValidField(registerForm, 'description'),
+          'border border-error': formUtils.isValidField(registerForm, 'description')
+        }"
+      >
+        <img class="w-4 h-4 opacity-50 flex-shrink-0 mt-1" src="assets/icon/icon-edit.svg" />
+        <textarea
+          type="text"
+          required
+          placeholder="Ej: Me gustan los gatos..."
+          name="descripción"
+          formControlName="description"
+          class="outline-none border-none grow placeholder:text-gray-400 placeholder:text-sm resize-none field-sizing-content"
+        ></textarea>
+      </label>
+      <form-error-label [control]="registerForm.get('description')!" />
+    </div>
+    <div class="flex flex-col md:gap-1">
+      <span
+        class="text-xs"
+        [class.text-error]="formUtils.isValidField(registerForm, 'birthDate')"
+      >
+        Fecha de nacimiento
+      </span>
+      <input
+        type="date"
+        class="w-full bg-bg-quaternary p-2 rounded-md focus:outline-primary outline-none placeholder:text-gray-400"
+        [ngClass]="{
+          'border border-transparent': !formUtils.isValidField(registerForm, 'birthDate'),
+          'border border-error': formUtils.isValidField(registerForm, 'birthDate')
+        }"
+        max="{{minBirthDate() | date:'yyyy-MM-dd'}}"
+        value="{{minBirthDate() | date:'yyyy-MM-dd'}}"
+        min="1990-01-01"
+        name="birthDate"
+        formControlName="birthDate"
+        (change)="dateChange($event)"
+      />
+      <form-error-label [control]="registerForm.get('birthDate')!" />
+    </div>
+    <div class="flex flex-col md:gap-1">
+      <span
+        class="text-xs"
+        [class.text-error]="formUtils.isValidField(registerForm, 'avatar')"
+      >
+        Foto de perfil
+      </span>
+      <label
+        class="cursor-pointer rounded-md"
+        [ngClass]="{
+          'border border-transparent': !formUtils.isValidField(registerForm, 'avatar'),
+          'border border-error': formUtils.isValidField(registerForm, 'avatar')
+        }"
+      >
+        <input
+          type="file"
+          accept="image/*"
+          class="sr-only"
+          name="avatar"
+          (change)="fileChange($event)"
+          #fileInput
+        />
+        <div class="w-full bg-bg-quaternary p-2 rounded-md focus:outline-primary outline-none border-none placeholder:text-gray-400 relative">
+          <p class="text-sm font-medium">{{fileName()}}</p>
+          <form-error-label [control]="registerForm.get('avatar')!" class="absolute bottom-0 left-0" />
+        </div>
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Registrar</button>
+</form>

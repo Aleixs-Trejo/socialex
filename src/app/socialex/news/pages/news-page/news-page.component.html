@@ -10,7 +10,7 @@
       @for (news of newsResource.value(); track news.source_publication_id) {
         <a [routerLink]="news.link" class="w-full rounded-md p-2 bg-white group">
           <article class="flex flex-col overflow-hidden">
-            <img [ngSrc]="news.photo_url" [alt]="news.title" class="aspect-2/3 max-w-full object-cover object-center transform group-hover:scale-110 transition-all" />
+            <img [src]="news.photo_url" [alt]="news.title" class="aspect-2/3 max-w-full object-cover object-center transform group-hover:scale-110 transition-all" />
             <div class="flex flex-col gap-1 p-2">
               <h4>{{ news.title }}</h4>
               <p class="text-sm text-gray-500">{{ news.link }}</p>

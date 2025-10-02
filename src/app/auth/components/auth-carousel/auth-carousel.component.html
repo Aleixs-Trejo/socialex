@@ -1,0 +1,15 @@
+<div class="swiper bg-bg-secondary" #swiperAuth>
+  <div class="swiper-wrapper w-full">
+    @for (image of imagesAuth; track image) {
+      <div class="swiper-slide cursor-pointer rounded-xl overflow-hidden">
+        <img
+          [srcset]="image"
+          alt="Carrusel"
+          class="w-full h-full block object-cover object-center"
+          draggable="false"
+        />
+      </div>
+    }
+  </div>
+  <div class="swiper-scrollbar"></div>
+</div>

@@ -7,6 +7,9 @@ import { authUsers } from '@auth/data/authUsers.data';
 import { AuthUser } from '@auth/interfaces/auth.interface';
 import { Observable, of } from 'rxjs';
 
+// Utils
+import { convertFileToBase64 } from '@socialex/utils/convert-image-base64';
+
 // Environment
 import { environment } from 'src/environments/environment';
 
@@ -70,7 +73,7 @@ export class AuthService {
 
     let imgBase64: string | undefined;
 
-    if (photoFile) imgBase64 = await this.convertFileToBase64(photoFile);
+    if (photoFile) imgBase64 = await convertFileToBase64(photoFile);
 
     const newUser: AuthUser = {
       id: Date.now(),
@@ -82,15 +85,6 @@ export class AuthService {
     this.authUsers.push(newUser);
     this._user.set(newUser);
     return this.handleAuthSuccess(newUser);
-  }
-  
-  private convertFileToBase64(file: File): Promise<string> {
-    return new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => res(reader.result as string);
-      reader.onerror = (error) => rej(error);
-    })
   }
 
   private handleAuthSuccess(user: AuthUser) {

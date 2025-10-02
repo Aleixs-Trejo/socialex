@@ -14,9 +14,11 @@
   --spacing-reactions: clamp(1rem, 4.5vw, 1.5rem);
   --spacing-modal-reactions: 50dvh;
   --spacing-gap-4-vw-16: clamp(0.25rem, 1dvw, 1rem);
+  --spacing-auth: clamp(64rem, 80dvh, 80rem);
 
   /* Font Size */
   --text-title-splash: clamp(1.5rem, 10dvw, 3.75rem);
+  --text-title-section: clamp(1.125rem, 5dvw, 1.5rem);
   --text-paragraph-content: clamp(0.875rem, 5dvw, 1.25rem);
   --text-xxs: clamp(10px, 3dvw, 12px);
 
@@ -24,6 +26,7 @@
   --color-bg-primary: #1C1C1D;
   --color-bg-secondary: #252728;
   --color-bg-tertiary: #333334;
+  --color-bg-quaternary: #3c364c;
 
   /* Animations */
   --animate-fade-in: fade-in 0.2s ease-in-out;
@@ -67,4 +70,12 @@
 .content-comment {
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.swiper {
+  height: 100%;
+}
+
+.swiper-wrapper .swiper-slide {
+  height: auto;
 }

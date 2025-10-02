@@ -1,0 +1,25 @@
+<div class="flex flex-col md:gap-1" [formGroup]="registerFormInput()">
+  <span
+    class="text-xs"
+    [class.text-error]="formUtils.isValidField(registerFormInput(), inputField().formControlName)"
+  >
+    {{ inputField().title }}
+  </span>
+  <label
+    class="flex items-center border border-transparent gap-2 bg-bg-quaternary p-2 rounded-md focus:outline-primary"
+    [ngClass]="{
+      'border border-transparent': !formUtils.isValidField(registerFormInput(), inputField().formControlName),
+      'border border-error': formUtils.isValidField(registerFormInput(), inputField().formControlName)
+    }"
+  >
+    <img class="h-4 opacity-50" [src]="inputField().icon" />
+    <input
+      [type]="inputField().type"
+      [placeholder]="inputField().placeholder"
+      class="outline-none grow placeholder:text-gray-400 placeholder:text-sm"
+      [name]="inputField().formControlName"
+      [formControlName]="inputField().formControlName"
+    />
+  </label>
+  <form-error-label [control]="registerFormInput().get(inputField().formControlName)!" />
+</div>
