@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { FormUtils } from '@socialex/utils/form-utils';
 
 @Component({
@@ -8,10 +8,20 @@ import { FormUtils } from '@socialex/utils/form-utils';
   templateUrl: './form-error-label.component.html',
 })
 export class FormErrorLabelComponent {
-  control = input.required<AbstractControl>();
+  controlForm = input<FormGroup>();
+  fieldName = input<string>();
+  formUtils = FormUtils;
 
   get errorMessage() {
-    const errors: ValidationErrors = this.control().errors || {};
-    return this.control().touched && Object.keys(errors).length > 0 ? FormUtils.getTextError(errors) : null;
+    const form = this.controlForm();
+    const fieldName = this.fieldName();
+
+    if (!form || !fieldName) return null;
+
+    const control = form.controls[fieldName];
+    if (!control) return null;
+
+    const errors: ValidationErrors = control.errors || {};
+    return control.touched && errors ? FormUtils.getTextError(errors) : null;
   }
 }

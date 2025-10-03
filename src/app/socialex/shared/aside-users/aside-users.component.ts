@@ -1,5 +1,5 @@
 // Angular
-import { AfterViewInit, Component, computed, effect, ElementRef, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, linkedSignal, signal, viewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // Interfaces | Types
@@ -15,7 +15,9 @@ import { usersData } from '@socialex/users/data/users.data';
 
 // Lenis
 import Lenis from 'lenis';
-import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
+import { AuthService } from '@auth/services/auth.service';
+import { AuthUser } from '@auth/interfaces/auth.interface';
 
 @Component({
   selector: 'aside-users',
@@ -24,16 +26,28 @@ import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
     RouterLinkActive,
     FilterAsideUsersByPipe,
     SearchUserByPipe,
-    TitleCasePipe,
-    NgOptimizedImage
+    TitleCasePipe
   ],
   templateUrl: './aside-users.component.html',
 })
 export class AsideUsersComponent implements AfterViewInit {
+  authService = inject(AuthService);
   private userLenis?: Lenis;
   contentWrapper = viewChild.required<ElementRef>('lenisWrapper');
 
-  users = signal<User[]>(usersData);
+  authUsers = linkedSignal(() => this.authService.getAllUsersFromLocalStorage());
+  users = computed(() => [
+    ...usersData,
+    ...this.authUsers().map(u =>({
+      id: u.id,
+      name: u.name,
+      avatar: u.avatar,
+      description: u.description,
+      status: u.status,
+      profession: u.profession,
+      birthdate: u.birthdate,
+    })),
+  ])
 
   searchQuery = signal('');
   debouncedSearch = signal('');

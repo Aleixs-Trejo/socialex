@@ -46,7 +46,7 @@ export class AuthService {
   saveUsersToLocalStorage(users: AuthUser[]) {
     localStorage.setItem(storageUsersKey, JSON.stringify(users));
   }
-  
+
   checkAuthStatus(): void {
     const raw = sessionStorage.getItem(storageSessionKey);
     if (!raw) {
@@ -64,9 +64,12 @@ export class AuthService {
     const usersFromLocalStorage = this.getAllUsersFromLocalStorage();
     const userFound = usersFromLocalStorage.find((u) => u.email === email && u.password === password);
     if (!userFound) return this.handleAuthError();
-
-    userFound.status = 'online';
     return this.handleAuthSuccess(userFound);
+  }
+
+  getCurrentUser() {
+    const user = sessionStorage.getItem('auth_user');
+    return user ? JSON.parse(user) as AuthUser : null;
   }
 
   logout() {
@@ -104,6 +107,12 @@ export class AuthService {
   private handleAuthSuccess(user: AuthUser) {
     sessionStorage.setItem(storageSessionKey, JSON.stringify(user));
     user.status = 'online';
+    const authUsers = this.getAllUsersFromLocalStorage();
+    const idx = authUsers.findIndex((u) => u.id === user.id);
+    if (idx !== -1) {
+      authUsers[idx] = user;
+      this.saveUsersToLocalStorage(authUsers);
+    }
     this._user.set(user);
     this._authStatus.set('authenticated');
     return true;

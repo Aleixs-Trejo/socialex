@@ -4,12 +4,13 @@ import {
   FormGroup,
   ValidationErrors,
 } from '@angular/forms';
+import { AuthUser } from '@auth/interfaces/auth.interface';
 
 async function sleep() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
-    }, 2500);
+    }, 1000);
   });
 }
 
@@ -36,7 +37,7 @@ export class FormUtils {
           return `Ingresa un correo electrónico válido`;
 
         case 'emailTaken':
-          return `El correo electrónico ya está siendo usado por otro usuario`;
+          return `El correo ya está en uso`;
 
         case 'passwordsNotEqual':
           return 'Las contraseñas no coinciden';
@@ -116,9 +117,13 @@ export class FormUtils {
 
     await sleep(); // 2 segundos y medio
 
-    const formValue = control.value;
+    const formValue = control.value?.toLowerCase();
 
-    if (formValue === 'hola@mundo.com') {
+    const users: AuthUser[] = JSON.parse(localStorage.getItem('auth_users') ?? '[]');
+
+    const isEmailExist = users.some((u) => u.email.toLowerCase() === formValue);
+
+    if (isEmailExist) {
       return {
         emailTaken: true,
       };

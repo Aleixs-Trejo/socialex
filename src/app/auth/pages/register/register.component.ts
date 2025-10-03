@@ -96,6 +96,7 @@ export default class RegisterComponent {
       email: [
         '',
         [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
+        [this.formUtils.checkingServerResponse],
       ],
       name: [
         '',

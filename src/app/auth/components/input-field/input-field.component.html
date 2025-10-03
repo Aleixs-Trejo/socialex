@@ -1,15 +1,23 @@
-<div class="flex flex-col md:gap-1" [formGroup]="formInput()">
+<div class="flex flex-col md:gap-1 relative" [formGroup]="formInput()">
   <span
     class="text-xs"
-    [class.text-error]="formUtils.isValidField(formInput(), inputField().formControlName)"
+    [class.text-error]="
+      formUtils.isValidField(formInput(), inputField().formControlName)
+    "
   >
     {{ inputField().title }}
   </span>
   <label
     class="flex items-center border border-transparent gap-2 bg-bg-quaternary p-2 rounded-md focus:outline-primary"
     [ngClass]="{
-      'border border-transparent': !formUtils.isValidField(formInput(), inputField().formControlName),
-      'border border-error': formUtils.isValidField(formInput(), inputField().formControlName)
+      'border border-transparent': !formUtils.isValidField(
+        formInput(),
+        inputField().formControlName
+      ),
+      'border border-error': formUtils.isValidField(
+        formInput(),
+        inputField().formControlName
+      )
     }"
   >
     <img class="h-4 opacity-50" [src]="inputField().icon" />
@@ -21,5 +29,8 @@
       [formControlName]="inputField().formControlName"
     />
   </label>
-  <form-error-label [control]="formInput().get(inputField().formControlName)!" />
+  <form-error-label
+    [controlForm]="formInput()"
+    [fieldName]="inputField().formControlName"
+  />
 </div>
