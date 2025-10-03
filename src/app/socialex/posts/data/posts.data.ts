@@ -3,63 +3,123 @@ import { Post } from '../interfaces/posts.interface';
 export const posts: Post[] = [
   {
     id: 'p-001',
-    authorId: 1,
+    authorId: 23,
     content:
-      'Hoy probé una receta de pastel de zanahoria y salió increíble 🤩. Creo que voy a compartir la receta en un próximo post.',
+      'Hoy finalmente me animé a probar esa receta de pastel de zanahoria que encontré en el libro de mi abuela 🥕✨.\n\nLes cuento que fue toda una aventura: primero quemé un poco la primera capa porque me distraje viendo videos, pero la segunda intentona salió PERFECTA. El glaseado de queso crema quedó suave y cremoso, y el pastel súper esponjoso.\n\nLa casa huele increíble y mis vecinos ya están tocando la puerta preguntando si pueden probar 😂.\n\n¿Alguien más tiene recetas familiares que les encanten? Me encantaría intercambiar secretos de cocina con ustedes.',
     categories: ['cocina', 'repostería', 'recetas'],
     createdAt: '2025-09-25T14:32:00Z',
     reactions: {
-      like: [{ authorId: 2 }, { authorId: 3 }],
-      love: [{ authorId: 5 }],
-      laugh: [],
-      wow: [{ authorId: 4 }],
+      like: [{ authorId: 12 }, { authorId: 45 }, { authorId: 67 }, { authorId: 8 }, { authorId: 34 }],
+      love: [{ authorId: 56 }, { authorId: 78 }, { authorId: 19 }],
+      laugh: [{ authorId: 89 }, { authorId: 3 }],
+      wow: [{ authorId: 41 }, { authorId: 72 }, { authorId: 15 }],
       sad: [],
       angry: [],
     },
     comments: [
       {
         id: 'c-001',
-        authorId: 2,
+        authorId: 45,
         content:
-          '¡Eso suena delicioso! ¿Ya pensaste en hacer un video tutorial?',
+          '¡Eso suena absolutamente delicioso! 🤤\n\nYo llevo años intentando perfeccionar mi receta de pastel de zanahoria y nunca me sale tan esponjoso como me gustaría. ¿Cuál es tu secreto? ¿Le pones nueces o pasas?\n\nTambién me encantaría saber si usaste aceite o mantequilla, porque he probado las dos versiones y no termino de decidirme por una.',
         createdAt: '2025-09-25T15:01:00Z',
       },
       {
         id: 'c-002',
-        authorId: 5,
-        content: 'Me anoto cuando compartas la receta 👀',
+        authorId: 56,
+        content: 'Me anoto para cuando compartas la receta completa 👀📝.\n\nPor cierto, ¿ya pensaste en hacer un video tutorial paso a paso? Sería genial ver el proceso completo, sobre todo la técnica del glaseado porque siempre se me hace muy líquido o muy espeso.',
         createdAt: '2025-09-25T15:12:00Z',
+      },
+      {
+        id: 'c-003',
+        authorId: 12,
+        content: 'Jajaja me pasó exactamente lo mismo la primera vez que lo hice 😂.\n\nQuemé DOS pasteles seguidos porque estaba en una llamada de trabajo y se me olvidó completamente que tenía el horno encendido. Mi cocina parecía zona de desastre.\n\nPero cuando finalmente me salió bien, fue el mejor pastel que he probado en mi vida. Hay algo especial en las recetas de las abuelas, tienen un toque mágico.',
+        createdAt: '2025-09-25T15:28:00Z',
+      },
+      {
+        id: 'c-004',
+        authorId: 78,
+        content: '¡Qué envidia! Yo intenté hacer uno la semana pasada y quedó totalmente seco, como si fuera un ladrillo 😭.\n\nCreo que me pasé con la harina o no le puse suficiente líquido. ¿Tienes algún consejo para que no quede así? También me gustaría saber cuánto tiempo lo horneas exactamente.',
+        createdAt: '2025-09-25T16:03:00Z',
+      },
+      {
+        id: 'c-005',
+        authorId: 34,
+        content: 'Yo tengo una receta familiar de pie de limón que es una locura total 🍋✨.\n\nMi bisabuela era francesa y la trajo cuando emigró, y desde entonces se ha pasado de generación en generación. El secreto está en el merengue, que tiene que quedar perfectamente dorado pero cremoso por dentro.\n\nSi te interesa te la paso por mensaje y hacemos intercambio de recetas, me encantaría probar tu pastel de zanahoria.',
+        createdAt: '2025-09-25T16:45:00Z',
+      },
+      {
+        id: 'c-006',
+        authorId: 89,
+        content: 'JAJAJA lo de los vecinos tocando la puerta me mató 😂😂.\n\nA mí me pasa lo mismo cuando hago brownies, el olor se expande por todo el edificio y empiezan a aparecer personas que ni sabía que vivían aquí. Es increíble cómo el olor a comida casera une a la gente.',
+        createdAt: '2025-09-25T17:20:00Z',
+      },
+      {
+        id: 'c-007',
+        authorId: 67,
+        content: 'Por favor comparte la receta completa con medidas exactas cuando puedas 🙏.\n\nYo soy bastante desastrosa en la cocina pero me encantaría intentar hacer este pastel para el cumpleaños de mi mamá que es en dos semanas. ¿Es muy difícil para alguien que apenas está aprendiendo a hornear?',
+        createdAt: '2025-09-25T18:15:00Z',
       },
     ],
   },
   {
     id: 'p-002',
-    authorId: 4,
+    authorId: 52,
     content:
-      'Estoy experimentando con una IA que genera ilustraciones, es increíble cómo la tecnología puede ayudar también en el arte 🎨🤖.',
+      'Últimamente he estado experimentando con diferentes herramientas de IA para generar ilustraciones y concept art, y déjenme decirles que estoy completamente fascinado 🎨🤖.\n\nLo que más me sorprende es cómo puedes partir de una idea vaga en tu mente, describirla con palabras, y ver cómo la IA la interpreta de formas que nunca hubieras imaginado. A veces los resultados son tan únicos que terminan inspirándome para proyectos completamente nuevos.\n\nHe estado usando estas imágenes como base para mis ilustraciones tradicionales. Las genero, las imprimo, y luego las intervengo con acuarelas, marcadores y collage. La combinación de lo digital y lo análogo está creando texturas y efectos que me encantan.\n\n¿Alguien más está explorando esta intersección entre arte tradicional y tecnología? Me encantaría conocer sus experiencias y técnicas.',
     categories: ['tecnología', 'IA', 'arte'],
     createdAt: '2025-09-26T09:10:00Z',
     reactions: {
-      like: [{ authorId: 1 }, { authorId: 3 }],
-      love: [{ authorId: 2 }],
+      like: [{ authorId: 17 }, { authorId: 38 }, { authorId: 61 }, { authorId: 74 }, { authorId: 9 }, { authorId: 28 }],
+      love: [{ authorId: 44 }, { authorId: 83 }, { authorId: 11 }, { authorId: 55 }],
       laugh: [],
-      wow: [{ authorId: 5 }],
+      wow: [{ authorId: 22 }, { authorId: 69 }, { authorId: 7 }, { authorId: 85 }, { authorId: 31 }],
       sad: [],
-      angry: [],
+      angry: [{ authorId: 90 }],
     },
     comments: [
       {
         id: 'c-003',
-        authorId: 3,
+        authorId: 38,
         content:
-          '¡Qué interesante! Podrías combinarlo con fotografía, seguro salen cosas locas.',
+          '¡Esto suena increíblemente interesante! 🤩\n\nYo también he estado explorando algo similar pero con fotografía. Tomo fotos de paisajes urbanos, las proceso con IA para crear versiones surrealistas, y luego las imprimo en gran formato.\n\nLa combinación de lo real capturado por la cámara y lo imaginario generado por la IA crea narrativas visuales muy potentes. ¿Has pensado en hacer una exposición con tu trabajo híbrido? Creo que hay mucha gente que apreciaría ver este proceso.',
         createdAt: '2025-09-26T09:45:00Z',
       },
       {
         id: 'c-004',
-        authorId: 1,
-        content: '¿Se puede usar gratis o hay que pagar? 👀',
+        authorId: 17,
+        content: '¿Qué herramientas específicas estás usando? 👀\n\nEstoy empezando a meterme en este mundo y hay tantas opciones que no sé por dónde comenzar. ¿Algunas son gratis o todas requieren suscripción? También me gustaría saber si necesito una computadora muy potente o si funciona bien en equipos normales.',
         createdAt: '2025-09-26T09:58:00Z',
+      },
+      {
+        id: 'c-005',
+        authorId: 44,
+        content: 'Me encanta cómo estás abordando esto de forma creativa y no solo dejando que la IA haga todo el trabajo 💚.\n\nCreo que ahí está el verdadero valor artístico: usar la tecnología como una herramienta más en tu proceso creativo, no como un reemplazo de tu visión artística. El hecho de que intervengas las imágenes manualmente le da tu toque personal único.\n\nMe gustaría ver algunos ejemplos de tu trabajo si tienes un portfolio o Instagram de arte.',
+        createdAt: '2025-09-26T10:15:00Z',
+      },
+      {
+        id: 'c-006',
+        authorId: 90,
+        content: 'Sinceramente no entiendo por qué los artistas están celebrando esto.\n\nLa IA está entrenada con arte robado de millones de artistas que nunca dieron su consentimiento. Cada vez que usas estas herramientas estás apoyando un sistema que devalúa el trabajo humano y perpetúa el robo de propiedad intelectual.\n\n¿No te preocupa el impacto que esto tendrá en los artistas emergentes que están intentando ganarse la vida con su arte?',
+        createdAt: '2025-09-26T10:42:00Z',
+      },
+      {
+        id: 'c-007',
+        authorId: 61,
+        content: 'Yo estoy haciendo algo parecido pero con diseño de personajes para videojuegos 🎮.\n\nUso IA para generar concepts rápidos de personajes, luego los refino digitalmente en Photoshop y finalmente los modelo en 3D. Me ha acelerado muchísimo el proceso de pre-producción.\n\nAntes me tomaba días crear diferentes versiones de un personaje, ahora puedo explorar decenas de opciones en horas y elegir las más prometedoras para desarrollarlas a fondo.',
+        createdAt: '2025-09-26T11:08:00Z',
+      },
+      {
+        id: 'c-008',
+        authorId: 22,
+        content: '¡Wow! Nunca había pensado en combinar las ilustraciones de IA con técnicas tradicionales 😮.\n\nSoy profesor de arte en una secundaria y creo que esta sería una excelente forma de introducir a mis estudiantes tanto a las nuevas tecnologías como a las técnicas clásicas. ¿Tendrías algún consejo para alguien que quiere empezar con este tipo de proyectos híbridos?\n\n¿Qué tipo de papel o superficie recomiendas para imprimir antes de trabajar con acuarelas?',
+        createdAt: '2025-09-26T11:35:00Z',
+      },
+      {
+        id: 'c-009',
+        authorId: 83,
+        content: 'Esto es exactamente el tipo de uso responsable y creativo de la IA que necesitamos ver más 🌟.\n\nNo estás usando la tecnología para reemplazar tu creatividad, sino para expandirla y explorar nuevas posibilidades. Me parece fascinante cómo describes que a veces los resultados te inspiran en direcciones inesperadas.\n\nEl arte siempre ha evolucionado con la tecnología: desde los pigmentos sintéticos hasta la fotografía digital. Esto es simplemente la siguiente etapa de esa evolución.',
+        createdAt: '2025-09-26T12:10:00Z',
       },
     ],
   },
@@ -1757,7 +1817,6 @@ export const posts: Post[] = [
       },
     ],
   },
-
   {
     id: 'p-035',
     authorId: 41,
@@ -2018,12 +2077,11 @@ export const posts: Post[] = [
       },
     ],
   },
-
   {
     id: 'p-037',
     authorId: 20,
     content:
-      'Nuevo descubrimiento en Kenia: fósil de Australopithecus anamensis de 4.2 millones de años muestra evidencia clara de bipedismo temprano. Pelvis moderna, brazos largos para trepar, cerebro de 400cc. La transición mono-humano cada vez más documentada 🦴🚶‍♂️ También encontraron herramientas líticas asociadas (Olduvaienses) que sugieren uso temprano de tecnología. Los creacionistas van a seguir negando la evidencia, pero la hominización es un hecho científico irrefutable. Link: nature.com/australopithecus-bipedalism-2025 #Evolución #Paleoantropología #CienciaVsReligión',
+      'Nuevo descubrimiento en Kenia: fósil de Australopithecus anamensis de 4.2 millones de años muestra evidencia clara de bipedismo temprano.\n\nPelvis moderna, brazos largos para trepar, cerebro de 400cc. La transición mono-humano cada vez más documentada 🦴🚶‍♂️\n\nTambién encontraron herramientas líticas asociadas (Olduvaienses) que sugieren uso temprano de tecnología. Los creacionistas van a seguir negando la evidencia, pero la hominización es un hecho científico irrefutable.\n\nLink: nature.com/australopithecus-bipedalism-2025\n\n#Evolución #Paleoantropología #CienciaVsReligión',
     categories: ['ciencia', 'evolución', 'paleontología'],
     createdAt: '2025-08-09T13:15:00Z',
     reactions: {
@@ -2061,63 +2119,63 @@ export const posts: Post[] = [
         id: 'c-142',
         authorId: 78,
         content:
-          'Increíble cómo cada descubrimiento confirma la teoría evolutiva. El registro fósil es cada vez más completo y coherente 🧬📚',
+          'Increíble cómo cada descubrimiento confirma la teoría evolutiva.\n\nEl registro fósil es cada vez más completo y coherente 🧬📚',
         createdAt: '2025-08-09T14:30:00Z',
       },
       {
         id: 'c-143',
         authorId: 45,
         content:
-          'UN fósil aislado no prueba nada. ¿Dónde están los miles de eslabones perdidos? Pura especulación basada en fragmentos de hueso 🦴❓',
+          'UN fósil aislado no prueba nada.\n\n¿Dónde están los miles de eslabones perdidos? Pura especulación basada en fragmentos de hueso 🦴❓',
         createdAt: '2025-08-09T14:55:00Z',
       },
       {
         id: 'c-144',
         authorId: 47,
         content:
-          'Tenemos literalmente miles de fósiles homínidos. Lucy, Ardi, Homo habilis, erectus, neanderthalensis... La secuencia está clarísima',
+          'Tenemos literalmente miles de fósiles homínidos.\n\nLucy, Ardi, Homo habilis, erectus, neanderthalensis... La secuencia está clarísima',
         createdAt: '2025-08-09T15:20:00Z',
       },
       {
         id: 'c-145',
         authorId: 67,
         content:
-          '¿4.2 millones de años? ¿Con qué método de datación? El carbono-14 solo funciona hasta 50,000 años. Cifras inventadas sin sustento real 📅🔬',
+          '¿4.2 millones de años? ¿Con qué método de datación?\n\nEl carbono-14 solo funciona hasta 50,000 años. Cifras inventadas sin sustento real 📅🔬',
         createdAt: '2025-08-09T15:45:00Z',
       },
       {
         id: 'c-146',
         authorId: 83,
         content:
-          'Potasio-argón, uranio-plomo, estratigrafía. Hay múltiples métodos que se corroboran entre sí. Educate antes de opinar',
+          'Potasio-argón, uranio-plomo, estratigrafía.\n\nHay múltiples métodos que se corroboran entre sí. Educate antes de opinar',
         createdAt: '2025-08-09T16:10:00Z',
       },
       {
         id: 'c-147',
         authorId: 18,
         content:
-          'La complejidad del ojo humano, del ADN, de la célula... Imposible que surja por casualidad. Tiene que haber un diseñador inteligente 👁️🧬',
+          'La complejidad del ojo humano, del ADN, de la célula...\n\nImposible que surja por casualidad. Tiene que haber un diseñador inteligente 👁️🧬',
         createdAt: '2025-08-09T16:35:00Z',
       },
       {
         id: 'c-148',
         authorId: 37,
         content:
-          "'Complejidad irreducible' fue refutada hace décadas. Evolución gradual explica perfectamente la complejidad biológica",
+          "'Complejidad irreducible' fue refutada hace décadas.\n\nEvolución gradual explica perfectamente la complejidad biológica",
         createdAt: '2025-08-09T17:00:00Z',
       },
       {
         id: 'c-149',
         authorId: 54,
         content:
-          "Los mismos 'científicos' que cambian de teoría cada 10 años ahora pretenden tener la verdad absoluta. Mucha soberbia para algo tan incierto",
+          "Los mismos 'científicos' que cambian de teoría cada 10 años ahora pretenden tener la verdad absoluta.\n\nMucha soberbia para algo tan incierto",
         createdAt: '2025-08-09T17:25:00Z',
       },
       {
         id: 'c-150',
         authorId: 20,
         content:
-          "Cambiar teorías con nueva evidencia se llama 'método científico'. Los dogmas inmutables los dejo para otros ámbitos 🔬📖",
+          "Cambiar teorías con nueva evidencia se llama 'método científico'.\n\nLos dogmas inmutables los dejo para otros ámbitos 🔬📖",
         createdAt: '2025-08-09T17:50:00Z',
       },
     ],
@@ -2126,7 +2184,7 @@ export const posts: Post[] = [
     id: 'p-038',
     authorId: 16,
     content:
-      'Hilo sobre la extinción masiva del Cretácico-Paleógeno (66 millones de años): La desaparición de los dinosaurios NO fue un evento simple sino una crisis múltiple 🧵 CAUSAS CONVERGENTES: 1) Impacto del asteroide Chicxulub (10km diámetro) - evidencia: capa de iridio global, cuarzo impactado, cráter en Yucatán 2) Vulcanismo masivo en Decán (India) - emisiones de CO2 y SO2 alteraron clima global 3) Cambio climático previo - nivel del mar bajo, fragmentación de hábitats 4) Competencia con mamíferos pequeños por recursos 5) Enfermedades de plantas con flores (angiospermas) PERO ATENCIÓN: Los dinosaurios NO se extinguieron completamente - las AVES son dinosaurios terópodos que sobrevivieron. T-Rex está más emparentado con un pollo que con un lagarto 🦖🐔 El tránsito Pleistoceno-Holoceno (hace 11,700 años) fue DIFERENTE - ahí se extinguieron megafauna como mamuts por cambio climático + caza humana. NO confundir períodos geológicos. La Era Cuaternaria (2.6 MA-presente) incluye ambos eventos pero separados por 65 millones de años 🌍⚡ #Paleontología #ExtinciónMasiva #Dinosaurios',
+      'Hilo sobre la extinción masiva del Cretácico-Paleógeno (66 millones de años):\n\nLa desaparición de los dinosaurios NO fue un evento simple sino una crisis múltiple 🧵\n\nCAUSAS CONVERGENTES:\n\n1) Impacto del asteroide Chicxulub (10km diámetro) - evidencia: capa de iridio global, cuarzo impactado, cráter en Yucatán\n\n2) Vulcanismo masivo en Decán (India) - emisiones de CO2 y SO2 alteraron clima global\n\n3) Cambio climático previo - nivel del mar bajo, fragmentación de hábitats\n\n4) Competencia con mamíferos pequeños por recursos\n\n5) Enfermedades de plantas con flores (angiospermas)\n\nPERO ATENCIÓN: Los dinosaurios NO se extinguieron completamente - las AVES son dinosaurios terópodos que sobrevivieron. T-Rex está más emparentado con un pollo que con un lagarto 🦖🐔\n\nEl tránsito Pleistoceno-Holoceno (hace 11,700 años) fue DIFERENTE - ahí se extinguieron megafauna como mamuts por cambio climático + caza humana.\n\nNO confundir períodos geológicos. La Era Cuaternaria (2.6 MA-presente) incluye ambos eventos pero separados por 65 millones de años 🌍⚡\n\n#Paleontología #ExtinciónMasiva #Dinosaurios',
     categories: ['paleontología', 'extinción', 'geología'],
     createdAt: '2025-08-26T11:20:00Z',
     reactions: {
@@ -2169,70 +2227,70 @@ export const posts: Post[] = [
         id: 'c-151',
         authorId: 85,
         content:
-          'Excelente explicación. Mucha gente cree que fue solo el meteorito pero la realidad es mucho más compleja. Ecosistemas ya estresados + impacto = colapso total 🌋☄️',
+          'Excelente explicación.\n\nMucha gente cree que fue solo el meteorito pero la realidad es mucho más compleja. Ecosistemas ya estresados + impacto = colapso total 🌋☄️',
         createdAt: '2025-08-26T12:05:00Z',
       },
       {
         id: 'c-152',
         authorId: 45,
         content:
-          '¿66 millones de años? ¿Cómo pueden estar tan seguros de fechas tan antiguas? Los métodos de datación radiométrica asumen tasas de desintegración constantes 📅❓',
+          '¿66 millones de años? ¿Cómo pueden estar tan seguros de fechas tan antiguas?\n\nLos métodos de datación radiométrica asumen tasas de desintegración constantes 📅❓',
         createdAt: '2025-08-26T12:30:00Z',
       },
       {
         id: 'c-153',
         authorId: 78,
         content:
-          'Las tasas de desintegración SON constantes, están determinadas por física nuclear. Además, múltiples métodos dan fechas concordantes',
+          'Las tasas de desintegración SON constantes, están determinadas por física nuclear.\n\nAdemás, múltiples métodos dan fechas concordantes',
         createdAt: '2025-08-26T12:55:00Z',
       },
       {
         id: 'c-154',
         authorId: 67,
         content:
-          '¿No consideran la posibilidad de un diluvio global? Muchas culturas tienen memorias de inundaciones masivas. Fósiles marinos en montañas lo confirman 🌊⛰️',
+          '¿No consideran la posibilidad de un diluvio global?\n\nMuchas culturas tienen memorias de inundaciones masivas. Fósiles marinos en montañas lo confirman 🌊⛰️',
         createdAt: '2025-08-26T13:20:00Z',
       },
       {
         id: 'c-155',
         authorId: 83,
         content:
-          'Los fósiles marinos en montañas demuestran ELEVACIÓN geológica, no diluvios. Tectónica de placas explica esos fenómenos perfectamente',
+          'Los fósiles marinos en montañas demuestran ELEVACIÓN geológica, no diluvios.\n\nTectónica de placas explica esos fenómenos perfectamente',
         createdAt: '2025-08-26T13:45:00Z',
       },
       {
         id: 'c-156',
         authorId: 56,
         content:
-          'Lo de las aves como dinosaurios supervivientes me vuela la cabeza. Básicamente tengo un velociraptor en mi jardín comiendo alpiste 🦕🐦',
+          'Lo de las aves como dinosaurios supervivientes me vuela la cabeza.\n\nBásicamente tengo un velociraptor en mi jardín comiendo alpiste 🦕🐦',
         createdAt: '2025-08-26T14:10:00Z',
       },
       {
         id: 'c-157',
         authorId: 18,
         content:
-          "Toda esta 'ciencia' se basa en interpretaciones subjetivas de rocas. Nadie estaba ahí hace '66 millones de años' para confirmarlo 🪨👀",
+          "Toda esta 'ciencia' se basa en interpretaciones subjetivas de rocas.\n\nNadie estaba ahí hace '66 millones de años' para confirmarlo 🪨👀",
         createdAt: '2025-08-26T14:35:00Z',
       },
       {
         id: 'c-158',
         authorId: 47,
         content:
-          'Con esa lógica tampoco podemos investigar crímenes sin testigos. La evidencia física habla por sí sola 🔍⚖️',
+          'Con esa lógica tampoco podemos investigar crímenes sin testigos.\n\nLa evidencia física habla por sí sola 🔍⚖️',
         createdAt: '2025-08-26T15:00:00Z',
       },
       {
         id: 'c-159',
         authorId: 44,
         content:
-          '¿Por qué solo se extinguieron dinosaurios grandes y no cocodrilos, tortugas, tiburones? La teoría del meteorito tiene huecos enormes 🐊🦈',
+          '¿Por qué solo se extinguieron dinosaurios grandes y no cocodrilos, tortugas, tiburones?\n\nLa teoría del meteorito tiene huecos enormes 🐊🦈',
         createdAt: '2025-08-26T15:25:00Z',
       },
       {
         id: 'c-160',
         authorId: 72,
         content:
-          'Animales acuáticos, de sangre fría y carroñeros tuvieron ventajas. Los grandes herbívoros dependían de plantas que colapsaron primero 🌱💀',
+          'Animales acuáticos, de sangre fría y carroñeros tuvieron ventajas.\n\nLos grandes herbívoros dependían de plantas que colapsaron primero 🌱💀',
         createdAt: '2025-08-26T15:50:00Z',
       },
     ],
@@ -2917,7 +2975,7 @@ export const posts: Post[] = [
     id: 'p-045',
     authorId: 32,
     content:
-      "Controversial take: Las herramientas no-code/low-code están MATANDO la industria del desarrollo web 💀👨‍💻 La realidad brutal: • Cliente puede hacer su web en Wix/WordPress en 1 día por $50 • ¿Para qué pagar $5000 a un dev por 2 semanas? • Shopify, Webflow, Bubble... todo democratizado • 80% de proyectos web NO necesitan código custom • Startups prefieren MVP rápido que arquitectura perfecta EL MERCADO CAMBIÓ: Ya no vendemos código, vendemos SOLUCIONES. El futuro developer: 50% no-code tools + 50% custom integrations. Los puristas que siguen obsesionados con 'escribir todo desde cero' van a quedar como los escribas cuando llegó la imprenta 📜➡️🖨️ EVOLUCIONA O MUERE: • Aprende Webflow, Framer, Notion • Especialízate en integraciones API • Enfócate en UX/CX, no en sintaxis • Cobra por valor, no por líneas de código Es doloroso pero es REAL. La democratización tecnológica llegó para quedarse 🌊🏄‍♂️ #NoCode #DesarrolloWeb #FuturoDev #TechEvolution",
+      "Controversial take: Las herramientas no-code/low-code están MATANDO la industria del desarrollo web 💀👨‍💻\n\nLa realidad brutal:\n\n• Cliente puede hacer su web en Wix/WordPress en 1 día por $50\n• ¿Para qué pagar $5000 a un dev por 2 semanas?\n• Shopify, Webflow, Bubble... todo democratizado\n• 80% de proyectos web NO necesitan código custom\n• Startups prefieren MVP rápido que arquitectura perfecta\n\nEL MERCADO CAMBIÓ:\n\nYa no vendemos código, vendemos SOLUCIONES. El futuro developer: 50% no-code tools + 50% custom integrations.\n\nLos puristas que siguen obsesionados con 'escribir todo desde cero' van a quedar como los escribas cuando llegó la imprenta 📜➡️🖨️\n\nEVOLUCIONA O MUERE:\n\n• Aprende Webflow, Framer, Notion\n• Especialízate en integraciones API\n• Enfócate en UX/CX, no en sintaxis\n• Cobra por valor, no por líneas de código\n\nEs doloroso pero es REAL. La democratización tecnológica llegó para quedarse 🌊🏄‍♂️\n\n#NoCode #DesarrolloWeb #FuturoDev #TechEvolution",
     categories: ['tecnología', 'desarrollo', 'no-code'],
     createdAt: '2025-08-12T13:20:00Z',
     reactions: {
@@ -2956,70 +3014,70 @@ export const posts: Post[] = [
         id: 'c-220',
         authorId: 85,
         content:
-          'FACTS! Gasté 3 meses haciendo mi portfolio en React. Mi amigo hizo el suyo en Framer en 2 horas y se ve mejor. Wake up call brutal 💀⚡',
+          'FACTS! Gasté 3 meses haciendo mi portfolio en React.\n\nMi amigo hizo el suyo en Framer en 2 horas y se ve mejor. Wake up call brutal 💀⚡',
         createdAt: '2025-08-12T14:05:00Z',
       },
       {
         id: 'c-221',
         authorId: 31,
         content:
-          "Hasta que el cliente necesite funcionalidad custom y su Wix explote. Después vienen llorando por un 'dev real' que arregle el desastre 🔧💥",
+          "Hasta que el cliente necesite funcionalidad custom y su Wix explote.\n\nDespués vienen llorando por un 'dev real' que arregle el desastre 🔧💥",
         createdAt: '2025-08-12T14:30:00Z',
       },
       {
         id: 'c-222',
         authorId: 74,
         content:
-          'Para cuando necesiten eso custom, ya generaron suficiente revenue para pagarlo. Iteración rápida > perfección prematura 💰🚀',
+          'Para cuando necesiten eso custom, ya generaron suficiente revenue para pagarlo.\n\nIteración rápida > perfección prematura 💰🚀',
         createdAt: '2025-08-12T14:55:00Z',
       },
       {
         id: 'c-223',
         authorId: 78,
         content:
-          "WordPress con 47 plugins cargando 8MB por página. Después se quejan de SEO y conversiones. Pero hey, 'no necesitan código custom' 🐌📉",
+          "WordPress con 47 plugins cargando 8MB por página.\n\nDespués se quejan de SEO y conversiones. Pero hey, 'no necesitan código custom' 🐌📉",
         createdAt: '2025-08-12T15:20:00Z',
       },
       {
         id: 'c-224',
         authorId: 56,
         content:
-          'Core Web Vitals de Wix han mejorado muchísimo. Ya no es 2018, las plataformas evolucionaron mientras devs siguen con prejuicios viejos 📊⚡',
+          'Core Web Vitals de Wix han mejorado muchísimo.\n\nYa no es 2018, las plataformas evolucionaron mientras devs siguen con prejuicios viejos 📊⚡',
         createdAt: '2025-08-12T15:45:00Z',
       },
       {
         id: 'c-225',
         authorId: 48,
         content:
-          'Comparar Webflow con desarrollo real es como comparar Lego con arquitectura. Funciona para casitas, no para rascacielos empresariales 🏗️🧱',
+          'Comparar Webflow con desarrollo real es como comparar Lego con arquitectura.\n\nFunciona para casitas, no para rascacielos empresariales 🏗️🧱',
         createdAt: '2025-08-12T16:10:00Z',
       },
       {
         id: 'c-226',
         authorId: 29,
         content:
-          "Netflix empezó con PHP básico. Facebook con un hack universitario. El 'rascacielos' se construye cuando hay usuarios, no desde día 1 🏢📈",
+          "Netflix empezó con PHP básico. Facebook con un hack universitario.\n\nEl 'rascacielos' se construye cuando hay usuarios, no desde día 1 🏢📈",
         createdAt: '2025-08-12T16:35:00Z',
       },
       {
         id: 'c-227',
         authorId: 64,
         content:
-          'Esperen a que necesiten migrations, testing, CI/CD, scalabilidad real. No-code es prototipado glorificado, no ingeniería de software seria 🧪⚙️',
+          'Esperen a que necesiten migrations, testing, CI/CD, scalabilidad real.\n\nNo-code es prototipado glorificado, no ingeniería de software seria 🧪⚙️',
         createdAt: '2025-08-12T17:00:00Z',
       },
       {
         id: 'c-228',
         authorId: 37,
         content:
-          "El 95% de websites nunca van a necesitar 'scalabilidad real'. Estás solucionando problemas que no existen para 99% de clientes 🎯💡",
+          "El 95% de websites nunca van a necesitar 'scalabilidad real'.\n\nEstás solucionando problemas que no existen para 99% de clientes 🎯💡",
         createdAt: '2025-08-12T17:25:00Z',
       },
       {
         id: 'c-229',
         authorId: 51,
         content:
-          'Vendor lock-in masivo. Cuando Wix/Webflow cambien pricing o ToS, ¿qué haces? Con código propio tienes control total del producto 🔒👑',
+          'Vendor lock-in masivo. Cuando Wix/Webflow cambien pricing o ToS, ¿qué haces?\n\nCon código propio tienes control total del producto 🔒👑',
         createdAt: '2025-08-12T17:50:00Z',
       },
     ],
@@ -3028,7 +3086,7 @@ export const posts: Post[] = [
     id: 'p-046',
     authorId: 4,
     content:
-      "Como senior dev con 12 años de experiencia, les voy a explicar por qué no-code/low-code es una TRAMPA a largo plazo 🪤💻 PROBLEMA FUNDAMENTAL: Están optimizando para velocidad inicial, no para sostenibilidad. WordPress site típico: • 23 plugins instalados • 847 HTTP requests por página • 12.3MB de JavaScript sin minificar • 47 dependencias conflictivas • Tema comprado con código legacy • SEO penalizado por velocidad • Imposible de mantener sin romper algo REALIDAD TÉCNICA QUE NO VEN: 🔍 Debugging nightmare: error en línea 47382 de minified code 🔍 Security vulnerabilities: plugins abandonados hace 3 años 🔍 Performance hell: 4 segundos de carga en móvil 🔍 Vendor lock-in: migrar = rehacer desde cero 🔍 Customización limitada: 'sorry, el tema no permite eso' CASOS REALES que he rescatado: • E-commerce en Shopify que colapsó en Black Friday • WordPress que se hackea cada 2 meses • Webflow site que no puede integrar CRM custom • Bubble app que no escala >1000 usuarios No-code está bien para landing pages y MVPs. Para productos serios, necesitas INGENIERÍA real 👨‍💻⚗️ #CodeQuality #SoftwareEngineering #TechnicalDebt #WebPerformance",
+      "Como senior dev con 12 años de experiencia, les voy a explicar por qué no-code/low-code es una TRAMPA a largo plazo 🪤💻\n\nPROBLEMA FUNDAMENTAL:\n\nEstán optimizando para velocidad inicial, no para sostenibilidad.\n\nWordPress site típico:\n\n• 23 plugins instalados\n• 847 HTTP requests por página\n• 12.3MB de JavaScript sin minificar\n• 47 dependencias conflictivas\n• Tema comprado con código legacy\n• SEO penalizado por velocidad\n• Imposible de mantener sin romper algo\n\nREALIDAD TÉCNICA QUE NO VEN:\n\n🔍 Debugging nightmare: error en línea 47382 de minified code\n🔍 Security vulnerabilities: plugins abandonados hace 3 años\n🔍 Performance hell: 4 segundos de carga en móvil\n🔍 Vendor lock-in: migrar = rehacer desde cero\n🔍 Customización limitada: 'sorry, el tema no permite eso'\n\nCASOS REALES que he rescatado:\n\n• E-commerce en Shopify que colapsó en Black Friday\n• WordPress que se hackea cada 2 meses\n• Webflow site que no puede integrar CRM custom\n• Bubble app que no escala >1000 usuarios\n\nNo-code está bien para landing pages y MVPs. Para productos serios, necesitas INGENIERÍA real 👨‍💻⚗️\n\n#CodeQuality #SoftwareEngineering #TechnicalDebt #WebPerformance",
     categories: ['desarrollo', 'tecnología', 'ingeniería'],
     createdAt: '2025-08-16T09:15:00Z',
     reactions: {
@@ -3070,70 +3128,70 @@ export const posts: Post[] = [
         id: 'c-230',
         authorId: 78,
         content:
-          'PREACH! He visto WordPress sites que tardan 12 segundos en cargar porque tienen Elementor + 34 plugins. Después se quejan de bounce rate 95% 🐌💀',
+          'PREACH! He visto WordPress sites que tardan 12 segundos en cargar porque tienen Elementor + 34 plugins.\n\nDespués se quejan de bounce rate 95% 🐌💀',
         createdAt: '2025-08-16T10:00:00Z',
       },
       {
         id: 'c-231',
         authorId: 32,
         content:
-          "Classic senior dev gatekeeping. 'Productos serios necesitan ingeniería real'... díselo a los millones usando Shopify exitosamente 💰🏪",
+          "Classic senior dev gatekeeping.\n\n'Productos serios necesitan ingeniería real'... díselo a los millones usando Shopify exitosamente 💰🏪",
         createdAt: '2025-08-16T10:25:00Z',
       },
       {
         id: 'c-232',
         authorId: 64,
         content:
-          'Shopify funciona porque tienen 200+ ingenieros detrás optimizando la plataforma. No-code user ≠ no-code platform. Confundes conceptos básicos 👨‍💻🏗️',
+          'Shopify funciona porque tienen 200+ ingenieros detrás optimizando la plataforma.\n\nNo-code user ≠ no-code platform. Confundes conceptos básicos 👨‍💻🏗️',
         createdAt: '2025-08-16T10:50:00Z',
       },
       {
         id: 'c-233',
         authorId: 85,
         content:
-          "'12 años de experiencia' pero sigue traumado por WordPress de 2015. Las herramientas evolucionaron, tu mentalidad no. Adapt or die, dinosaur 🦕⚡",
+          "'12 años de experiencia' pero sigue traumado por WordPress de 2015.\n\nLas herramientas evolucionaron, tu mentalidad no. Adapt or die, dinosaur 🦕⚡",
         createdAt: '2025-08-16T11:15:00Z',
       },
       {
         id: 'c-234',
         authorId: 51,
         content:
-          "Physics don't evolve. 847 HTTP requests SIEMPRE van a ser lentos. No importa qué tan 'evolucionada' esté tu herramienta no-code 📡💥",
+          "Physics don't evolve. 847 HTTP requests SIEMPRE van a ser lentos.\n\nNo importa qué tan 'evolucionada' esté tu herramienta no-code 📡💥",
         createdAt: '2025-08-16T11:40:00Z',
       },
       {
         id: 'c-235',
         authorId: 74,
         content:
-          "Me encanta cómo hablan de 'productos serios' desde su bubble de Silicon Valley. El 99% de negocios locales solo necesita mostrar info + contacto básico 🏪📞",
+          "Me encanta cómo hablan de 'productos serios' desde su bubble de Silicon Valley.\n\nEl 99% de negocios locales solo necesita mostrar info + contacto básico 🏪📞",
         createdAt: '2025-08-16T12:05:00Z',
       },
       {
         id: 'c-236',
         authorId: 47,
         content:
-          'Hasta que necesiten inventario real-time, pagos seguros, integraciones ERP... Ahí se dan cuenta por qué existe la ingeniería de software 🔐⚙️',
+          'Hasta que necesiten inventario real-time, pagos seguros, integraciones ERP...\n\nAhí se dan cuenta por qué existe la ingeniería de software 🔐⚙️',
         createdAt: '2025-08-16T12:30:00Z',
       },
       {
         id: 'c-237',
         authorId: 29,
         content:
-          "Plot twist: La mayoría de 'custom code' también está lleno de dependencies, frameworks bloated y technical debt. Al menos no-code es honesto sobre eso 📦💸",
+          "Plot twist: La mayoría de 'custom code' también está lleno de dependencies, frameworks bloated y technical debt.\n\nAl menos no-code es honesto sobre eso 📦💸",
         createdAt: '2025-08-16T12:55:00Z',
       },
       {
         id: 'c-238',
         authorId: 84,
         content:
-          'Difference: Con código propio puedes refactorizar, optimizar, debuggear. Con no-code dependes de que el vendor fixee sus bugs 🔧🆚🤞',
+          'Difference: Con código propio puedes refactorizar, optimizar, debuggear.\n\nCon no-code dependes de que el vendor fixee sus bugs 🔧🆚🤞',
         createdAt: '2025-08-16T13:20:00Z',
       },
       {
         id: 'c-239',
         authorId: 37,
         content:
-          'Senior devs defending their relevance vs no-code democratization. Same energy as taxi drivers vs Uber. Evolution happens 🚕➡️🚗',
+          'Senior devs defending their relevance vs no-code democratization.\n\nSame energy as taxi drivers vs Uber. Evolution happens 🚕➡️🚗',
         createdAt: '2025-08-16T13:45:00Z',
       },
     ],
@@ -3142,7 +3200,7 @@ export const posts: Post[] = [
     id: 'p-047',
     authorId: 49,
     content:
-      'Unpopular opinion: PHP y jQuery siguen siendo RELEVANTES en 2025 y los hipsters de JavaScript no lo quieren aceptar 🐘⚡ DATOS REALES que duelen: • 78% de websites usan PHP (W3Techs 2025) • WordPress = 43% de TODO internet • Facebook, Wikipedia, Slack backend = PHP • jQuery presente en 95% de top 1M sites • Laravel/Symfony compiten perfectamente con Express/Nest • Fiverr/Upwork: 10x más trabajos PHP que Node VENTAJAS que ignoran los JS fanboys: ✅ Shared hosting barato ($5/mes vs $20 VPS) ✅ Deploy simple (upload FTP vs Docker/CI/CD) ✅ Ecosistema maduro (20+ años de librerías) ✅ Documentación extensa en español ✅ Curva de aprendizaje suave ✅ Debugging directo sin transpilación MIENTRAS USTEDES DISCUTEN arquitecturas y frameworks del mes, nosotros FACTURAMOS con tecnología probada 💰🚀 PHP 8.3 + JIT compiler compite en performance con Node. jQuery 3.7 + modern browsers = desarrollo rápido sin bundlers. Stop the hate, embrace pragmatismo 🤝 #PHP #jQuery #LegacyTech #WebDevelopment #PragmaticDev',
+      'Unpopular opinion: PHP y jQuery siguen siendo RELEVANTES en 2025 y los hipsters de JavaScript no lo quieren aceptar 🐘⚡\n\nDATOS REALES que duelen:\n\n• 78% de websites usan PHP (W3Techs 2025)\n• WordPress = 43% de TODO internet\n• Facebook, Wikipedia, Slack backend = PHP\n• jQuery presente en 95% de top 1M sites\n• Laravel/Symfony compiten perfectamente con Express/Nest\n• Fiverr/Upwork: 10x más trabajos PHP que Node\n\nVENTAJAS que ignoran los JS fanboys:\n\n✅ Shared hosting barato ($5/mes vs $20 VPS)\n✅ Deploy simple (upload FTP vs Docker/CI/CD)\n✅ Ecosistema maduro (20+ años de librerías)\n✅ Documentación extensa en español\n✅ Curva de aprendizaje suave\n✅ Debugging directo sin transpilación\n\nMIENTRAS USTEDES DISCUTEN arquitecturas y frameworks del mes, nosotros FACTURAMOS con tecnología probada 💰🚀\n\nPHP 8.3 + JIT compiler compite en performance con Node. jQuery 3.7 + modern browsers = desarrollo rápido sin bundlers.\n\nStop the hate, embrace pragmatismo 🤝\n\n#PHP #jQuery #LegacyTech #WebDevelopment #PragmaticDev',
     categories: ['tecnología', 'desarrollo', 'legacy'],
     createdAt: '2025-08-14T11:30:00Z',
     reactions: {
@@ -3183,70 +3241,70 @@ export const posts: Post[] = [
         id: 'c-240',
         authorId: 64,
         content:
-          'THANK YOU! Llevo 15 años con PHP y sigo cobrando más que los React developers que cambian de framework cada 6 meses. Estabilidad > hype 💰📈',
+          'GRACIAS! Llevo 15 años con PHP y sigo cobrando más que los React developers que cambian de framework cada 6 meses.\n\nEstabilidad > hype 💰📈',
         createdAt: '2025-08-14T12:15:00Z',
       },
       {
         id: 'c-241',
         authorId: 32,
         content:
-          "PHP en 2025... serio? Es como usar Internet Explorer porque 'funciona'. TypeScript + Node.js tiene mejor type safety, async handling, ecosystem moderno 🦕➡️🚀",
+          "PHP en 2025... en serio? Es como usar Internet Explorer porque 'funciona'.\n\nTypeScript + Node.js tiene mejor type safety, async handling, ecosistema moderno 🦕➡️🚀",
         createdAt: '2025-08-14T12:40:00Z',
       },
       {
         id: 'c-242',
         authorId: 58,
         content:
-          "'Type safety' en JavaScript 😂 El lenguaje más inconsistente del mundo intentando ser tipado. Al menos PHP es honesto con su dynamic typing",
+          "'Type safety' en JavaScript 😂\n\nEl lenguaje más inconsistente del mundo intentando ser tipado. Al menos PHP es honesto con su tipado dinámico",
         createdAt: '2025-08-14T13:05:00Z',
       },
       {
         id: 'c-243',
         authorId: 85,
         content:
-          'jQuery manipulando DOM directamente en 2025 es técnicamente doloroso. Virtual DOM, component lifecycle, state management... evolution happened 🧠⚡',
+          'jQuery manipulando DOM directamente en 2025 es técnicamente doloroso.\n\nVirtual DOM, component lifecycle, state management... la evolución ya pasó 🧠⚡',
         createdAt: '2025-08-14T13:30:00Z',
       },
       {
         id: 'c-244',
         authorId: 76,
         content:
-          "'Virtual DOM' para hacer un simple dropdown. Overengineering level: God. jQuery hace el trabajo en 3 líneas, React necesita 200 🎭📏",
+          "'Virtual DOM' para hacer un simple dropdown. Nivel de sobreingeniería: Dios.\n\njQuery hace el trabajo en 3 líneas, React necesita 200 🎭📏",
         createdAt: '2025-08-14T13:55:00Z',
       },
       {
         id: 'c-245',
         authorId: 37,
         content:
-          'Node.js + Express + Prisma + TypeScript = stack moderno, escalable, mantenible. PHP + jQuery = legacy hell que nadie quiere tocar en 5 años 💀🔧',
+          'Node.js + Express + Prisma + TypeScript = stack moderno, escalable, mantenible.\n\nPHP + jQuery = infierno legacy que nadie quiere tocar en 5 años 💀🔧',
         createdAt: '2025-08-14T14:20:00Z',
       },
       {
         id: 'c-246',
         authorId: 51,
         content:
-          'Laravel + Eloquent + PHP 8.3 = modern framework igual de potente. El problema no es el lenguaje, es el desarrollador que no se actualiza 🔄💡',
+          'Laravel + Eloquent + PHP 8.3 = framework moderno igual de potente.\n\nEl problema no es el lenguaje, es el desarrollador que no se actualiza 🔄💡',
         createdAt: '2025-08-14T14:45:00Z',
       },
       {
         id: 'c-247',
         authorId: 74,
         content:
-          'Microservicios, serverless, edge computing... PHP stuck en monolitos de los 2000s. Node.js se adapta mejor al cloud-native development ☁️🌐',
+          'Microservicios, serverless, edge computing... PHP atrapado en monolitos de los 2000s.\n\nNode.js se adapta mejor al desarrollo cloud-native ☁️🌐',
         createdAt: '2025-08-14T15:10:00Z',
       },
       {
         id: 'c-248',
         authorId: 47,
         content:
-          'Laravel Vapor, PHP on Lambda, Docker containers... PHP también evolucionó. Stop living in 2010 stereotypes, research first 📚🔍',
+          'Laravel Vapor, PHP en Lambda, contenedores Docker... PHP también evolucionó.\n\nDeja de vivir en estereotipos de 2010, investiga primero 📚🔍',
         createdAt: '2025-08-14T15:35:00Z',
       },
       {
         id: 'c-249',
         authorId: 25,
         content:
-          'API integrations, real-time features, modern authentication... Node.js ecosystem superior para aplicaciones modernas. PHP es mantenimiento legacy 🔌⚡',
+          'Integraciones API, funcionalidades real-time, autenticación moderna... ecosistema Node.js superior para aplicaciones modernas.\n\nPHP es mantenimiento legacy 🔌⚡',
         createdAt: '2025-08-14T16:00:00Z',
       },
     ],
@@ -3255,7 +3313,7 @@ export const posts: Post[] = [
     id: 'p-048',
     authorId: 16,
     content:
-      'HOT TAKE: Seguir usando PHP/jQuery en nuevos proyectos 2025 es MALPRACTICE profesional 🚨👨‍💻 Como tech lead que ha migrado 15+ legacy systems, les explico por qué: PROBLEMAS TÉCNICOS REALES: 🔴 PHP: Inconsistencias de sintaxis (array_push vs array_merge), weak typing hell, global state nightmare 🔴 jQuery: DOM thrashing, memory leaks, callback hell, no component reusability 🔴 Ecosystem fragmentado: Composer packages mal mantenidos, seguridad cuestionable STACK MODERNO SUPERIOR: ✅ Node.js + TypeScript: Type safety real, async/await nativo, V8 performance ✅ Express/NestJS: Arquitectura modular, middleware ecosystem, OpenAPI integration ✅ React/Vue + modern build tools: Component architecture, hot reload, tree shaking ✅ Prisma/TypeORM: Type-safe database queries, migrations automáticas ✅ Docker + K8s: Deployment consistency, auto-scaling, zero-downtime deploys INTEGRACIÓN TERCEROS: • Stripe, PayPal APIs: SDKs optimizados para Node • AWS services: Lambda functions, S3, DynamoDB native support • Real-time: WebSockets, Socket.io, Server-sent events • GraphQL, REST APIs: Better tooling y developer experience EL MERCADO HABLA: Senior Node.js dev = $120k+ | Senior PHP dev = $80k. Employers want MODERN skills 💰📊 Stop romanticizing legacy tech. Evolution or extinction 🦖➡️🚀 #ModernDevelopment #NodeJS #TypeScript #TechEvolution',
+      'HOT TAKE: Seguir usando PHP/jQuery en nuevos proyectos 2025 es MALPRACTICE profesional 🚨👨‍💻\n\nComo tech lead que ha migrado 15+ legacy systems, les explico por qué:\n\nPROBLEMAS TÉCNICOS REALES:\n\n🔴 PHP: Inconsistencias de sintaxis (array_push vs array_merge), weak typing hell, global state nightmare\n🔴 jQuery: DOM thrashing, memory leaks, callback hell, no component reusability\n🔴 Ecosystem fragmentado: Composer packages mal mantenidos, seguridad cuestionable\n\nSTACK MODERNO SUPERIOR:\n\n✅ Node.js + TypeScript: Type safety real, async/await nativo, V8 performance\n✅ Express/NestJS: Arquitectura modular, middleware ecosystem, OpenAPI integration\n✅ React/Vue + modern build tools: Component architecture, hot reload, tree shaking\n✅ Prisma/TypeORM: Type-safe database queries, migrations automáticas\n✅ Docker + K8s: Deployment consistency, auto-scaling, zero-downtime deploys\n\nINTEGRACIÓN TERCEROS:\n\n• Stripe, PayPal APIs: SDKs optimizados para Node\n• AWS services: Lambda functions, S3, DynamoDB native support\n• Real-time: WebSockets, Socket.io, Server-sent events\n• GraphQL, REST APIs: Better tooling y developer experience\n\nEL MERCADO HABLA:\n\nSenior Node.js dev = $120k+ | Senior PHP dev = $80k. Employers want MODERN skills 💰📊\n\nStop romanticizing legacy tech. Evolution or extinction 🦖➡️🚀\n\n#ModernDevelopment #NodeJS #TypeScript #TechEvolution',
     categories: ['desarrollo', 'tecnología', 'modernización'],
     createdAt: '2025-08-19T14:20:00Z',
     reactions: {
@@ -3298,70 +3356,70 @@ export const posts: Post[] = [
         id: 'c-250',
         authorId: 85,
         content:
-          'FACTS! He trabajado en ambos stacks. Node.js + TypeScript elimina 90% de runtime errors que PHP genera constantemente. Type safety is life 💎🔒',
+          'HECHOS! He trabajado en ambos stacks. Node.js + TypeScript elimina 90% de errores en runtime que PHP genera constantemente.\n\nLa seguridad de tipos es vida 💎🔒',
         createdAt: '2025-08-19T15:05:00Z',
       },
       {
         id: 'c-251',
         authorId: 49,
         content:
-          "Classic JavaScript evangelist. Symfony + PHPStan tiene mejor type checking que tu TypeScript con 'any' everywhere. Research before posting 🔍📚",
+          "Clásico evangelista de JavaScript. Symfony + PHPStan tiene mejor verificación de tipos que tu TypeScript con 'any' por todas partes.\n\nInvestiga antes de publicar 🔍📚",
         createdAt: '2025-08-19T15:30:00Z',
       },
       {
         id: 'c-252',
         authorId: 78,
         content:
-          'PHPStan es add-on, TypeScript es core language feature. Comparing band-aid solutions with native architecture 🩹🆚🏗️',
+          'PHPStan es un complemento, TypeScript es una característica del lenguaje principal.\n\nComparando soluciones parche con arquitectura nativa 🩹🆚🏗️',
         createdAt: '2025-08-19T15:55:00Z',
       },
       {
         id: 'c-253',
         authorId: 64,
         content:
-          "'Malpractice' dice el que probablemente no puede deployar sin 15 containers y 3 CI/CD pipelines. LAMP stack: upload y funciona. Simplicity wins 📁⬆️",
+          "'Malpráctica' dice el que probablemente no puede deployar sin 15 contenedores y 3 pipelines CI/CD.\n\nLAMP stack: subes y funciona. La simplicidad gana 📁⬆️",
         createdAt: '2025-08-19T16:20:00Z',
       },
       {
         id: 'c-254',
         authorId: 32,
         content:
-          "'Upload y funciona' hasta que necesitas scaling, monitoring, rollbacks... Modern DevOps exists for reasons. Production != hobby project 📊⚙️",
+          "'Subes y funciona' hasta que necesitas escalabilidad, monitoreo, rollbacks...\n\nDevOps moderno existe por razones. Producción != proyecto de hobby 📊⚙️",
         createdAt: '2025-08-19T16:45:00Z',
       },
       {
         id: 'c-255',
         authorId: 47,
         content:
-          '$120k Node vs $80k PHP... WHERE? Glassdoor muestra PHP seniors a $110k+. Stop manipulating salary data para push agenda 💰📋',
+          '$120k Node vs $80k PHP... ¿DÓNDE? Glassdoor muestra PHP seniors a $110k+.\n\nDeja de manipular datos salariales para impulsar tu agenda 💰📋',
         createdAt: '2025-08-19T17:10:00Z',
       },
       {
         id: 'c-256',
         authorId: 37,
         content:
-          'San Francisco, New York, Berlin... global market pays premium for modern stack experience. Regional PHP markets are different beast 🌍💼',
+          'San Francisco, Nueva York, Berlín... el mercado global paga premium por experiencia en stack moderno.\n\nLos mercados regionales de PHP son otra cosa 🌍💼',
         createdAt: '2025-08-19T17:35:00Z',
       },
       {
         id: 'c-257',
         authorId: 58,
         content:
-          "'V8 performance' jajaja single-threaded bottleneck vs PHP-FPM multi-process. Node.js blocks en heavy computation, PHP spawns workers. Architecture 101 🧵⚡",
+          "'Rendimiento V8' jajaja cuello de botella single-threaded vs PHP-FPM multi-proceso.\n\nNode.js se bloquea en computación pesada, PHP genera workers. Arquitectura 101 🧵⚡",
         createdAt: '2025-08-19T18:00:00Z',
       },
       {
         id: 'c-258',
         authorId: 74,
         content:
-          "Event loop + worker threads + cluster mode. Node.js isn't 2012 anymore. Meanwhile PHP still struggling with async without ReactPHP hacks 🔄⚡",
+          "Event loop + worker threads + cluster mode. Node.js ya no es 2012.\n\nMientras tanto PHP sigue luchando con async sin hacks de ReactPHP 🔄⚡",
         createdAt: '2025-08-19T18:25:00Z',
       },
       {
         id: 'c-259',
         authorId: 51,
         content:
-          "Facebook, Wikipedia, Slack, Tumblr backend = PHP. Pero claro, Mark Zuckerberg no entiende de 'modern development' como tú 😏🏢",
+          "Facebook, Wikipedia, Slack, Tumblr backend = PHP.\n\nPero claro, Mark Zuckerberg no entiende de 'desarrollo moderno' como tú 😏🏢",
         createdAt: '2025-08-19T18:50:00Z',
       },
     ],
@@ -3370,47 +3428,47 @@ export const posts: Post[] = [
     id: 'p-049',
     authorId: 53,
     content:
-      "THREAD: Por qué mi generación pudo comprarse casa y la actual no 🏠💰🧵 Mi historia real (nacido 1965): Empecé trabajando 12-14 horas diarias en una ferretería a los 18. Sábados completos, domingos medio día. NO había 'work-life balance' ni jornadas de 8 horas sagradas. RESULTADOS después de 10 años: ✅ Terreno de 300m² en Ate (1995) - $8,000 ✅ Casa construida poco a poco los fines de semana ✅ Camioneta Hilux usada pero propia ✅ 3 hijos educados en colegios privados ✅ Negocio propio (ferretería + construcción) LA FÓRMULA ERA SIMPLE: MÁS HORAS = MÁS PLATA = MÁS PATRIMONIO Los jóvenes de hoy: 'Solo trabajo mis 8 horas', 'overtime es explotación', 'necesito tiempo personal'... Perfecto, pero después no se quejen de vivir en casa de sus papás a los 30 🤷‍♂️ MENTALIDAD GANADORA: Si quieres extraordinario, tienes que HACER extraordinario. El éxito no viene en horario de oficina. Mientras tú descansas, tu competencia trabaja 💪⏰ #ÉticaLaboral #SuccessMindset #HusttleCulture #PatrimonyBuilding #TrabajoDuro",
+      "HILO: ¿Por qué mi generación pudo comprarse una casa y la actual no? 🏠💰🧵\n\n" +
+      "Mi historia real (nacido en 1965):\n" +
+      "- Empecé trabajando 12-14 horas diarias en una ferretería a los 18 años.\n" +
+      "- Sábados completos, domingos medio día.\n" +
+      "- NO existía el 'equilibrio vida-trabajo' ni las jornadas de 8 horas sagradas.\n\n" +
+      "RESULTADOS después de 10 años:\n" +
+      "✅ Terreno de 300m² en Ate (1995) - $8,000\n" +
+      "✅ Casa construida poco a poco los fines de semana\n" +
+      "✅ Camioneta Hilux usada pero propia\n" +
+      "✅ 3 hijos educados en colegios privados\n" +
+      "✅ Negocio propio (ferretería + construcción)\n\n" +
+      "LA FÓRMULA ERA SIMPLE:\n" +
+      "MÁS HORAS = MÁS DINERO = MÁS PATRIMONIO\n\n" +
+      "Los jóvenes de hoy dicen:\n" +
+      "'Solo trabajo mis 8 horas',\n" +
+      "'el overtime es explotación',\n" +
+      "'necesito tiempo personal'...\n\n" +
+      "Perfecto, pero después no se quejen de vivir en casa de sus padres a los 30 🤷‍♂️\n\n" +
+      "MENTALIDAD GANADORA:\n" +
+      "Si quieres algo extraordinario, tienes que HACER cosas extraordinarias.\n" +
+      "El éxito no llega en horario de oficina.\n" +
+      "Mientras tú descansas, tu competencia trabaja 💪⏰\n\n" +
+      "#ÉticaLaboral #MentalidadDeÉxito #CulturaDelEsfuerzo #ConstruyendoPatrimonio #TrabajoDuro",
     categories: ['trabajo', 'generaciones', 'éxito'],
     createdAt: '2025-08-10T16:45:00Z',
     reactions: {
       like: [
-        { authorId: 31 },
-        { authorId: 48 },
-        { authorId: 76 },
-        { authorId: 12 },
-        { authorId: 84 },
-        { authorId: 58 },
-        { authorId: 47 },
-        { authorId: 64 },
-        { authorId: 51 },
-        { authorId: 67 },
+        { authorId: 31 }, { authorId: 48 }, { authorId: 76 },
+        { authorId: 12 }, { authorId: 84 }, { authorId: 58 },
+        { authorId: 47 }, { authorId: 64 }, { authorId: 51 },
+        { authorId: 67 }
       ],
-      love: [
-        { authorId: 45 },
-        { authorId: 18 },
-        { authorId: 60 },
-        { authorId: 75 },
-      ],
+      love: [{ authorId: 45 }, { authorId: 18 }, { authorId: 60 }, { authorId: 75 }],
       laugh: [{ authorId: 26 }, { authorId: 69 }, { authorId: 36 }],
-      wow: [
-        { authorId: 14 },
-        { authorId: 33 },
-        { authorId: 52 },
-        { authorId: 40 },
-      ],
+      wow: [{ authorId: 14 }, { authorId: 33 }, { authorId: 52 }, { authorId: 40 }],
       sad: [{ authorId: 39 }, { authorId: 17 }, { authorId: 54 }],
       angry: [
-        { authorId: 23 },
-        { authorId: 42 },
-        { authorId: 37 },
-        { authorId: 74 },
-        { authorId: 29 },
-        { authorId: 56 },
-        { authorId: 78 },
-        { authorId: 19 },
-        { authorId: 85 },
-        { authorId: 22 },
+        { authorId: 23 }, { authorId: 42 }, { authorId: 37 },
+        { authorId: 74 }, { authorId: 29 }, { authorId: 56 },
+        { authorId: 78 }, { authorId: 19 }, { authorId: 85 },
+        { authorId: 22 }
       ],
     },
     comments: [
@@ -3418,70 +3476,88 @@ export const posts: Post[] = [
         id: 'c-260',
         authorId: 64,
         content:
-          'EXACTO! Yo también construí mi patrimonio trabajando 70+ horas semanales. Los millennials quieren resultado de campeón con esfuerzo de mediocre 👑💪',
+          "¡EXACTO!\nYo también construí mi patrimonio trabajando más de 70 horas semanales.\nLos millennials quieren resultados de campeón con esfuerzo de mediocre 👑💪",
         createdAt: '2025-08-10T17:30:00Z',
       },
       {
         id: 'c-261',
         authorId: 23,
         content:
-          'Terreno en Ate 1995 = $8,000. Hoy ese mismo terreno = $80,000. Salario mínimo 1995 = 200 soles. Hoy = 1025 soles. Matemáticas básicas: LA PROPORCIÓN CAMBIÓ 📊💀',
+          "Terreno en Ate 1995 = $8,000\nHoy ese mismo terreno = $80,000\n\n" +
+          "Salario mínimo 1995 = 200 soles\nHoy = 1025 soles\n\n" +
+          "Matemática básica: LA PROPORCIÓN CAMBIÓ 📊💀",
         createdAt: '2025-08-10T17:55:00Z',
       },
       {
         id: 'c-262',
         authorId: 51,
         content:
-          'Si trabajas solo 8 horas obviamente no vas a comprar nada. Yo sigo trabajando 12+ horas y sigo comprando propiedades. Esfuerzo = Resultados 🏗️💰',
+          "Si trabajas solo 8 horas obviamente no vas a comprar nada.\n" +
+          "Yo sigo trabajando 12+ horas y sigo comprando propiedades.\n\n" +
+          "Esfuerzo = Resultados 🏗️💰",
         createdAt: '2025-08-10T18:20:00Z',
       },
       {
         id: 'c-263',
         authorId: 78,
         content:
-          "'Más horas = más plata' en trabajos por hora. En trabajos profesionales puedes generar más valor en menos tiempo con productividad inteligente 🧠⚡",
+          "'Más horas = más plata' aplica en trabajos por hora.\n" +
+          "En trabajos profesionales puedes generar más valor en menos tiempo con productividad inteligente 🧠⚡",
         createdAt: '2025-08-10T18:45:00Z',
       },
       {
         id: 'c-264',
         authorId: 47,
         content:
-          "'Productividad inteligente' jajaja código para decir 'quiero ganar más trabajando menos'. Success requires sacrifice, period 🎯💯",
+          "'Productividad inteligente' jajaja... código para decir:\n" +
+          "'quiero ganar más trabajando menos'.\n\n" +
+          "El éxito requiere sacrificio, punto 🎯💯",
         createdAt: '2025-08-10T19:10:00Z',
       },
       {
         id: 'c-265',
         authorId: 37,
         content:
-          "Glorificar el burnout como 'ética laboral' es tóxico. Japón tiene palabra para muerte por exceso de trabajo: KAROSHI. Vida > patrimonio 💔⚰️",
+          "Glorificar el burnout como 'ética laboral' es tóxico.\n" +
+          "En Japón existe la palabra KAROSHI: muerte por exceso de trabajo.\n\n" +
+          "La vida vale más que el patrimonio 💔⚰️",
         createdAt: '2025-08-10T19:35:00Z',
       },
       {
         id: 'c-266',
         authorId: 84,
         content:
-          'Karoshi es por stress, no por trabajo duro. Si amas lo que haces, 14 horas se sienten como 8. Passion beats clock-watching 🔥❤️',
+          "Karoshi es por estrés, no por trabajo duro.\n" +
+          "Si amas lo que haces, 14 horas se sienten como 8.\n\n" +
+          "La pasión vence al reloj 🔥❤️",
         createdAt: '2025-08-10T20:00:00Z',
       },
       {
         id: 'c-267',
         authorId: 74,
         content:
-          "En 1995 un salario básico compraba 8m² de terreno. Hoy compra 0.5m². Pero claro, el problema es que los jóvenes son 'mediocres' 🤡📐",
+          "En 1995 un salario básico compraba 8m² de terreno.\n" +
+          "Hoy compra solo 0.5m².\n\n" +
+          "Pero claro, el problema es que los jóvenes son 'mediocres' 🤡📐",
         createdAt: '2025-08-10T20:25:00Z',
       },
       {
         id: 'c-268',
         authorId: 58,
         content:
-          'Inflación existe, pero también existen oportunidades nuevas. E-commerce, digital services, crypto... Adapt or cry 💻🚀',
+          "La inflación existe, pero también existen nuevas oportunidades:\n" +
+          "E-commerce, servicios digitales, criptomonedas...\n\n" +
+          "Adáptate o llora 💻🚀",
         createdAt: '2025-08-10T20:50:00Z',
       },
       {
         id: 'c-269',
         authorId: 29,
         content:
-          "Mi abuelo compró casa con sueldo de obrero. Mi papá necesitó crédito hipotecario. Yo necesito 30 años de deuda. Pero sí, somos 'mediocres' 🏠💸",
+          "Mi abuelo compró casa con sueldo de obrero.\n" +
+          "Mi papá necesitó un crédito hipotecario.\n" +
+          "Yo necesito 30 años de deuda.\n\n" +
+          "Pero sí... somos 'mediocres' 🏠💸",
         createdAt: '2025-08-10T21:15:00Z',
       },
     ],
@@ -3490,43 +3566,46 @@ export const posts: Post[] = [
     id: 'p-050',
     authorId: 27,
     content:
-      "Controversial but true: La obsesión boomer con 'trabajar 14 horas diarias' es la razón por la que vivimos en una sociedad enferma 🤢⚡ REALIDAD ECONÓMICA que ignoran: 💡 Productividad per cápita subió 300% desde 1970 💡 Salarios reales bajaron 40% en mismo período 💡 Costo de vivienda subió 400% vs ingresos 💡 Educación universitaria: 1200% más cara 💡 Atención médica: 800% más cara DATOS DUROS: Casa promedio 1980 = 2.5x salario anual | Casa promedio 2025 = 8.5x salario anual NO ES FALTA DE 'ÉTICA LABORAL', ES ECONOMÍA ROTA 📊💀 Además, esa mentalidad de 'trabajar hasta morir' nos dio: ❌ Padres ausentes emocionalmente ❌ Divorcios por stress laboral ❌ Depresión y ansiedad epidémica ❌ Burnout normalizado ❌ Cero tiempo para salud mental/física FRANCIA: 35 horas semanales, 5 semanas vacaciones, mayor productividad que EEUU. NÓRDICOS: Work-life balance, mayores índices de felicidad y prosperidad. El problema NO son los jóvenes 'mediocres'. Es un sistema que exige más y paga menos 🌍⚖️ #WorkLifeBalance #EconomíaRota #MentalHealthMatters #SustainableWork",
+      "Controversial pero cierto:\n" +
+      "La obsesión boomer con 'trabajar 14 horas diarias' es la razón por la que vivimos en una sociedad enferma 🤢⚡\n\n" +
+      "REALIDAD ECONÓMICA que ignoran:\n" +
+      "💡 La productividad per cápita subió 300% desde 1970\n" +
+      "💡 Los salarios reales bajaron 40% en el mismo período\n" +
+      "💡 El costo de la vivienda subió 400% frente a los ingresos\n" +
+      "💡 La educación universitaria es 1200% más cara\n" +
+      "💡 La atención médica es 800% más cara\n\n" +
+      "DATOS DUROS:\n" +
+      "🏠 Casa promedio 1980 = 2.5x salario anual\n" +
+      "🏠 Casa promedio 2025 = 8.5x salario anual\n\n" +
+      "NO ES FALTA DE 'ÉTICA LABORAL'. ES UNA ECONOMÍA ROTA 📊💀\n\n" +
+      "Además, esa mentalidad de 'trabajar hasta morir' nos dejó:\n" +
+      "❌ Padres ausentes emocionalmente\n" +
+      "❌ Divorcios por estrés laboral\n" +
+      "❌ Depresión y ansiedad epidémica\n" +
+      "❌ Burnout normalizado\n" +
+      "❌ Cero tiempo para salud mental/física\n\n" +
+      "Ejemplos:\n" +
+      "🇫🇷 Francia: 35 horas semanales, 5 semanas de vacaciones, mayor productividad que EE.UU.\n" +
+      "🌍 Países nórdicos: Equilibrio vida-trabajo, mayores índices de felicidad y prosperidad.\n\n" +
+      "El problema NO son los jóvenes 'mediocres'.\n" +
+      "Es un sistema que exige más y paga menos ⚖️\n\n" +
+      "#EquilibrioLaboral #EconomíaRota #SaludMental #TrabajoSostenible",
     categories: ['trabajo', 'economía', 'sociedad'],
     createdAt: '2025-08-22T13:30:00Z',
     reactions: {
       like: [
-        { authorId: 23 },
-        { authorId: 42 },
-        { authorId: 37 },
-        { authorId: 74 },
-        { authorId: 29 },
-        { authorId: 56 },
-        { authorId: 78 },
-        { authorId: 19 },
-        { authorId: 85 },
-        { authorId: 22 },
-        { authorId: 65 },
+        { authorId: 23 }, { authorId: 42 }, { authorId: 37 }, { authorId: 74 },
+        { authorId: 29 }, { authorId: 56 }, { authorId: 78 }, { authorId: 19 },
+        { authorId: 85 }, { authorId: 22 }, { authorId: 65 }
       ],
-      love: [
-        { authorId: 61 },
-        { authorId: 25 },
-        { authorId: 72 },
-        { authorId: 55 },
-      ],
+      love: [{ authorId: 61 }, { authorId: 25 }, { authorId: 72 }, { authorId: 55 }],
       laugh: [{ authorId: 26 }, { authorId: 69 }],
       wow: [{ authorId: 14 }, { authorId: 33 }, { authorId: 52 }],
       sad: [{ authorId: 39 }, { authorId: 17 }, { authorId: 54 }],
       angry: [
-        { authorId: 31 },
-        { authorId: 48 },
-        { authorId: 76 },
-        { authorId: 12 },
-        { authorId: 84 },
-        { authorId: 58 },
-        { authorId: 47 },
-        { authorId: 64 },
-        { authorId: 51 },
-        { authorId: 53 },
+        { authorId: 31 }, { authorId: 48 }, { authorId: 76 }, { authorId: 12 },
+        { authorId: 84 }, { authorId: 58 }, { authorId: 47 }, { authorId: 64 },
+        { authorId: 51 }, { authorId: 53 }
       ],
     },
     comments: [
@@ -3534,70 +3613,88 @@ export const posts: Post[] = [
         id: 'c-270',
         authorId: 78,
         content:
-          "PREACH! Mi papá trabajó 60+ horas semanales toda su vida. Resultado: 2 infartos, divorcio, depresión. ¿Eso es 'éxito'? No gracias 💔🏥",
+          "¡Amén!\nMi papá trabajó más de 60 horas semanales toda su vida.\n\n" +
+          "Resultado: 2 infartos, divorcio, depresión.\n" +
+          "¿Eso es 'éxito'? No gracias 💔🏥",
         createdAt: '2025-08-22T14:15:00Z',
       },
       {
         id: 'c-271',
         authorId: 31,
         content:
-          'Estadísticas manipuladas para justificar mediocridad. Si no puedes competir con quien trabaja más, find excuses. Winners find ways 🏆💪',
+          "Estadísticas manipuladas para justificar mediocridad.\n" +
+          "Si no puedes competir con quien trabaja más, buscas excusas.\n\n" +
+          "Los ganadores buscan formas 🏆💪",
         createdAt: '2025-08-22T14:40:00Z',
       },
       {
         id: 'c-272',
         authorId: 85,
         content:
-          "'Competir con quien trabaja más' mentalidad de cangrejo. El éxito no debería medirse en horas sino en impacto y bienestar integral 🦀➡️🧠",
+          "'Competir con quien trabaja más' es mentalidad de cangrejo.\n" +
+          "El éxito no debería medirse en horas, sino en impacto y bienestar integral 🦀➡️🧠",
         createdAt: '2025-08-22T15:05:00Z',
       },
       {
         id: 'c-273',
         authorId: 64,
         content:
-          'Francia 35 horas y nosotros queremos imitar países desarrollados con economías diferentes. En Perú si no trabajas extra, otro lo hará por menos 🇫🇷≠🇵🇪',
+          "Francia con 35 horas está en otro contexto.\n" +
+          "En Perú, si no trabajas extra, otro lo hará por menos.\n\n" +
+          "🇫🇷 ≠ 🇵🇪",
         createdAt: '2025-08-22T15:30:00Z',
       },
       {
         id: 'c-274',
         authorId: 37,
         content:
-          "Race to the bottom mentality. Por eso seguimos siendo país en desarrollo: normalizamos la explotación como 'competitividad' 📉🔄",
+          "Mentalidad de 'carrera hacia el fondo'.\n" +
+          "Por eso seguimos en desarrollo: normalizamos la explotación como 'competitividad' 📉🔄",
         createdAt: '2025-08-22T15:55:00Z',
       },
       {
         id: 'c-275',
         authorId: 84,
         content:
-          "'Padres ausentes'... mi papá trabajó 14 horas para darnos educación privada y universidad. Prefiero padre trabajador que presente pero pobre 🎓💰",
+          "'Padres ausentes'...\n" +
+          "Mi papá trabajó 14 horas para darnos educación privada y universidad.\n" +
+          "Prefiero un padre trabajador que presente pero pobre 🎓💰",
         createdAt: '2025-08-22T16:20:00Z',
       },
       {
         id: 'c-276',
         authorId: 74,
         content:
-          'False dichotomy. Se puede ser buen padre Y tener balance. Dinamarca, Suecia lo prueban: padres presentes + prosperidad económica 👨‍👩‍👧‍👦💎',
+          "Falsa dicotomía.\n" +
+          "Se puede ser buen padre Y tener equilibrio.\n" +
+          "Dinamarca y Suecia lo prueban: padres presentes + prosperidad económica 👨‍👩‍👧‍👦💎",
         createdAt: '2025-08-22T16:45:00Z',
       },
       {
         id: 'c-277',
         authorId: 47,
         content:
-          'Millennials citing países nórdicos con 5 millones de habitantes vs Perú con 33 millones. Context matters, scaling matters 📊🌍',
+          "Los millennials citan países nórdicos con 5 millones de habitantes.\n" +
+          "Perú tiene 33 millones.\n\n" +
+          "El contexto importa, la escala importa 📊🌍",
         createdAt: '2025-08-22T17:10:00Z',
       },
       {
         id: 'c-278',
         authorId: 29,
         content:
-          "Alemania 83 millones, Francia 68 millones, ambos con mejores work-life balance. Size isn't the issue, políticas públicas are 🏛️⚖️",
+          "Alemania tiene 83 millones, Francia 68 millones.\n" +
+          "Ambos con mejor equilibrio laboral.\n\n" +
+          "El tamaño no es el problema, son las políticas públicas 🏛️⚖️",
         createdAt: '2025-08-22T17:35:00Z',
       },
       {
         id: 'c-279',
         authorId: 53,
         content:
-          'Excuses, excuses everywhere. Mientras ustedes analizan estadísticas, otros construyen imperios trabajando smart AND hard. Resultado habla 🏗️👑',
+          "Excusas, excusas en todas partes.\n" +
+          "Mientras ustedes analizan estadísticas, otros construyen imperios trabajando duro e inteligentemente.\n\n" +
+          "Los resultados hablan 🏗️👑",
         createdAt: '2025-08-22T18:00:00Z',
       },
     ],

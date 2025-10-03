@@ -1,11 +1,9 @@
 // Angular 20
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
 // Interfaces
 import { AuthUser } from '@auth/interfaces/auth.interface';
-import { Observable, of } from 'rxjs';
 
 // Utils
 import { convertFileToBase64 } from '@socialex/utils/convert-image-base64';
