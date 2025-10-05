@@ -20,8 +20,7 @@ import { PostCardComponent } from '@socialex/posts/components/post-card/post-car
 export default class HomePageComponent {
   postsService = inject(PostsService);
   page = signal(1);
-  pageSize = signal(this.postsService.posts.length);
-  allPosts = signal<Post[]>([]);
+  pageSize = signal(this.postsService.posts().length);
 
   postsResource = rxResource({
     params: () => ({ page: this.page(), pageSize: this.pageSize() }),

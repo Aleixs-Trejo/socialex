@@ -1,6 +1,6 @@
 // Angular 20
 import { I18nPluralPipe, NgClass, NgOptimizedImage } from '@angular/common';
-import { Component, ElementRef, HostListener, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, inject, input, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
@@ -50,13 +50,21 @@ export class PostCardComponent {
   maxCommentsToShow = signal(3);
   showAllComments = signal(false);
 
-  private elRef = inject(ElementRef);
+  totalReactionsCount = signal(0);
 
   i18nPluralPipeComments = {
     '=0': '',
     '=1': '1 comentario',
     other: '# comentarios',
   };
+
+  postCardEffect = effect(() => {
+    const post = this.post();
+    if (!post) return;
+
+    this.totalReactionsCount.set(this.postsService.getTotalReactions(post.id)());
+  });
+
 
   userPostResource = rxResource({
     params: () => ({ authorId: this.post().authorId }),
@@ -81,11 +89,6 @@ export class PostCardComponent {
   reactionsResource = rxResource({
     params: () => ({ postId: this.post().id }),
     stream: ({ params }) => this.postsService.getUsersReactions(params.postId),
-  });
-
-  totalReactionsResource = rxResource({
-    params: () => ({ postId: this.post().id }),
-    stream: ({ params }) => this.postsService.getTotalReactions(params.postId),
   });
 
   toggleCommentPost(postId: string) {

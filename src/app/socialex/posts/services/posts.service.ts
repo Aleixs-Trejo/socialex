@@ -1,5 +1,5 @@
 // Angular 20
-import { Injectable } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 
 // Data
 import { posts } from '../data/posts.data';
@@ -19,56 +19,59 @@ import { Observable, of } from 'rxjs';
 
 // Helpers
 import { getReactionIcon } from '@socialex/posts/helpers/reaction.helper';
+import { AuthService } from '@auth/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
-  users: User[] = usersData;
-  posts: Post[] = posts;
+  authService = inject(AuthService);
+  users = signal<User[]>(usersData);
+  posts = signal<Post[]>(posts);
 
   getPosts(page: number, pageSize: number): Observable<Post[]> {
     const start = (page - 1) * pageSize;
-    const paginated = this.posts.slice(start, start + pageSize);
+    const paginated = this.posts().slice(start, start + pageSize);
     return of(paginated);
   }
 
   getAuhtorPost(authorId: number): Observable<User> {
-    const author = this.users.find((u) => u.id === authorId);
+    const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
     if (!author) return of();
     return of(author);
   }
 
   getUsersComments(postId: string): Observable<User[]> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
-    const comments = post.comments.map((c) => this.users.find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
+    const comments = post.comments.map((c) => this.authService.allUsersAndAuthUsers().find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
     const unique = Array.from(new Map(comments.map((u) => [u.id, u])).values());
     return of(unique);
   }
 
   getUsersReactions(postId: string): Observable<User[]> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
     const allReactions: Reaction[] = Object.values(post.reactions).flat();
-    const users = allReactions.map((r) => this.users.find((u) => u.id === r.authorId)).filter((u): u is User => u !== undefined);
+    const users = allReactions.map((r) => this.authService.allUsersAndAuthUsers().find((u) => u.id === r.authorId)).filter((u): u is User => u !== undefined);
     const unique = Array.from(new Map(users.map((u) => [u.id, u])).values());
     return of(unique);
   }
 
-  getTotalReactions(postId: string): Observable<number> {
-    const post = this.posts.find((p) => p.id === postId);
-    if (!post) return of(0);
-    const total = Object.values(post.reactions).reduce((acc, cur) => acc + cur.length, 0);
-    return of(total);
+  getTotalReactions(postId: string): Signal<number> {
+    return computed(() => {
+      const post = this.posts().find((p) => p.id === postId);
+      if (!post) return 0;
+      return Object.values(post.reactions).reduce((acc, cur) => acc + cur.length, 0);
+    })
   }
 
   getAllReactionsByUsers(postId: string): Observable<{ user: User; type: keyof Reactions, icon: string }[]> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
 
     const result: { user: User; type: keyof Reactions, icon: string }[] = [];
     (Object.keys(post.reactions) as (keyof Reactions)[]).forEach((type) => {
       post.reactions[type].forEach((reaction) => {
-        const user = this.users.find((u) => u.id === reaction.authorId);
+        const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === reaction.authorId);
         if (user) result.push({ user, type, icon: getReactionIcon(type) });
       });
     });
@@ -76,28 +79,28 @@ export class PostsService {
   }
 
   getReactionsTypeByUser(postId: string, type: keyof Reactions): Observable<{ user: User; type: keyof Reactions; icon: string }[]> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
     const result = post.reactions[type].map((r) => {
-      const user = this.users.find((u) => u.id === r.authorId);
+      const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === r.authorId);
       return user ? { user, type, icon: getReactionIcon(type) } : null;
     }).filter((item): item is { user: User; type: keyof Reactions; icon: string } => item !== null);
     return of(result);
   }
 
   getTotalComments(postId: string): Observable<number> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of(0);
     const total = post.comments.length;
     return of(total);
   }
 
   getCommentsWithUsers(postId: string): Observable<{ comment: Comment; user: User }[]> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
 
     const joined = post.comments.map((c) => {
-      const user = this.users.find((u) => u.id === c.authorId);
+      const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === c.authorId);
       return user ? { comment: c, user } : null;
     }).filter((item): item is { comment: Comment; user: User } => item !== null);
 
@@ -105,27 +108,125 @@ export class PostsService {
   }
 
   getLimitedTotalComments(postId: string, limit: number = 3): Observable<User[]> {
-    const post = this.posts.find((p) => p.id === postId);
+    const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
 
-    const comments = post.comments.map((c) => this.users.find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
+    const comments = post.comments.map((c) => this.authService.allUsersAndAuthUsers().find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
     const unique = Array.from(new Map(comments.map((u) => [u.id, u])).values());
     return of(unique.slice(-limit));
   }
 
   getAllPostsFromUser(userId: number): Observable<Post[]> {
-    const user = this.users.find((u) => u.id === userId);
+    const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === userId);
     if (!user) return of([]);
 
-    const postsFromUser = this.posts.filter((p) => p.authorId === userId);
+    const postsFromUser = this.posts().filter((p) => p.authorId === userId);
     return of(postsFromUser);
   }
 
   getAllCommentsPostsFromUser(userId: number): Observable<Post[]> {
-    const user = this.users.find((u) => u.id === userId);
+    const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === userId);
     if (!user) return of([]);
 
-    const postsCommentsFromUser = this.posts.filter((p) => p.comments.some((c) => c.authorId === userId));
+    const postsCommentsFromUser = this.posts().filter((p) => p.comments.some((c) => c.authorId === userId));
     return of(postsCommentsFromUser);
+  }
+
+  /* changeReaction(postId: string, type: keyof Reactions, authorId: number) {
+    const post = this.posts().find((p) => p.id === postId);
+    if (!post) return;
+    const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
+    if (!author) return;
+
+    let previousReaction: keyof Reactions | null = null;
+
+    for (const key in post.reactions) {
+      const reactionType = key as keyof Reactions;
+      const hasReacted = post.reactions[reactionType].some((r) => r.authorId === authorId);
+      if (hasReacted) {
+        previousReaction = reactionType;
+        break;
+      }
+    }
+
+    if (previousReaction === type) {
+      post.reactions[type] = post.reactions[type].filter((r) => r.authorId !== authorId);
+      return;
+    }
+
+    if (previousReaction) {
+      post.reactions[previousReaction] = post.reactions[previousReaction].filter((r) => r.authorId !== authorId);
+    }
+
+    post.reactions[type].push({ authorId });
+  } */
+
+  changeReaction(postId: string, type: keyof Reactions, authorId: number) {
+    this.posts.update(posts => {
+      const postIndex = posts.findIndex((p) => p.id === postId);
+      if (postIndex === -1) return posts;
+
+      const post = { ...posts[postIndex] };
+      const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
+      if (!author) return posts;
+
+      let previousReaction: keyof Reactions | null = null;
+
+      for (const key in post.reactions) {
+        const reactionType = key as keyof Reactions;
+        const hasReacted = post.reactions[reactionType].some((r) => r.authorId === authorId);
+        if (hasReacted) {
+          previousReaction = reactionType;
+          break;
+        }
+      }
+
+      if (previousReaction === type) {
+        post.reactions[type] = post.reactions[type].filter((r) => r.authorId !== authorId);
+      } else {
+        if (previousReaction) {
+          post.reactions[previousReaction] = post.reactions[previousReaction].filter((r) => r.authorId !== authorId);
+        }
+
+        post.reactions[type].push({ authorId });
+      }
+
+      const newPosts = [...posts];
+      newPosts[postIndex] = post;
+      return newPosts;
+    });
+  }
+
+  hasPreviousAnyReaction(postId: string,) {
+    const post = this.posts().find((p) => p.id === postId);
+    if (!post) return false;
+
+    let previousReaction: keyof Reactions | null = null;
+
+    for (const key in post.reactions) {
+      const reactionType = key as keyof Reactions;
+      const hasReacted = post.reactions[reactionType].some((r) => r.authorId === this.authService.getCurrentUser()?.id);
+      if (hasReacted) {
+        previousReaction = reactionType;
+        break;
+      }
+    }
+
+    return previousReaction !== null;
+  }
+
+  getUserReactionType(postId: string): keyof Reactions | null {
+    const post = this.posts().find((p) => p.id === postId);
+    if (!post) return null;
+
+    const currentUserId = this.authService.getCurrentUser()!.id;
+
+    for (const key in post.reactions) {
+      const reactionType = key as keyof Reactions;
+      const hasReacted = post.reactions[reactionType].some((r) => r.authorId === currentUserId);
+      if (hasReacted) return reactionType;
+    }
+
+    return null;
   }
 }

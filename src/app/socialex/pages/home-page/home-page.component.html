@@ -14,5 +14,10 @@
         }
       </section>
     }
+    @if (postsResource.error()) {
+      <div class="w-full flex justify-center items-center">
+        <span class="loading loading-spinner text-primary"></span>
+      </div>
+    }
   </div>
 </app-section-component>
