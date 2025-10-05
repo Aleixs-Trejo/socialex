@@ -1,6 +1,6 @@
 // Angular 20
 import { I18nPluralPipe, NgClass, NgOptimizedImage } from '@angular/common';
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
@@ -17,6 +17,9 @@ import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
 import { ModalReactionsComponent } from '../modal-reactions/modal-reactions.component';
 import { LenisService } from '@socialex/shared/services/lenis.service';
 import { LimitCountActiPipe } from '@socialex/posts/pipes/limit-count-activity.pipe';
+import { ReactionActionComponent } from '../reaction-action/reaction-action.component';
+import { UiStateService } from '@socialex/shared/services/ui-state.service';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'post-card',
@@ -28,12 +31,15 @@ import { LimitCountActiPipe } from '@socialex/posts/pipes/limit-count-activity.p
     NgOptimizedImage,
     ModalReactionsComponent,
     LimitCountActiPipe,
+    ReactionActionComponent,
   ],
   templateUrl: './post-card.component.html',
 })
 export class PostCardComponent {
+  authService = inject(AuthService);
   postsService = inject(PostsService);
   lenisService = inject(LenisService);
+  uiService = inject(UiStateService);
 
   post = input.required<Post>();
   openModalReactionsByPostId = signal<string | null>(null);
@@ -43,6 +49,8 @@ export class PostCardComponent {
   maxReactionsToShow = signal(5);
   maxCommentsToShow = signal(3);
   showAllComments = signal(false);
+
+  private elRef = inject(ElementRef);
 
   i18nPluralPipeComments = {
     '=0': '',

@@ -1,6 +1,6 @@
-<article class="rounded-md border border-gray-700 overflow-hidden">
+<article class="rounded-md border border-gray-700 relative">
   <div class="flex flex-col">
-    <div class="flex items-center gap-2 p-3">
+    <div class="flex items-center gap-2 p-3 overflow-hidden">
       <img
         [ngSrc]="
           userPostResource.value()?.avatar || '/assets/img/avatar-empty.webp'
@@ -102,10 +102,14 @@
       </div>
       }
     </div>
+    @if (authService.authStatus() === 'authenticated' && uiService.showReactionAction() === post().id) {
+      <reaction-action />
+    }
     <div class="border-b border-gray-600 mx-3"></div>
-    <div class="flex items-center gap-2 px-3 py-1">
+    <div class="flex items-center gap-2 px-3 py-1 overflow-hidden">
       <button
         type="button"
+        (click)="uiService.openReactionAction(post().id)"
         class="text-sm flex items-center justify-center gap-2 text-gray-300 p-1.5 grow cursor-pointer transition-colors rounded-lg hover:bg-zinc-800"
       >
         <svg
@@ -152,7 +156,7 @@
       [class.hidden]="!openCommentPostId()"
     ></div>
     <div
-      class="comments-container px-3 opacity-0"
+      class="comments-container px-3 opacity-0 overflow-hidden"
       [ngClass]="{
         'h-1 opacity-0 pointer-events-none': !openCommentPostId(),
         'h-auto py-2 opacity-100 pointer-events-auto': openCommentPostId() === post().id
