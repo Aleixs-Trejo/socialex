@@ -58,8 +58,7 @@
     </div>
     <div class="text-base px-3 content-post">{{ post().content }}</div>
     <div class="w-full flex justify-between items-center px-3 py-2">
-      @if (totalReactionsResource.hasValue() && totalReactionsResource.value() >
-      0) {
+      @if (totalReactionsResource.hasValue() && totalReactionsResource.value() > 0) {
       <div
         class="flex items-center gap-2 mr-auto cursor-pointer hover:underline relative group z-5"
         (click)="openReactionsModal(post().id)"
@@ -80,13 +79,13 @@
         <div
           class="absolute z-5 opacity-0 transition-opacity pointer-events-none bottom-full left-0 w-max h-max flex flex-col gap-1 bg-gray-200 rounded-md p-2 group-hover:opacity-100"
         >
-          @for (user of reactionsResource.value(); track user.id) {
+          @for (user of reactionsResource.value() | limitCountActivity:5 ; track user) {
           <span class="text-sm text-gray-800 leading-4">{{ user.name }}</span>
           }
         </div>
       </div>
-      } @if (totalCommentsResource.hasValue() && totalCommentsResource.value() >
-      0) {
+      }
+      @if (totalCommentsResource.hasValue() && totalCommentsResource.value() > 0) {
       <div
         class="flex items-center gap-2 ml-auto cursor-pointer hover:underline relative group z-5"
       >
@@ -96,7 +95,7 @@
         <div
           class="absolute z-5 opacity-0 transition-opacity pointer-events-none bottom-full right-0 w-max h-max flex flex-col gap-1 bg-gray-200 rounded-md p-2 group-hover:opacity-100"
         >
-          @for (user of commentsResource.value(); track user.id) {
+          @for (user of commentsResource.value() | limitCountActivity:5 ; track user) {
           <span class="text-sm text-gray-800 leading-4">{{ user.name }}</span>
           }
         </div>
@@ -150,12 +149,12 @@
     </div>
     <div
       class="border-b border-gray-600 mx-3"
-      [class.hidden]="openCommentPostId() === null"
+      [class.hidden]="!openCommentPostId()"
     ></div>
     <div
       class="comments-container px-3 opacity-0"
       [ngClass]="{
-        'h-1 opacity-0 pointer-events-none': openCommentPostId() === null,
+        'h-1 opacity-0 pointer-events-none': !openCommentPostId(),
         'h-auto py-2 opacity-100 pointer-events-auto': openCommentPostId() === post().id
       }"
     >

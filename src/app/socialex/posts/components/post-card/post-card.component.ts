@@ -16,6 +16,7 @@ import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
 // Components
 import { ModalReactionsComponent } from '../modal-reactions/modal-reactions.component';
 import { LenisService } from '@socialex/shared/services/lenis.service';
+import { LimitCountActiPipe } from '@socialex/posts/pipes/limit-count-activity.pipe';
 
 @Component({
   selector: 'post-card',
@@ -25,7 +26,8 @@ import { LenisService } from '@socialex/shared/services/lenis.service';
     NgClass,
     RouterLink,
     NgOptimizedImage,
-    ModalReactionsComponent
+    ModalReactionsComponent,
+    LimitCountActiPipe,
   ],
   templateUrl: './post-card.component.html',
 })
@@ -38,6 +40,10 @@ export class PostCardComponent {
 
   openCommentPostId = signal<string | null>(null);
 
+  maxReactionsToShow = signal(5);
+  maxCommentsToShow = signal(3);
+  showAllComments = signal(false);
+
   i18nPluralPipeComments = {
     '=0': '',
     '=1': '1 comentario',
@@ -45,27 +51,33 @@ export class PostCardComponent {
   };
 
   userPostResource = rxResource({
-    stream: () => this.postsService.getAuhtorPost(this.post().authorId),
+    params: () => ({ authorId: this.post().authorId }),
+    stream: ({ params }) => this.postsService.getAuhtorPost(params.authorId),
   });
 
   commentsResource = rxResource({
-    stream: () => this.postsService.getUsersComments(this.post().id),
+    params: () => ({ postId: this.post().id }),
+    stream: ({ params }) => this.postsService.getUsersComments(params.postId),
   });
 
   totalCommentsResource = rxResource({
-    stream: () => this.postsService.getTotalComments(this.post().id),
+    params: () => ({ postId: this.post().id }),
+    stream: ({ params }) => this.postsService.getTotalComments(params.postId),
   });
 
   commentsWithUsersResource = rxResource({
-    stream: () => this.postsService.getCommentsWithUsers(this.post().id),
+    params: () => ({ postId: this.post().id}),
+    stream: ({ params }) => this.postsService.getCommentsWithUsers(params.postId),
   });
 
   reactionsResource = rxResource({
-    stream: () => this.postsService.getUsersReactions(this.post().id),
+    params: () => ({ postId: this.post().id }),
+    stream: ({ params }) => this.postsService.getUsersReactions(params.postId),
   });
 
   totalReactionsResource = rxResource({
-    stream: () => this.postsService.getTotalReactions(this.post().id),
+    params: () => ({ postId: this.post().id }),
+    stream: ({ params }) => this.postsService.getTotalReactions(params.postId),
   });
 
   toggleCommentPost(postId: string) {

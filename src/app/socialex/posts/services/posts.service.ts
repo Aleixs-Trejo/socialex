@@ -40,10 +40,7 @@ export class PostsService {
   getUsersComments(postId: string): Observable<User[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
-    const comments = post.comments
-      .map((c) => this.users.find((u) => u.id === c.authorId))
-      .filter((u): u is User => u !== undefined);
-
+    const comments = post.comments.map((c) => this.users.find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
     const unique = Array.from(new Map(comments.map((u) => [u.id, u])).values());
     return of(unique);
   }
@@ -52,11 +49,7 @@ export class PostsService {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
     const allReactions: Reaction[] = Object.values(post.reactions).flat();
-
-    const users = allReactions
-      .map((r) => this.users.find((u) => u.id === r.authorId))
-      .filter((u): u is User => u !== undefined);
-
+    const users = allReactions.map((r) => this.users.find((u) => u.id === r.authorId)).filter((u): u is User => u !== undefined);
     const unique = Array.from(new Map(users.map((u) => [u.id, u])).values());
     return of(unique);
   }
@@ -64,16 +57,11 @@ export class PostsService {
   getTotalReactions(postId: string): Observable<number> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of(0);
-    const total = Object.values(post.reactions).reduce(
-      (acc, cur) => acc + cur.length,
-      0
-    );
+    const total = Object.values(post.reactions).reduce((acc, cur) => acc + cur.length, 0);
     return of(total);
   }
 
-  getAllReactionsByUsers(
-    postId: string
-  ): Observable<{ user: User; type: keyof Reactions, icon: string }[]> {
+  getAllReactionsByUsers(postId: string): Observable<{ user: User; type: keyof Reactions, icon: string }[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
 
@@ -87,22 +75,13 @@ export class PostsService {
     return of(result);
   }
 
-  getReactionsTypeByUser(
-    postId: string,
-    type: keyof Reactions
-  ): Observable<{ user: User; type: keyof Reactions; icon: string }[]> {
+  getReactionsTypeByUser(postId: string, type: keyof Reactions): Observable<{ user: User; type: keyof Reactions; icon: string }[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
-
-    const result = post.reactions[type]
-      .map((r) => {
-        const user = this.users.find((u) => u.id === r.authorId);
-        return user ? { user, type, icon: getReactionIcon(type) } : null;
-      })
-      .filter(
-        (item): item is { user: User; type: keyof Reactions; icon: string } =>
-          item !== null
-      );
+    const result = post.reactions[type].map((r) => {
+      const user = this.users.find((u) => u.id === r.authorId);
+      return user ? { user, type, icon: getReactionIcon(type) } : null;
+    }).filter((item): item is { user: User; type: keyof Reactions; icon: string } => item !== null);
     return of(result);
   }
 
@@ -113,22 +92,25 @@ export class PostsService {
     return of(total);
   }
 
-  getCommentsWithUsers(
-    postId: string
-  ): Observable<{ comment: Comment; user: User }[]> {
+  getCommentsWithUsers(postId: string): Observable<{ comment: Comment; user: User }[]> {
     const post = this.posts.find((p) => p.id === postId);
     if (!post) return of([]);
 
-    const joined = post.comments
-      .map((c) => {
-        const user = this.users.find((u) => u.id === c.authorId);
-        return user ? { comment: c, user } : null;
-      })
-      .filter(
-        (item): item is { comment: Comment; user: User } => item !== null
-      );
+    const joined = post.comments.map((c) => {
+      const user = this.users.find((u) => u.id === c.authorId);
+      return user ? { comment: c, user } : null;
+    }).filter((item): item is { comment: Comment; user: User } => item !== null);
 
     return of(joined);
+  }
+
+  getLimitedTotalComments(postId: string, limit: number = 3): Observable<User[]> {
+    const post = this.posts.find((p) => p.id === postId);
+    if (!post) return of([]);
+
+    const comments = post.comments.map((c) => this.users.find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
+    const unique = Array.from(new Map(comments.map((u) => [u.id, u])).values());
+    return of(unique.slice(-limit));
   }
 
   getAllPostsFromUser(userId: number): Observable<Post[]> {
@@ -143,9 +125,7 @@ export class PostsService {
     const user = this.users.find((u) => u.id === userId);
     if (!user) return of([]);
 
-    const postsCommentsFromUser = this.posts.filter((p) =>
-      p.comments.some((c) => c.authorId === userId)
-    );
+    const postsCommentsFromUser = this.posts.filter((p) => p.comments.some((c) => c.authorId === userId));
     return of(postsCommentsFromUser);
   }
 }

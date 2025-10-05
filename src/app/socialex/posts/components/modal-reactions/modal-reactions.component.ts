@@ -1,5 +1,5 @@
 // Angular 20
-import { Component, inject, input, output, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -15,17 +15,21 @@ import { Reactions } from '@socialex/posts/interfaces/posts.interface';
 
 // Helpers
 import { btnsReactions } from '@socialex/posts/helpers/reaction.helper';
+import Lenis from 'lenis';
 
 @Component({
   selector: 'modal-reactions',
   imports: [RouterLink, NgClass, NgOptimizedImage],
   templateUrl: './modal-reactions.component.html',
 })
-export class ModalReactionsComponent {
+export class ModalReactionsComponent implements AfterViewInit {
   postsService = inject(PostsService);
   postId = input<string>();
   showReactionType = signal<keyof Reactions>('like');
   closeModalReactions = output<void>();
+
+  private reactionsLenis?: Lenis;
+  contentWrapper = viewChild.required<ElementRef>('lenisReactionsWrapper');
 
   allReactionsResource = rxResource({
     params: () => ({ postId: `${this.postId()}` }),
@@ -58,5 +62,29 @@ export class ModalReactionsComponent {
 
   closeModal() {
     this.closeModalReactions.emit();
+  }
+
+  ngAfterViewInit(): void {
+    this.initReactionsLenis();
+    const animate = (time: number) => {
+      this.reactionsLenis?.raf(time);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  initReactionsLenis() {
+    const wrapperEl  = this.contentWrapper()?.nativeElement;
+    if (!wrapperEl ) return;
+
+    this.reactionsLenis = new Lenis({
+      wrapper: wrapperEl ,
+      content: wrapperEl.firstElementChild as HTMLElement,
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.reactionsLenis?.destroy();
   }
 }

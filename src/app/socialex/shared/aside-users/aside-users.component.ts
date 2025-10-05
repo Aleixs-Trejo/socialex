@@ -17,7 +17,6 @@ import { usersData } from '@socialex/users/data/users.data';
 import Lenis from 'lenis';
 import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '@auth/services/auth.service';
-import { AuthUser } from '@auth/interfaces/auth.interface';
 
 @Component({
   selector: 'aside-users',
