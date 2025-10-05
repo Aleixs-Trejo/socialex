@@ -8,10 +8,11 @@
       >
         <img
           class="w-40 h-40 aspect-square rounded-full"
-          [ngSrc]="user()?.avatar || '/assets/img/avatar-empty.webp'"
+          [src]="user()?.avatar || '/assets/img/avatar-empty.webp'"
           width="160"
           height="160"
           alt="Avatar"
+          priority
           draggable="false"
         />
         <div

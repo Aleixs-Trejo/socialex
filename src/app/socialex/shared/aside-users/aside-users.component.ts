@@ -34,20 +34,6 @@ export class AsideUsersComponent implements AfterViewInit {
   private userLenis?: Lenis;
   contentWrapper = viewChild.required<ElementRef>('lenisWrapper');
 
-  authUsers = linkedSignal(() => this.authService.getAllUsersFromLocalStorage());
-  users = computed(() => [
-    ...usersData,
-    ...this.authUsers().map(u =>({
-      id: u.id,
-      name: u.name,
-      avatar: u.avatar,
-      description: u.description,
-      status: u.status,
-      profession: u.profession,
-      birthdate: u.birthdate,
-    })),
-  ])
-
   searchQuery = signal('');
   debouncedSearch = signal('');
   filterBy = signal<FilterUsersStatus>('all');
@@ -55,7 +41,7 @@ export class AsideUsersComponent implements AfterViewInit {
   btnsOptions: FilterUsersStatus[] = ['all', 'online', 'offline'];
 
   filteredUsers = computed(() =>
-    this.users()
+    this.authService.allUsersAndAuthUsers()
       .filter((u) =>
         this.filterBy() === 'all' ? true : u.status === this.filterBy()
       )

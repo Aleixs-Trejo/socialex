@@ -42,7 +42,7 @@
     </div>
     <div class="overflow-auto scroll-auto" #lenisWrapper>
       <ul class="flex flex-col">
-        @for(user of users() | filterAsideUsersBy: filterBy() | searchUserBy: debouncedSearch(); track user.id) {
+        @for(user of authService.allUsersAndAuthUsers() | filterAsideUsersBy: filterBy() | searchUserBy: debouncedSearch(); track user.id) {
         <li class="flex items-center gap-2 w-full transition-colors hover:bg-zinc-700">
           <a
             [routerLink]="['profile', user.id]"

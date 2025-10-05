@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 // Interfaces
 import { AuthUser } from '@auth/interfaces/auth.interface';
+import { usersData } from '@socialex/users/data/users.data';
+import { User } from '@socialex/users/interfaces/user.interface';
 
 // Utils
 import { convertFileToBase64 } from '@socialex/utils/convert-image-base64';
@@ -39,6 +41,19 @@ export class AuthService {
     const raw = localStorage.getItem(storageUsersKey);
     return raw ? JSON.parse(raw) as AuthUser[] : [];
   }
+
+  allUsersAndAuthUsers = computed<User[]>(() => ([
+    ...this.getAllUsersFromLocalStorage(),
+    ...usersData.map(u => ({
+      id: u.id,
+      name: u.name,
+      avatar: u.avatar,
+      description: u.description,
+      status: u.status,
+      profession: u.profession,
+      birthdate: u.birthdate,
+    })),
+  ]));
 
   // Guardar usuarios en localStorage
   saveUsersToLocalStorage(users: AuthUser[]) {

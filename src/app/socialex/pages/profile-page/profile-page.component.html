@@ -8,9 +8,10 @@
       >
         <img
           class="w-40 h-40 aspect-square rounded-full"
-          [src]="user()?.avatar || '/assets/img/avatar-empty.webp'"
+          [srcset]="user()?.avatar || '/assets/img/avatar-empty.webp'"
           width="160"
           height="160"
+          priority
           alt="Avatar"
           draggable="false"
         />

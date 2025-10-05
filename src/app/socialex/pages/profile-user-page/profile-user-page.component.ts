@@ -1,5 +1,5 @@
 // Angular
-import { Component, inject, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   I18nPluralPipe,
@@ -21,11 +21,11 @@ import { usersData } from '@socialex/users/data/users.data';
 
 // Components
 import { PostCardComponent } from '@socialex/posts/components/post-card/post-card.component';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'app-profile-user-page',
   imports: [
-    NgOptimizedImage,
     I18nPluralPipe,
     SlicePipe,
     PostCardComponent
@@ -33,6 +33,7 @@ import { PostCardComponent } from '@socialex/posts/components/post-card/post-car
   templateUrl: './profile-user-page.component.html',
 })
 export default class ProfileUserPageComponent {
+  authService = inject(AuthService);
   activatedRoute = inject(ActivatedRoute);
   postsService = inject(PostsService);
   queryParamId = toSignal(this.activatedRoute.paramMap, { initialValue: null });
@@ -54,18 +55,18 @@ export default class ProfileUserPageComponent {
   user = linkedSignal(() => {
     const id = this.queryParamId()?.get('userId');
     if (!id) return null;
-    return usersData.find((user) => user.id === +id);
+    return this.authService.allUsersAndAuthUsers().find((user) => user.id === +id);
   });
 
   postsUserResource = rxResource({
     params: () => ({ userId: this.user()?.id }),
-    stream: () =>
-      this.postsService.getAllPostsFromUser(Number(this.user()?.id)),
+    stream: ({ params }) =>
+      this.postsService.getAllPostsFromUser(Number(params.userId)),
   });
 
   commentsPostUserResource = rxResource({
     params: () => ({ userId: this.user()?.id }),
-    stream: () =>
-      this.postsService.getAllCommentsPostsFromUser(Number(this.user()?.id)),
+    stream: ({ params }) =>
+      this.postsService.getAllCommentsPostsFromUser(Number(params.userId)),
   });
 }

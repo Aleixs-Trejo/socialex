@@ -1,5 +1,5 @@
 // Angular
-import { I18nPluralPipe, NgOptimizedImage, SlicePipe } from '@angular/common';
+import { I18nPluralPipe, SlicePipe } from '@angular/common';
 import { Component, inject, linkedSignal, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -39,11 +39,11 @@ export default class ProfilePageComponent {
 
   postsUserResource = rxResource({
     params: () => ({ userId: this.user()!.id }),
-    stream: () => this.postsService.getAllPostsFromUser(this.user()!.id),
+    stream: ({ params }) => this.postsService.getAllPostsFromUser(params.userId),
   });
 
   commentsPostUserResource = rxResource({
     params: () => ({ userId: this.user()!.id }),
-    stream: () => this.postsService.getAllCommentsPostsFromUser(this.user()!.id),
+    stream: ({ params }) => this.postsService.getAllCommentsPostsFromUser(params.userId),
   });
 }
