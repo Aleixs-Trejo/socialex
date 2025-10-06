@@ -130,14 +130,14 @@
           </svg>
           <span class="user-select-none pointer-events-none">Reaccionar</span>
         } @else {
-          @if (uiService.reactionData()) {
+          @if (uiService.getReactionForPost(post().id)) {
             <div class="flex items-center gap-2">
               <img
-                [srcset]="uiService.reactionData()?.icon"
+                [srcset]="uiService.getReactionForPost(post().id)?.icon"
                 alt="icon"
                 class="w-5 aspect-square"
               />
-              <span class="text-xs">{{ uiService.reactionData()?.title }}</span>
+              <span class="text-xs">{{ uiService.getReactionForPost(post().id)?.title }}</span>
             </div>
           }
         }

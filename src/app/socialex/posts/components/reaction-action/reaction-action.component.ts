@@ -1,5 +1,5 @@
 // Angular 20
-import { Component, ElementRef, HostListener, inject, input } from '@angular/core';
+import { Component, effect, ElementRef, HostListener, inject, input } from '@angular/core';
 
 // Services
 import { AuthService } from '@auth/services/auth.service';
@@ -28,6 +28,28 @@ export class ReactionActionComponent {
 
   reactions = reactions;
 
+  constructor() {
+    effect(() => {
+      const post = this.post();
+      const currentUser = this.authService.getCurrentUser();
+      if (!post || !currentUser) return;
+  
+      let userReaction: keyof Reactions | null = null;
+      for (const key in post.reactions) {
+        const type = key as keyof Reactions;
+        if (post.reactions[type].some((r) => r.authorId === currentUser.id)) {
+          userReaction = type;
+          break;
+        }
+      }
+  
+      if (userReaction) {
+        const reactionData = this.reactions.find((r) => r.type === userReaction);
+        if (reactionData) this.uiService.setReactionData(post.id, reactionData);
+      }
+    });
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickedInside = this.elRef.nativeElement.contains(event.target);
@@ -35,9 +57,11 @@ export class ReactionActionComponent {
   }
 
   clickReaction(type: keyof Reactions) {
-    this.postsService.changeReaction(this.post()!.id, type, this.authService.getCurrentUser()!.id);
-    const reactionTypeData = this.reactions.find((r) => r.type === type) || null;
-    this.uiService.reactionData.set(reactionTypeData);
+    const postId = this.post().id;
+    const authorId = this.authService.getCurrentUser()!.id;
+    this.postsService.changeReaction(postId, type, authorId);
+    const reactionTypeData = this.reactions.find((r) => r.type === type);
+    if (reactionTypeData) this.uiService.setReactionForPost(postId, reactionTypeData);
     this.uiService.closeReactionAction();
   }
 }

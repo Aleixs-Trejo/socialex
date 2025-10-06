@@ -27,3 +27,9 @@ export interface Comment {
   content: string;
   createdAt: string;
 }
+
+export interface ReactionType {
+  type: keyof Reactions;
+  icon: string;
+  title: string;
+}
