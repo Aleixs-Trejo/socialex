@@ -13,6 +13,7 @@ import { PostDatePipe } from '@socialex/posts/pipes/post-date.pipe';
 // Interfaces
 import { Post } from '@socialex/posts/interfaces/posts.interface';
 import { InputCommentComponent } from '../input-comment/input-comment.component';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'post-card-comments',
@@ -20,6 +21,7 @@ import { InputCommentComponent } from '../input-comment/input-comment.component'
   templateUrl: './post-card-comments.component.html',
 })
 export class PostCardCommentsComponent {
+  authService = inject(AuthService);
   postsService = inject(PostsService);
   post = input.required<Post>();
   openComment = input.required<string | null>();
