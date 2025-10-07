@@ -38,7 +38,6 @@ export class PostCardCommentsComponent {
   });
 
   toggleViewComments() {
-    console.log(this.showAllComments());
     this.showAllComments.set(!this.showAllComments());
   }
 }

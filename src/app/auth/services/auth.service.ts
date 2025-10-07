@@ -24,6 +24,8 @@ export class AuthService {
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<AuthUser | null>(null);
 
+  private _localUsers = signal<AuthUser[]>(this.getAllUsersFromLocalStorage());
+
   constructor() {
     this.checkAuthStatus();
   }
@@ -43,7 +45,7 @@ export class AuthService {
   }
 
   allUsersAndAuthUsers = computed<User[]>(() => ([
-    ...this.getAllUsersFromLocalStorage(),
+    ...this._localUsers(),
     ...usersData.map(u => ({
       id: u.id,
       name: u.name,
@@ -58,6 +60,7 @@ export class AuthService {
   // Guardar usuarios en localStorage
   saveUsersToLocalStorage(users: AuthUser[]) {
     localStorage.setItem(storageUsersKey, JSON.stringify(users));
+    this._localUsers.set(users);
   }
 
   checkAuthStatus(): void {
@@ -86,8 +89,15 @@ export class AuthService {
   }
 
   logout() {
-    const currentUser = this._user();
-    if (currentUser) currentUser.status = 'offline';
+    const current = this.getCurrentUser();
+    if (!current) return;
+  
+    const authUsers = this.getAllUsersFromLocalStorage();
+    const authUsersIdx = authUsers.findIndex((u) => u.id === this.getCurrentUser()?.id);
+    if (authUsersIdx !== -1) {
+      authUsers[authUsersIdx] = { ...authUsers[authUsersIdx], status: 'offline' };
+      this.saveUsersToLocalStorage(authUsers);
+    }
 
     sessionStorage.removeItem(storageSessionKey);
     this._user.set(null);
@@ -118,15 +128,17 @@ export class AuthService {
   }
 
   private handleAuthSuccess(user: AuthUser) {
-    sessionStorage.setItem(storageSessionKey, JSON.stringify(user));
-    user.status = 'online';
+    const userOnline: AuthUser = { ...user, status: 'online' };
+    sessionStorage.setItem(storageSessionKey, JSON.stringify(userOnline));
     const authUsers = this.getAllUsersFromLocalStorage();
     const idx = authUsers.findIndex((u) => u.id === user.id);
     if (idx !== -1) {
-      authUsers[idx] = user;
-      this.saveUsersToLocalStorage(authUsers);
+      authUsers[idx] = {...authUsers[idx], ...userOnline};
+    } else {
+      authUsers.push(userOnline);
     }
-    this._user.set(user);
+    this.saveUsersToLocalStorage(authUsers);
+    this._user.set(userOnline);
     this._authStatus.set('authenticated');
     return true;
   }
