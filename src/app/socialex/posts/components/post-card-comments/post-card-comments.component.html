@@ -1,0 +1,58 @@
+<div
+  class="comments-container px-3 opacity-0 overflow-hidden"
+  [ngClass]="{
+    'h-1 opacity-0 pointer-events-none': !openComment(),
+    'h-auto py-2 opacity-100 pointer-events-auto': openComment() === post().id
+  }"
+>
+  <ul class="flex flex-col gap-4">
+    @if (post().comments.length === 0) {
+      <li class="flex items-start w-full rounded text-sm text-gray-400">
+        No hay comentarios
+      </li>
+    }
+    @if (post().comments.length > 3) {
+      <li>
+        <button
+          class="w-max p-1 text-xs hover:underline cursor-pointer"
+          (click)="toggleViewComments()"
+          >
+          {{ showAllComments() ? 'Menos comentarios' : 'Todos los comentarios' }}
+        </button>
+      </li>
+    }
+    @if (commentsWithUsersResource.value(); as comments) {
+      @for (item of comments; track item.comment.id) {
+        <li class="flex flex-col items-start w-full rounded">
+          <div class="flex gap-2">
+            <img
+              [src]="item.user.avatar"
+              alt="avatar"
+              class="w-8 h-8 rounded-full"
+            />
+            <div class="w-full flex flex-col bg-bg-tertiary rounded-lg p-2">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center flex-wrap leading-2">
+                  <a
+                    [routerLink]="['/socialex/profile', item.user.id]"
+                    class="font-semibold text-sm mr-2 hover:underline"
+                  >
+                    {{ item.user.name }}
+                  </a>
+                  <span class="text-xxs text-gray-400">
+                    {{ item.user.profession }}
+                  </span>
+                </div>
+              </div>
+              <div class="text-base text-white content-comment">{{ item.comment.content }}</div>
+            </div>
+          </div>
+          <span class="text-xxs text-gray-400 ml-12">
+            {{ item.comment.createdAt | postDate }}
+          </span>
+        </li>
+      }
+    }
+  </ul>
+  <input-comment [post]="post()" />
+</div>

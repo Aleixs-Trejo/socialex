@@ -29,7 +29,7 @@ export class PostsService {
 
   getPosts(page: number, pageSize: number): Observable<Post[]> {
     const start = (page - 1) * pageSize;
-    const paginated = this.posts().slice(start, start + pageSize);
+    const paginated = this.posts().reverse().slice(start, start + pageSize);
     return of(paginated);
   }
 
@@ -107,13 +107,17 @@ export class PostsService {
     return of(joined);
   }
 
-  getLimitedTotalComments(postId: string, limit: number = 3): Observable<User[]> {
+  getLimitedTotalComments(postId: string, limit: number = 3): Observable<{ comment: Comment; user: User }[]> {
     const post = this.posts().find((p) => p.id === postId);
     if (!post) return of([]);
 
-    const comments = post.comments.map((c) => this.authService.allUsersAndAuthUsers().find((u) => u.id === c.authorId)).filter((u): u is User => u !== undefined);
-    const unique = Array.from(new Map(comments.map((u) => [u.id, u])).values());
-    return of(unique.slice(-limit));
+    const limitedComments = post.comments.slice(-limit);
+
+    const joined = limitedComments.map((c) => {
+      const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === c.authorId);
+      return user ? { comment: c, user } : null;
+    }).filter((item): item is { comment: Comment; user: User } => item !== null);
+    return of(joined);
   }
 
   getAllPostsFromUser(userId: number): Observable<Post[]> {
@@ -131,35 +135,6 @@ export class PostsService {
     const postsCommentsFromUser = this.posts().filter((p) => p.comments.some((c) => c.authorId === userId));
     return of(postsCommentsFromUser);
   }
-
-  /* changeReaction(postId: string, type: keyof Reactions, authorId: number) {
-    const post = this.posts().find((p) => p.id === postId);
-    if (!post) return;
-    const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
-    if (!author) return;
-
-    let previousReaction: keyof Reactions | null = null;
-
-    for (const key in post.reactions) {
-      const reactionType = key as keyof Reactions;
-      const hasReacted = post.reactions[reactionType].some((r) => r.authorId === authorId);
-      if (hasReacted) {
-        previousReaction = reactionType;
-        break;
-      }
-    }
-
-    if (previousReaction === type) {
-      post.reactions[type] = post.reactions[type].filter((r) => r.authorId !== authorId);
-      return;
-    }
-
-    if (previousReaction) {
-      post.reactions[previousReaction] = post.reactions[previousReaction].filter((r) => r.authorId !== authorId);
-    }
-
-    post.reactions[type].push({ authorId });
-  } */
 
   changeReaction(postId: string, type: keyof Reactions, authorId: number) {
     this.posts.update(posts => {
@@ -228,5 +203,29 @@ export class PostsService {
     }
 
     return null;
+  }
+
+  addComment(postId: string, content: string, authorId: number) {
+    this.posts.update(posts => {
+      const postIndex = posts.findIndex((p) => p.id === postId);
+      if (postIndex === -1) return posts;
+
+      const post = { ...posts[postIndex] };
+      const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
+      if (!author) return posts;
+
+      const newComment: Comment = {
+        id: `${Date.now()}`,
+        authorId,
+        content,
+        createdAt: new Date().toISOString()
+      };
+      post.comments.push(newComment);
+
+      const newPosts = [...posts];
+      newPosts[postIndex] = post;
+
+      return newPosts;
+    });
   }
 }
