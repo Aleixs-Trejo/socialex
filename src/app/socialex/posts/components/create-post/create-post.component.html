@@ -1,0 +1,25 @@
+<div class="w-full bg-bg-secondary rounded-md p-4">
+  <div class="overflow-hidden flex flex-col gap-2">
+    <div class="flex items-start gap-2">
+      <img
+        [src]="currentUser.avatar"
+        [alt]="currentUser.name"
+        class="w-8 h-8 rounded-full flex-shrink-0"
+      />
+      <textarea
+        name="comment"
+        id="comment"
+        class="field-sizing-content grow resize-none outline-none rounded-lg bg-bg-tertiary p-2 placeholder:text-gray-300"
+        (keydown)="keydownPost($event, txtComment)"
+        placeholder="Publica lo que quieras"
+        #txtComment
+      ></textarea>
+    </div>
+    <button
+      class="btn btn-primary w.full"
+      (click)="createPost(currentUser.id, txtComment)"
+    >
+      Publicar
+    </button>
+  </div>
+</div>

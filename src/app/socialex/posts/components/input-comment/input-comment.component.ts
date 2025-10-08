@@ -16,6 +16,12 @@ export class InputCommentComponent {
   postsService = inject(PostsService);
   post = input.required<Post>();
 
+  get currentUser() {
+    const user = this.authService.getCurrentUser();
+    if (!user) throw new Error('No user found');
+    return user;
+  }
+
   keydownComment(event: KeyboardEvent, textarea: HTMLTextAreaElement) {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -28,7 +34,7 @@ export class InputCommentComponent {
     if (!content) return;
     
     const postId = this.post().id;
-    const authorId = this.authService.getCurrentUser()!.id;
+    const authorId = this.currentUser.id;
     this.postsService.addComment(postId, content, authorId);
 
     textarea.value = '';

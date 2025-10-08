@@ -22,4 +22,10 @@ export class AsideComponent {
   authService = inject(AuthService);
   asideService = inject(AsideService);
   asideList = asideList;
+
+  get currentUser() {
+    const user = this.authService.getCurrentUser();
+    if (!user) throw new Error('No user found');
+    return user;
+  }
 }

@@ -1,16 +1,16 @@
 <div class="w-full flex flex-col gap-1 my-4">
   <div class="flex gap-2 w-full">
     <img
-      [src]="authService.getCurrentUser()?.avatar"
+      [src]="currentUser.avatar"
       alt="avatar"
-      class="w-8 h-8 rounded-full flex-shrink-0"
+      class="mt-2 w-8 h-8 rounded-full flex-shrink-0"
     />
     <textarea
       name="comment"
       id="comment"
       class="field-sizing-content grow resize-none outline-none rounded-lg bg-bg-tertiary p-2 placeholder:text-gray-300"
       (keydown)="keydownComment($event, txtComment)"
-      [placeholder]="'Comentar como ' + authService.getCurrentUser()?.name"
+      [placeholder]="'Comentar como ' + currentUser.name"
       #txtComment
     ></textarea>
   </div>

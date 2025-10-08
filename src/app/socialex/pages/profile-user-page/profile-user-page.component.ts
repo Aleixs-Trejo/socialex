@@ -1,11 +1,13 @@
 // Angular
-import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import {
-  I18nPluralPipe,
-  NgOptimizedImage,
-  SlicePipe,
-} from '@angular/common';
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  signal,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { I18nPluralPipe, SlicePipe } from '@angular/common';
 
 // RxJS
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
@@ -16,20 +18,19 @@ import { PostsService } from '@socialex/posts/services/posts.service';
 // Types
 import { Activity } from '@socialex/users/types/activity.types';
 
-// Data
-import { usersData } from '@socialex/users/data/users.data';
-
 // Components
 import { PostCardComponent } from '@socialex/posts/components/post-card/post-card.component';
 import { AuthService } from '@auth/services/auth.service';
 
+const activities: { eng: Activity; esp: string }[] = [
+  { eng: 'posts', esp: 'Publicaciones' },
+  { eng: 'comments', esp: 'Comentarios' },
+  { eng: 'reactions', esp: 'Reacciones' },
+];
+
 @Component({
   selector: 'app-profile-user-page',
-  imports: [
-    I18nPluralPipe,
-    SlicePipe,
-    PostCardComponent
-  ],
+  imports: [I18nPluralPipe, SlicePipe, PostCardComponent],
   templateUrl: './profile-user-page.component.html',
 })
 export default class ProfileUserPageComponent {
@@ -39,6 +40,7 @@ export default class ProfileUserPageComponent {
   queryParamId = toSignal(this.activatedRoute.paramMap, { initialValue: null });
 
   showActivity = signal<Activity>('posts');
+  activities = activities;
 
   i18nPluralProfilePosts = {
     '=0': 'No tiene publicaciones',
@@ -55,7 +57,9 @@ export default class ProfileUserPageComponent {
   user = linkedSignal(() => {
     const id = this.queryParamId()?.get('userId');
     if (!id) return null;
-    return this.authService.allUsersAndAuthUsers().find((user) => user.id === +id);
+    return this.authService
+      .allUsersAndAuthUsers()
+      .find((user) => user.id === +id);
   });
 
   postsUserResource = rxResource({
@@ -69,4 +73,17 @@ export default class ProfileUserPageComponent {
     stream: ({ params }) =>
       this.postsService.getAllCommentsPostsFromUser(Number(params.userId)),
   });
+
+  reactionsPostUserResource = rxResource({
+    params: () => ({ userId: this.user()!.id }),
+    stream: ({ params }) => this.postsService.getAllReactionsPostsFromUser(params.userId),
+  });
+
+  resourcesMap = {
+    posts: this.postsUserResource,
+    comments: this.commentsPostUserResource,
+    reactions: this.reactionsPostUserResource,
+  }
+
+  activePostsResource = computed(() => this.resourcesMap[this.showActivity()]);
 }

@@ -66,39 +66,29 @@
       <div class="flex flex-col gap-4 bg-bg-tertiary p-4 rounded-xl">
         <h3 class="text-xl font-semibold">Actividad:</h3>
         <div class="flex gap-2 flex-wrap items-center">
-          <button
-            type="button"
-            class="btn btn-sm sm:btn-md"
-            [class.btn-primary]="showActivity() === 'posts'"
-            (click)="showActivity.set('posts')"
-          >
-            Publicaciones
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm sm:btn-md"
-            [class.btn-primary]="showActivity() === 'comments'"
-            (click)="showActivity.set('comments')"
-          >
-            Comentarios
-          </button>
+          @for (activity of activities; track activity.eng) {
+            <button
+              type="button"
+              class="btn btn-sm sm:btn-md"
+              [class.btn-primary]="showActivity() === activity.eng"
+              (click)="showActivity.set(activity.eng)"
+            >
+              {{ activity.esp }}
+            </button>
+          }
         </div>
         <div class="flex flex-col gap-2">
-          @if (showActivity() === 'posts') {
-            @if (postsUserResource.hasValue()) {
+          @if (activePostsResource().hasValue()) {
+            @if (activePostsResource().value()!.length > 0) {
               <section class="flex flex-col gap-4">
-                @for (post of postsUserResource.value() | slice: 0:2; track post.id) {
-                  <post-card [post]="post" />
+                @for (post of activePostsResource().value() | slice: 0:4; track post.id) {
+                  <post-card [post]="post" class="bg-bg-secondary rounded-md" />
                 }
               </section>
-            }
-          } @else {
-            @if (commentsPostUserResource.hasValue()) {
-              <section class="flex flex-col gap-4">
-                @for (post of commentsPostUserResource.value() | slice: 0:2; track post.id) {
-                  <post-card [post]="post" />
-                }
-              </section>
+            } @else {
+              <p class="text-sm text-gray-300 italic">
+                No hay {{ showActivity() === 'posts' ? 'publicaciones' : showActivity() === 'comments' ? 'comentarios' : 'reacciones' }} aún.
+              </p>
             }
           }
         </div>

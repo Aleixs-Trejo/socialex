@@ -31,7 +31,7 @@ export class ReactionActionComponent {
   constructor() {
     effect(() => {
       const post = this.post();
-      const currentUser = this.authService.getCurrentUser();
+      const currentUser = this.currentUser;
       if (!post || !currentUser) return;
   
       let userReaction: keyof Reactions | null = null;
@@ -50,6 +50,12 @@ export class ReactionActionComponent {
     });
   }
 
+  get currentUser() {
+    const user = this.authService.getCurrentUser();
+    if (!user) throw new Error('No user found');
+    return user;
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickedInside = this.elRef.nativeElement.contains(event.target);
@@ -58,7 +64,7 @@ export class ReactionActionComponent {
 
   clickReaction(type: keyof Reactions) {
     const postId = this.post().id;
-    const authorId = this.authService.getCurrentUser()!.id;
+    const authorId = this.currentUser.id;
     this.postsService.changeReaction(postId, type, authorId);
     const reactionTypeData = this.reactions.find((r) => r.type === type);
     if (reactionTypeData) this.uiService.setReactionForPost(postId, reactionTypeData);

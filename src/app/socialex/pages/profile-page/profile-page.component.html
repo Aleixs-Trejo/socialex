@@ -8,7 +8,7 @@
       >
         <img
           class="w-40 h-40 aspect-square rounded-full"
-          [srcset]="user()?.avatar || '/assets/img/avatar-empty.webp'"
+          [srcset]="currentUser.avatar || '/assets/img/avatar-empty.webp'"
           width="160"
           height="160"
           priority
@@ -20,15 +20,15 @@
         >
           <span
             class="block w-full h-full rounded-full"
-            [class.bg-green-500]="user()?.status === 'online'"
-            [class.bg-zinc-500]="user()?.status === 'offline'"
+            [class.bg-green-500]="currentUser.status === 'online'"
+            [class.bg-zinc-500]="currentUser.status === 'offline'"
           ></span>
         </div>
       </div>
       <div class="flex flex-col gap-2">
         <div class="flex flex-col text-center lg:text-start">
-          <h2 class="text-2xl font-semibold">{{ user()?.name }}</h2>
-          <h3 class="text-base text-gray-200">{{ user()?.profession }}</h3>
+          <h2 class="text-2xl font-semibold">{{ currentUser.name }}</h2>
+          <h3 class="text-base text-gray-200">{{ currentUser.profession }}</h3>
         </div>
         <div class="flex items-center gap-4 text-center lg:text-start">
           <span class="text-sm">{{
@@ -51,14 +51,14 @@
             class="flex flex-col flex-wrap lg:flex-row lg:gap-4 lg:flex-nowrap"
           >
             <h4 class="text-lg font-semibold">Información:</h4>
-            <p class="text-base text-gray-200">{{ user()?.description }}</p>
+            <p class="text-base text-gray-200">{{ currentUser.description }}</p>
           </div>
         </div>
         <div
           class="flex items-center gap-x-4 flex-wrap lg:flex-row lg:gap-4 lg:flex-nowrap"
         >
           <h4 class="text-lg font-semibold">Fecha de nacimiento:</h4>
-          <span class="text-sm text-gray-200">{{ user()?.birthdate }}</span>
+          <span class="text-sm text-gray-200">{{ currentUser.birthdate }}</span>
         </div>
       </div>
     </div>
@@ -66,39 +66,29 @@
       <div class="flex flex-col gap-4 bg-bg-tertiary p-4 rounded-xl">
         <h3 class="text-xl font-semibold">Actividad:</h3>
         <div class="flex gap-2 flex-wrap items-center">
-          <button
-            type="button"
-            class="btn btn-sm sm:btn-md"
-            [class.btn-primary]="showActivity() === 'posts'"
-            (click)="showActivity.set('posts')"
-          >
-            Publicaciones
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm sm:btn-md"
-            [class.btn-primary]="showActivity() === 'comments'"
-            (click)="showActivity.set('comments')"
-          >
-            Comentarios
-          </button>
+          @for (activity of activities; track activity.eng) {
+            <button
+              type="button"
+              class="btn btn-sm sm:btn-md"
+              [class.btn-primary]="showActivity() === activity.eng"
+              (click)="showActivity.set(activity.eng)"
+            >
+              {{ activity.esp }}
+            </button>
+          }
         </div>
         <div class="flex flex-col gap-2">
-          @if (showActivity() === 'posts') {
-            @if (postsUserResource.hasValue()) {
+          @if (activePostsResource().hasValue()) {
+            @if (activePostsResource().value()!.length > 0) {
               <section class="flex flex-col gap-4">
-                @for (post of postsUserResource.value() | slice: 0:2; track post.id) {
-                  <post-card [post]="post" />
+                @for (post of activePostsResource().value() | slice: 0:2; track post.id) {
+                  <post-card [post]="post" class="bg-bg-secondary rounded-md" />
                 }
               </section>
-            }
-          } @else {
-            @if (commentsPostUserResource.hasValue()) {
-              <section class="flex flex-col gap-4">
-                @for (post of commentsPostUserResource.value() | slice: 0:2; track post.id) {
-                  <post-card [post]="post" />
-                }
-              </section>
+            } @else {
+              <p class="text-sm text-gray-300 italic">
+                No hay {{ showActivity() === 'posts' ? 'publicaciones' : showActivity() === 'comments' ? 'comentarios' : 'reacciones' }} aún.
+              </p>
             }
           }
         </div>

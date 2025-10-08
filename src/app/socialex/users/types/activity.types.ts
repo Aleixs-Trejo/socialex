@@ -1,1 +1,1 @@
-export type Activity = 'posts' | 'comments';
+export type Activity = 'posts' | 'comments' | 'reactions';

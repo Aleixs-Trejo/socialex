@@ -29,7 +29,7 @@ export class PostsService {
 
   getPosts(page: number, pageSize: number): Observable<Post[]> {
     const start = (page - 1) * pageSize;
-    const paginated = this.posts().reverse().slice(start, start + pageSize);
+    const paginated = [...this.posts()].reverse().slice(start, start + pageSize);
     return of(paginated);
   }
 
@@ -136,6 +136,14 @@ export class PostsService {
     return of(postsCommentsFromUser);
   }
 
+  getAllReactionsPostsFromUser(userId: number): Observable<Post[]> {
+    const user = this.authService.allUsersAndAuthUsers().find((u) => u.id === userId);
+    if (!user) return of([]);
+
+    const postsReactionsFromUser = this.posts().filter((p) => Object.values(p.reactions).flat().some((r) => r.authorId === userId));
+    return of(postsReactionsFromUser);
+  }
+
   changeReaction(postId: string, type: keyof Reactions, authorId: number) {
     this.posts.update(posts => {
       const postIndex = posts.findIndex((p) => p.id === postId);
@@ -209,11 +217,9 @@ export class PostsService {
     this.posts.update(posts => {
       const postIndex = posts.findIndex((p) => p.id === postId);
       if (postIndex === -1) return posts;
-
       const post = { ...posts[postIndex] };
       const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
       if (!author) return posts;
-
       const newComment: Comment = {
         id: `${Date.now()}`,
         authorId,
@@ -221,10 +227,36 @@ export class PostsService {
         createdAt: new Date().toISOString()
       };
       post.comments.push(newComment);
-
       const newPosts = [...posts];
       newPosts[postIndex] = post;
+      return newPosts;
+    });
+  }
 
+  createPost(authorId: number, content: string, categories: string[]) {
+    this.posts.update(posts => {
+      const author = this.authService.allUsersAndAuthUsers().find((u) => u.id === authorId);
+      if (!author) return posts;
+
+      const idLastPost: number = Number(posts.at(-1)?.id.slice(-2));
+      const newPost: Post = {
+        id: `p-0${idLastPost + 1}`,
+        authorId,
+        content,
+        categories,
+        createdAt: new Date().toISOString(),
+        comments: [],
+        reactions: {
+          like: [],
+          love: [],
+          laugh: [],
+          wow: [],
+          sad: [],
+          angry: [],
+        },
+      };
+
+      const newPosts = [...posts, newPost];
       return newPosts;
     });
   }

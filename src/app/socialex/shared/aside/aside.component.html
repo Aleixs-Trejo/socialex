@@ -1,5 +1,5 @@
 <aside
-  class="fixed top-header bottom-0 left-0 z-10 transition-all border-r border-zinc-700 bg-bg-primary"
+  class="fixed top-header bottom-0 left-0 z-10 transition-all bg-bg-primary"
   [class.w-aside-active]="asideService.isAsideActiveService()"
   [class.w-aside]="!asideService.isAsideActiveService()"
 >
@@ -34,7 +34,7 @@
     </div>
     <div class="flex flex-col gap-4">
       <ul class="flex flex-col">
-        @if (authService.getCurrentUser()) {
+        @if (currentUser) {
           <li class="transition-colors hover:bg-zinc-700">
             <a
               class="w-full h-12 px-4 aspect-square rounded-md flex items-center transition-colors"
@@ -44,8 +44,8 @@
             >
               <div class="flex items-center gap-4">
                 <img
-                  [src]="authService.getCurrentUser()?.avatar"
-                  [alt]="authService.getCurrentUser()?.name"
+                  [src]="currentUser.avatar"
+                  [alt]="currentUser.name"
                   class="w-8 h-8 aspect-square rounded-full"
                 />
                 <span
@@ -53,7 +53,7 @@
                   [class.opacity-100]="asideService.isAsideActiveService()"
                   [class.opacity-0]="!asideService.isAsideActiveService()"
                 >
-                  {{ authService.getCurrentUser()?.name }}
+                  {{ currentUser.name }}
                 </span>
               </div>
             </a>
@@ -74,7 +74,7 @@
                   [class.opacity-100]="asideService.isAsideActiveService()"
                   [class.opacity-0]="!asideService.isAsideActiveService()"
                 >
-                  Noticias
+                  {{ element.title }}
                 </span>
               </div>
             </a>
