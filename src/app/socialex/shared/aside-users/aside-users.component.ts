@@ -1,5 +1,5 @@
 // Angular
-import { AfterViewInit, Component, computed, effect, ElementRef, inject, linkedSignal, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // Interfaces | Types
@@ -9,12 +9,6 @@ import { FilterUsersStatus } from '@socialex/types/filter-users-status.type';
 // Pipes
 import { FilterAsideUsersByPipe } from '@socialex/pipes/filter-aside-users-by.pipe';
 import { SearchUserByPipe } from '@socialex/pipes/search-user-by.pipe';
-
-// Data
-import { usersData } from '@socialex/users/data/users.data';
-
-// Lenis
-import Lenis from 'lenis';
 import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '@auth/services/auth.service';
 
@@ -29,16 +23,15 @@ import { AuthService } from '@auth/services/auth.service';
   ],
   templateUrl: './aside-users.component.html',
 })
-export class AsideUsersComponent implements AfterViewInit {
+export class AsideUsersComponent {
   authService = inject(AuthService);
-  private userLenis?: Lenis;
-  contentWrapper = viewChild.required<ElementRef>('lenisWrapper');
 
   searchQuery = signal('');
   debouncedSearch = signal('');
   filterBy = signal<FilterUsersStatus>('all');
 
   btnsOptions: FilterUsersStatus[] = ['all', 'online', 'offline'];
+
 
   filteredUsers = computed(() =>
     this.authService.allUsersAndAuthUsers()
@@ -73,28 +66,4 @@ export class AsideUsersComponent implements AfterViewInit {
 
     onCleanUp(() => clearTimeout(timeout));
   });
-
-  ngAfterViewInit(): void {
-    this.initUsersLenis();
-    const animate = (time: number) => {
-      this.userLenis?.raf(time);
-      requestAnimationFrame(animate);
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  initUsersLenis() {
-    const wrapperEl  = this.contentWrapper()?.nativeElement;
-    if (!wrapperEl ) return;
-
-    this.userLenis = new Lenis({
-      wrapper: wrapperEl ,
-      content: wrapperEl.firstElementChild as HTMLElement,
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.userLenis?.destroy();
-  }
 }

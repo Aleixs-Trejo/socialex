@@ -1,12 +1,11 @@
 // Angular 20
 import { I18nPluralPipe } from '@angular/common';
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 // Services
 import { AuthService } from '@auth/services/auth.service';
 import { PostsService } from '@socialex/posts/services/posts.service';
-import { LenisService } from '@socialex/shared/services/lenis.service';
 import { UiStateService } from '@socialex/shared/services/ui-state.service';
 
 // Interfaces
@@ -29,14 +28,14 @@ import { PostCardCommentsComponent } from '../post-card-comments/post-card-comme
     LimitCountActiPipe,
     ReactionActionComponent,
     PostCardContentComponent,
-    PostCardCommentsComponent,
+    PostCardCommentsComponent
   ],
   templateUrl: './post-card.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostCardComponent {
   authService = inject(AuthService);
   postsService = inject(PostsService);
-  lenisService = inject(LenisService);
   uiService = inject(UiStateService);
 
   post = input.required<Post>();
@@ -93,11 +92,9 @@ export class PostCardComponent {
 
   openReactionsModal(postId: string) {
     this.openModalReactionsByPostId.set(postId);
-    this.lenisService.stopScroll();
   }
 
   closeReactionsModal() {
     this.openModalReactionsByPostId.set(null);
-    this.lenisService.startScroll();
   }
 }

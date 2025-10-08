@@ -1,5 +1,5 @@
 // Angular 20
-import { AfterViewInit, Component, effect, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnDestroy, signal, viewChild } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 // Services
@@ -18,15 +18,20 @@ import { AuthService } from '@auth/services/auth.service';
   selector: 'app-home-page',
   imports: [SectionComponentComponent, PostCardComponent, CreatePostComponent],
   templateUrl: './home-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class HomePageComponent implements AfterViewInit {
+export default class HomePageComponent implements OnDestroy {
   authService = inject(AuthService);
   postsService = inject(PostsService);
 
   page = signal(1);
-  pageSize = signal(5);
+  pageSize = signal(3);
   allPosts = signal<Post[]>([]);
   isLoadingMorePosts = signal(false);
+  hasMorePosts = signal(true);
+
+  elementScroll = viewChild<ElementRef>('infiniteScrollTrigger');
+  private observer?: IntersectionObserver;
 
   postsResource = rxResource({
     params: () => ({ page: this.page(), pageSize: this.pageSize(), posts: this.postsService.posts() }),
@@ -36,22 +41,40 @@ export default class HomePageComponent implements AfterViewInit {
   infiniteScrollEffect = effect(() => {
     const newPosts = this.postsResource.value();
     if (!newPosts) return;
-    this.allPosts.update(prev => [...newPosts.filter(p => !prev.some(pp => pp.id === p.id)), ...prev]);
+
+    const existing = this.allPosts();
+    const unique = newPosts.filter(p => !existing.some(pp => pp.id === p.id));
+
+    if (unique.length > 0) {
+      this.allPosts.set([...existing, ...unique]);
+    }
+
+    const total = this.postsService.posts().length;
+    this.hasMorePosts.set(total > this.allPosts().length);
+
     this.isLoadingMorePosts.set(false);
   });
+
+  newPostEffect = effect(() => {
+    const allPostsService = this.postsService.posts();
+    if (!allPostsService) return;
+
+    const latest = [...allPostsService].reverse().at(0);
+    if (!latest) return;
+    const current = this.allPosts();
+
+    if (!current.some(p => p.id === latest.id)) {
+      this.allPosts.set([latest, ...current]);
+    }
+  })
   
-  elementScroll = viewChild<ElementRef>('infiniteScrollTrigger');
-  
-  private observer?: IntersectionObserver;
-  
-  ngAfterViewInit() {
-    this.infiniteScrollInit();
-  }
-  
-  infiniteScrollInit() {
-    const elementScroll = this.elementScroll()?.nativeElement;
+  initScrollObserver =  effect(onCleanUp => {
+    const elRef = this.elementScroll();
+    if (!elRef) return;
+
+    const elementScroll = elRef?.nativeElement as HTMLElement;
     if (!elementScroll) return;
-    
+
     this.observer?.disconnect();
     this.observer = new IntersectionObserver((entries) => {
       const [entry] = entries;
@@ -60,13 +83,17 @@ export default class HomePageComponent implements AfterViewInit {
         this.loadMorePosts();
       }
     });
-    
+
     this.observer.observe(elementScroll);
-  }
+
+    onCleanUp(() => {
+      this.observer?.disconnect();
+      this.observer = undefined;
+    });
+  });
 
   loadMorePosts() {
-    const total = this.postsService.posts().length;
-    if (this.allPosts().length >= total) return;
+    if (!this.hasMorePosts()) return;
     this.page.update(p => p + 1);
   }
   

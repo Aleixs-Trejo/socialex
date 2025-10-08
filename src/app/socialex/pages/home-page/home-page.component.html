@@ -5,34 +5,30 @@
     } @else if (authService.authStatus() === 'not-authenticated') {
       <h1 class="text-3xl font-semibold max-w-full overflow-hidden">Últimas novedades</h1>
     }
-    @if (postsResource.isLoading()) {
-      <div class="w-full min-h-[70dvh] flex items-center justify-center">
-        <span class="loading loading-spinner text-primary"></span>
-      </div>
-    }
     @if (postsResource.isLoading() && allPosts().length === 0) {
       <div class="w-full min-h-[70dvh] flex items-center justify-center">
         <span class="loading loading-spinner text-primary"></span>
       </div>
-    }
-    <!--  -->
-    <section class="w-full flex flex-col gap-4">
-      @for (post of allPosts(); track post.id) {
-        <post-card [post]="post" />
-      }
-      @if (isLoadingMorePosts()) {
-        <div class="w-full h-6 flex justify-center items-center py-4">
-          <span class="loading loading-spinner text-primary"></span>
+    } @else {
+      <section class="w-full flex flex-col gap-4">
+        @for (post of allPosts(); track post.id) {
+          <post-card [post]="post" />
+        }
+        <div #infiniteScrollTrigger class="h-6">
+          @if (isLoadingMorePosts() && hasMorePosts()) {
+            <div class="w-full h-6 flex justify-center items-center py-4">
+              <span class="loading loading-spinner text-primary"></span>
+            </div>
+          }
+        </div>
+      </section>
+      @if (postsResource.error()) {
+        <div class="w-full flex justify-center items-center">
+          <span class="text-error">
+            Ocurrió un error, reportalo con Alesis y dile que se ponga a chambear 😾
+          </span>
         </div>
       }
-      <div #infiniteScrollTrigger class="h-6"></div>
-    </section>
-    @if (postsResource.error()) {
-      <div class="w-full flex justify-center items-center">
-        <span class="loading loading-spinner text-primary">
-          Ocurrió un error, reportalo con Alesis y dile que se ponga a chambear 😾
-        </span>
-      </div>
     }
   </div>
 </app-section-component>
