@@ -894,4 +894,14 @@ export const usersData: User[] = [
     avatar: 'https://randomuser.me/api/portraits/women/90.jpg',
     birthdate: '1999-05-27',
   },
+  {
+    id: 91,
+    name: 'Alesis Nakano',
+    profession: 'Músico',
+    description:
+      'Me gusta Kim Chaewon.',
+    status: 'online',
+    avatar: 'https://i.pinimg.com/736x/da/cd/70/dacd70ae18a1b6b728220af02a85d17f.jpg',
+    birthdate: '2000-11-02',
+  },
 ];

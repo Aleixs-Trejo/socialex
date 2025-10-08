@@ -7,10 +7,8 @@
         class="w-42 h-42 rounded-full bg-white p-1 flex-shrink-0 flex justify-center items-center relative"
       >
         <img
-          class="w-40 h-40 aspect-square rounded-full"
+          class="w-40 h-40 aspect-square rounded-full object-contain object-center"
           [srcset]="currentUser.avatar || '/assets/img/avatar-empty.webp'"
-          width="160"
-          height="160"
           priority
           alt="Avatar"
           draggable="false"
