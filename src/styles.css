@@ -69,20 +69,17 @@
   }
 }
 
-.html {
+/* .html {
   scrollbar-gutter: stable;
-}
+} */
 
 .body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    @apply hidden;
-  }
-
   &:has(.modal-reactions) {
     @apply overflow-hidden;
+  }
+
+  &:has(.login-form) {
+    @apply w-full min-h-dvh flex justify-center items-center overflow-hidden;
   }
 }
 

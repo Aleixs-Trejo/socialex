@@ -1,10 +1,23 @@
-<div class="absolute bottom-2 sm:left-3 z-15 inset-x-0 w-max bg-bg-tertiary rounded-xl animate-fade-in-up">
+<div
+  class="absolute bottom-2 sm:left-3 z-15 inset-x-0 w-max bg-bg-tertiary rounded-xl animate-fade-in-up"
+>
   <div class="flex items-center gap-2 w-full p-1">
     @for(btn of reactions; track btn.type) {
-      <button class="h-9/10 m-auto flex flex-col items-center justify-center cursor-pointer rounded-lg sm:px-2 hover:bg-zinc-800 transition-colors group" [title]="btn.title" (click)="clickReaction(btn.type)">
-        <img [src]="btn.icon" alt="icon" class="w-9 aspect-square transition-transform duration-400 group-hover:scale-120 group-hover:animate-shake-smooth" />
-        <span class="text-xxs hidden sm:block w-min leading-3 sm:w-max">{{ btn.title }}</span>
-      </button>
+    <button
+      class="h-9/10 m-auto flex flex-col items-center justify-center cursor-pointer rounded-lg sm:px-2 hover:bg-zinc-800 transition-colors group"
+      [title]="btn.title"
+      (click)="clickReaction(btn.type)"
+    >
+      <img
+        [src]="btn.icon"
+        alt="icon"
+        class="w-9 aspect-square transition-transform duration-400 group-hover:scale-120 group-hover:animate-shake-smooth"
+        draggable="false"
+      />
+      <span class="text-xxs hidden sm:block w-min leading-3 sm:w-max">{{
+        btn.title
+      }}</span>
+    </button>
     }
   </div>
 </div>

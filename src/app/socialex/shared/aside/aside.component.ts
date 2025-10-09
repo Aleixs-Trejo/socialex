@@ -23,9 +23,5 @@ export class AsideComponent {
   asideService = inject(AsideService);
   asideList = asideList;
 
-  get currentUser() {
-    const user = this.authService.getCurrentUser();
-    if (!user) throw new Error('No user found');
-    return user;
-  }
+  currentUser = this.authService.getCurrentUser();
 }

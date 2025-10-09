@@ -1,21 +1,21 @@
 // Angular
-import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { DatePipe, NgClass } from '@angular/common';
 
 // Services
 import { AuthService } from '@auth/services/auth.service';
-
-// Components
-import { FormErrorLabelComponent } from '@auth/components/form-error-label/form-error-label.component';
-import { InputFieldComponent } from '@auth/components/input-field/input-field.component';
 
 // Utils
 import { FormUtils } from '@socialex/utils/form-utils';
 
 // Cropper
 import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
+
+// Components
+import { FormErrorLabelComponent } from '@auth/components/form-error-label/form-error-label.component';
+import { InputFieldComponent } from '@auth/components/input-field/input-field.component';
+import { Router } from '@angular/router';
 
 const inputsFields = [
   {
@@ -56,25 +56,23 @@ const inputsFields = [
 ];
 
 @Component({
-  selector: 'app-register',
-  imports: [
-    RouterLink,
-    DatePipe,
-    ReactiveFormsModule,
-    FormErrorLabelComponent,
-    NgClass,
-    InputFieldComponent,
-    ImageCropperComponent,
-  ],
-  templateUrl: './register.component.html',
+  selector: 'app-edit-profile-page',
+  imports: [InputFieldComponent, ReactiveFormsModule, NgClass, FormErrorLabelComponent, DatePipe, ImageCropperComponent],
+  templateUrl: './edit-profile-page.component.html',
 })
-export default class RegisterComponent {
-  fb = inject(FormBuilder);
+export default class EditProfilePageComponent {
   authService = inject(AuthService);
+  fb = inject(FormBuilder);
   router = inject(Router);
-  formUtils = FormUtils;
-  inputsFields = inputsFields;
 
+  get currentUser() {
+    const user = this.authService.getCurrentUser();
+    if (!user) throw new Error('No user found');
+    return user;
+  }
+
+  inputsFields = inputsFields;
+  formUtils = FormUtils;
   hasError = signal(false);
 
   fileInput = viewChild<ElementRef>('fileInput');
@@ -87,7 +85,7 @@ export default class RegisterComponent {
   );
   imageCropper = viewChild<ImageCropperComponent | undefined>(ImageCropperComponent);
   croppedImageData: ImageCroppedEvent | null = null;
-  croppedImageObjectUrl = signal<string | undefined>(undefined); 
+  croppedImageObjectUrl = signal<string | undefined>(undefined);
 
   birthDate = signal<Date | null>(null);
   maxBirhDate = signal<Date>(new Date());
@@ -106,23 +104,23 @@ export default class RegisterComponent {
     this.birthDate.set(date);
   }
 
-  registerForm = this.fb.group(
+  editForm = this.fb.group(
     {
       email: [
-        '',
+        this.currentUser.email,
         [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
-        [this.formUtils.checkingServerResponse],
+        [this.formUtils.checkingServerResponse(this.currentUser.email)],
       ],
       name: [
-        '',
+        this.currentUser.name,
         [Validators.required, Validators.pattern(this.formUtils.namePattern)],
       ],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      password2: ['', [Validators.required, Validators.minLength(4)]],
-      profession: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.maxLength(100)]],
-      birthdate: this.fb.control<Date | null>(null, [Validators.required]),
-      avatar: this.fb.control<File | null>(null, [Validators.required]),
+      password: [this.currentUser.password, [Validators.required, Validators.minLength(4)]],
+      password2: [this.currentUser.password, [Validators.required, Validators.minLength(4)]],
+      profession: [this.currentUser.profession, [Validators.required]],
+      description: [this.currentUser.description, [Validators.required, Validators.maxLength(100)]],
+      birthdate: [this.currentUser.birthdate, [Validators.required]],
+      avatar: this.fb.control<File | string | null>(this.currentUser.avatar, [Validators.required]),
     },
     {
       validators: this.formUtils.matchPasswordsValidator(
@@ -136,25 +134,23 @@ export default class RegisterComponent {
     const fileList = (e.target as HTMLInputElement).files;
     const file = fileList?.length ? fileList[0] : null;
 
-    this.selectedFile.set(undefined);
-    this.croppedImageFile.set(undefined);
-    this.registerForm.controls['avatar']?.setValue(null);
+    this.editForm.controls['avatar']?.setValue(null);
     this.showCropper.set(false);
     this.croppedImageData = null;
 
     if (!file) {
-      this.registerForm.controls['avatar']?.markAsTouched();
+      this.editForm.controls['avatar']?.markAsTouched();
       return;
     }
 
     const maxSize = 2 * 1024 * 1024;
     if (!file.type.startsWith('image/')) {
-      this.registerForm.controls['avatar']?.setErrors({invalidFileType: true});
+      this.editForm.controls['avatar']?.setErrors({invalidFileType: true});
       return;
     }
 
     if (file.size > maxSize) {
-      this.registerForm.controls['avatar']?.setErrors({ fileTooBig: true });
+      this.editForm.controls['avatar']?.setErrors({ fileTooBig: true });
       return;
     }
 
@@ -178,10 +174,9 @@ export default class RegisterComponent {
 
     const croppedFile = new File([event.blob!], originalNameFile, { type: event.blob!.type });
     this.croppedImageObjectUrl.set(URL.createObjectURL(croppedFile));
-
     this.croppedImageFile.set(croppedFile);
-    this.registerForm.controls['avatar']?.setValue(croppedFile);
-    this.registerForm.controls['avatar']?.markAsDirty();
+    this.editForm.controls['avatar']?.setValue(croppedFile);
+    this.editForm.controls['avatar']?.markAsDirty();
     this.showCropper.set(false);
     this.croppedImageData = null;
   }
@@ -190,7 +185,7 @@ export default class RegisterComponent {
     this.croppedImageData = null;
     this.croppedImageFile.set(undefined);
     this.selectedFile.set(undefined);
-    this.registerForm.controls['avatar']?.setValue(null);
+    this.editForm.controls['avatar']?.setValue(null);
     this.showCropper.set(false);
 
     if (this.croppedImageObjectUrl()) {
@@ -200,34 +195,36 @@ export default class RegisterComponent {
 
     const inputRef = this.fileInput()?.nativeElement;
     if (inputRef) inputRef.value = '';
+    this.croppedImageObjectUrl.set(this.currentUser.avatar);
   }
 
   loadImageFailed() {
-    this.registerForm.controls['avatar']?.setErrors({ loadFailed: true });
+    this.editForm.controls['avatar']?.setErrors({ loadFailed: true });
     this.showCropper.set(false);
   }
 
   async onSubmit() {
-    this.registerForm.markAllAsTouched();
+    this.editForm.markAllAsTouched();
 
-    if (this.registerForm.invalid) {
+    if (this.editForm.invalid) {
       this.hasError.set(true);
       setTimeout(() => this.hasError.set(false), 2000);
       return;
     }
 
-    const { avatar, ...userPayload } = this.registerForm.value as any;
+    const { avatar, ...userPayload } = this.editForm.value as any;
 
     if (userPayload.birthDate instanceof Date) {
       userPayload.birthDate = userPayload.birthDate.toISOString();
     }
 
-    const result = await this.authService.register(
+    const result = await this.authService.editProfile(
       userPayload,
       this.croppedImageFile()
     );
+
     if (result) {
-      this.router.navigateByUrl('/socialex/home');
+      setTimeout(() => this.router.navigateByUrl('/socialex/my-profile'), 100);
       return;
     }
   }

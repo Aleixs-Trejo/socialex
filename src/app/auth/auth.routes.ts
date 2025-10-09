@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { NotAuthenticatedGuard } from "./guards/not-authenticated.guard";
 
 const authRoutes: Routes = [
   {
@@ -8,24 +9,15 @@ const authRoutes: Routes = [
       {
         path: 'register',
         title: 'Registro',
-        loadComponent: () => import('./pages/register/register.component')
+        loadComponent: () => import('./pages/register/register.component'),
       },
       {
         path: 'login',
         title: 'Inicio de sesión',
-        loadComponent: () => import('./pages/login/login.component')
-      },
-      {
-        path: 'edit/:userId',
-        title: 'Editar perfil',
-        loadComponent: () => import('./pages/edit/edit.component')
-      },
-      {
-        path: '**',
-        redirectTo: 'login'
+        loadComponent: () => import('./pages/login/login.component'),
       }
     ],
-  }
+  },
 ];
 
 export default authRoutes;

@@ -1,0 +1,139 @@
+<section class="w-full flex items-center justify-center">
+  <div class="w-9/10 max-w-4xl mx-auto my-4 bg-bg-primary flex rounded-md">
+    <div class="w-full h-full p-4">
+      <div class="md:flex-1 md:p-4">
+        <form class="flex flex-col gap-8" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <h2 class="text-title-section text-center">Edita tu información</h2>
+          <div class="flex flex-col gap-4">
+            <label
+              for="fileInput"
+              class="w-4/5 mx-auto max-w-65 relative cursor-pointer"
+            >
+              <img
+                class="w-full h-full object-cover rounded-full border border-gray-300"
+                [src]="croppedImageObjectUrl() || currentUser.avatar"
+                alt="Avatar"
+              />
+              <div
+                class="absolute top-1/10 left-1/30 w-1/2 max-w-10 aspect-square rounded-full border-dashed border-2 border-white flex items-center justify-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <rect width="24" height="24" fill="none" />
+                  <path
+                    fill="currentColor"
+                    d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"
+                  />
+                </svg>
+              </div>
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="fileChange($event)"
+            />
+            @for (inputField of inputsFields; track inputField.title) {
+              <input-field [inputField]="inputField" [formInput]="editForm" />
+            }
+            <div class="flex flex-col md:gap-1">
+              <span
+                class="text-xs"
+                [class.text-error]="formUtils.isValidField(editForm, 'description')"
+              >
+                Descripción
+              </span>
+              <label
+                class="flex items-start gap-2 bg-bg-quaternary p-2 rounded-md focus:outline-primary"
+                [ngClass]="{
+                  'border border-transparent': !formUtils.isValidField(editForm, 'description'),
+                  'border border-error': formUtils.isValidField(editForm, 'description')
+                }"
+              >
+                <img class="w-4 h-4 opacity-50 flex-shrink-0 mt-1" src="assets/icon/icon-edit.svg" />
+                <textarea
+                  type="text"
+                  required
+                  placeholder="Ej: Me gustan los gatos..."
+                  name="descripción"
+                  formControlName="description"
+                  class="outline-none border-none grow placeholder:text-gray-400 placeholder:text-sm resize-none field-sizing-content"
+                ></textarea>
+              </label>
+              <form-error-label [controlForm]="editForm" [fieldName]="'description'" />
+            </div>
+            <div class="flex flex-col md:gap-1">
+              <span
+                class="text-xs"
+                [class.text-error]="formUtils.isValidField(editForm, 'birthdate')"
+              >
+                Fecha de nacimiento
+              </span>
+              <input
+                type="date"
+                class="w-full bg-bg-quaternary p-2 rounded-md focus:outline-primary outline-none placeholder:text-gray-400"
+                [ngClass]="{
+                  'border border-transparent': !formUtils.isValidField(editForm, 'birthdate'),
+                  'border border-error': formUtils.isValidField(editForm, 'birthdate')
+                }"
+                max="{{minBirthDate() | date:'yyyy-MM-dd'}}"
+                value="{{minBirthDate() | date:'yyyy-MM-dd'}}"
+                min="1990-01-01"
+                name="birthdate"
+                formControlName="birthdate"
+                (change)="dateChange($event)"
+              />
+              <form-error-label [controlForm]="editForm" [fieldName]="'birthdate'" />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-full"
+            [disabled]="!editForm.valid || editForm.pristine"
+          >
+            Actualizar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  @if (showCropper()) {
+    <div class="fixed inset-0 z-50 bg-black/50 bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white rounded-lg w-9/10 max-w-lg p-4 flex flex-col gap-4">
+        <h3 class="text-xl font-bold text-black">🖼️ Recortar imagen</h3>
+        <div>
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1/1"
+            [roundCropper]="true"
+            [autoCrop]="true" format="png"
+            (imageCropped)="imageCropped($event)"
+            (loadImageFailed)="loadImageFailed()"
+          />
+        </div>
+        <div class="flex flex-col sm:flex-row sm:justify-end gap-3">
+          <button 
+            type="button" 
+            (click)="confirmCrop()" 
+            [disabled]="!croppedImageData" class="btn btn-primary w-full sm:w-max"
+          >
+            Aceptar y Recortar
+          </button>
+          <button 
+            type="button" 
+            (click)="cancelCrop()" 
+            class="btn btn-ghost w-full sm:w-max text-error"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</section>

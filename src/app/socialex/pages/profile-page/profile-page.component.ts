@@ -2,6 +2,7 @@
 import { I18nPluralPipe, SlicePipe } from '@angular/common';
 import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 
 // Services
 import { AuthService } from '@auth/services/auth.service';
@@ -21,7 +22,7 @@ const activities: { eng: Activity; esp: string }[] = [
 
 @Component({
   selector: 'app-profile-page',
-  imports: [I18nPluralPipe, SlicePipe, PostCardComponent],
+  imports: [I18nPluralPipe, SlicePipe, PostCardComponent, RouterLink],
   templateUrl: './profile-page.component.html',
 })
 export default class ProfilePageComponent {

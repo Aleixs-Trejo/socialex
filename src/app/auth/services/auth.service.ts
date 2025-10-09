@@ -143,6 +143,29 @@ export class AuthService {
     return true;
   }
 
+  async editProfile(updatedUser: AuthUser, photoFile?: File) {
+    const authUsers = this.getAllUsersFromLocalStorage();
+    const currUser = this.getCurrentUser();
+    if (!currUser) return this.handleAuthError();
+
+    let imgBase64: string | undefined;
+    if (photoFile) imgBase64 = await convertFileToBase64(photoFile);
+
+    const editedUser: AuthUser = {
+      ...currUser,
+      ...updatedUser,
+      avatar: imgBase64 || currUser.avatar,
+    }
+
+    const index = authUsers.findIndex(u => u.id === currUser.id);
+    if (index !== -1) {
+      authUsers[index] = editedUser;
+    }
+
+    this.saveUsersToLocalStorage(authUsers);
+    return this.handleAuthSuccess(editedUser);
+  }
+
   private handleAuthError() {
     this._user.set(null);
     this._authStatus.set('not-authenticated');

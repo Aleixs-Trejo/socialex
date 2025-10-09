@@ -21,26 +21,20 @@ const socialexRoutes: Routes = [
         canMatch: [AuthenticatedGuard]
       },
       {
-        path: 'my-reactions',
-        title: 'Mis Reacciones',
-        loadComponent: () => import('./pages/reactions-page/reactions-page.component'),
-        canMatch: [AuthenticatedGuard]
-      },
-      {
-        path: 'comments',
-        title: 'Mis Comentarios',
-        loadComponent: () => import('./pages/comments-page/comments-page.component'),
-        canMatch: [AuthenticatedGuard]
-      },
-      {
         path: 'profile/:userId',
         title: 'Perfil de usuario',
         loadComponent: () => import('./pages/profile-user-page/profile-user-page.component'),
         canMatch: [AuthenticatedGuard]
       },
       {
+        path: 'edit-profile',
+        title: 'Editar Perfil',
+        loadComponent: () => import('./pages/edit-profile-page/edit-profile-page.component'),
+        canMatch: [AuthenticatedGuard]
+      },
+      {
         path: 'post/:postId',
-        title: 'Publicación de usuario',
+        title: 'Publicación',
         loadComponent: () => import('./pages/post-page/post-page.component')
       },
       {

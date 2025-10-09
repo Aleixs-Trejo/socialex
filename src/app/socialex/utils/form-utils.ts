@@ -111,24 +111,34 @@ export class FormUtils {
     };
   }
 
-  static async checkingServerResponse(
-    control: AbstractControl
-  ): Promise<ValidationErrors | null> {
+  static checkingServerResponse(currentEmail?: string) {
+    return async (control: AbstractControl): Promise<ValidationErrors | null> => {
+      await sleep();
+      const formValue = control.value?.toLowerCase();
+      const users: AuthUser[] = JSON.parse(localStorage.getItem('auth_users') ?? '[]');
+      if (currentEmail && formValue === currentEmail.toLocaleLowerCase()){ 
+        return null;
+      }
+      const isEmailExist = users.some((u) => u.email.toLowerCase() === formValue);
+      if (isEmailExist) {
+        return {
+          emailTaken: true,
+        };
+      }
+      return null;
+    }
+  }
 
+  /* static async checkingServerResponse(control: AbstractControl): Promise<ValidationErrors | null> {
     await sleep(); // 2 segundos y medio
-
     const formValue = control.value?.toLowerCase();
-
     const users: AuthUser[] = JSON.parse(localStorage.getItem('auth_users') ?? '[]');
-
     const isEmailExist = users.some((u) => u.email.toLowerCase() === formValue);
-
     if (isEmailExist) {
       return {
         emailTaken: true,
       };
     }
-
     return null;
-  }
+  } */
 }
