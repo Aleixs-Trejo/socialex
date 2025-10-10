@@ -45,7 +45,7 @@ const socialexRoutes: Routes = [
       {
         path: 'music',
         title: 'Música',
-        loadComponent: () => import('./music/pages/music-page/music-page.component')
+        loadChildren: () => import('./music/music.routes')
       },
       {
         path: 'watch',

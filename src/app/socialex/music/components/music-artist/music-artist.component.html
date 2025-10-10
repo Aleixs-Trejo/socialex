@@ -1,0 +1,91 @@
+@if (musicArtistResource.isLoading()) {
+<div class="w-full min-h-[70dvh] flex items-center justify-center">
+  <span class="loading loading-spinner text-primary"></span>
+</div>
+}
+@if (musicArtistResource.hasValue()) {
+  <h2 class="text-lg text-start mb-2">Artista: <a class="text-primary underline" [routerLink]="['/socialex/music/', musicArtistResource.value().artistUri.split(':')[1], musicArtistResource.value().artistUri.split(':')[2]]">{{ musicArtistResource.value().artistName }}</a></h2>
+  <section class="swiper" #swiperArtist>
+    <div class="swiper-wrapper w-full pb-4">
+      @for (single of musicArtistResource.value().singles; track single.uri) {
+        <a class="swiper-slide flex p-4 w-full rounded-lg group bg-bg-tertiary" [routerLink]="['/socialex/music/', single.uri.split(':')[1], single.id]">
+          <article class="w-full flex flex-col gap-2 overflow-hidden">
+            <div class="w-full aspect-square overflow-hidden">
+              <img
+                [ngSrc]="single.urlImage"
+                width="300"
+                height="300"
+                [alt]="single.name"
+                class="w-full h-auto object-cover object-center transform group-hover:scale-110 transition-transform duration-300 user-select-none"
+                priority
+                draggable="false"
+              />
+            </div>
+            <h4 class="text-center text-xs leading-4 user-select-none group-hover:underline">{{ single.name }}</h4>
+          </article>
+        </a>
+      }
+    </div>
+    <div class="swiper-button-next rounded-full transition-colors duration-300 hover:bg-bg-primary rotate-90 group">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        class="opacity-55 transition-opacity duration-300 group-hover:opacity-100"
+      >
+        <rect width="24" height="24" fill="none" />
+        <g fill="#fff">
+          <path
+            d="m14.829 11.948l1.414-1.414L12 6.29l-4.243 4.243l1.415 1.414L11 10.12v7.537h2V10.12z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M19.778 4.222c-4.296-4.296-11.26-4.296-15.556 0s-4.296 11.26 0 15.556s11.26 4.296 15.556 0s4.296-11.26 0-15.556m-1.414 1.414A9 9 0 1 0 5.636 18.364A9 9 0 0 0 18.364 5.636"
+            clip-rule="evenodd"
+          />
+        </g>
+      </svg>
+    </div>
+    <div class="swiper-button-prev rounded-full transition-colors duration-300 hover:bg-bg-primary -rotate-90 group">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        class="opacity-55 transition-opacity duration-300 group-hover:opacity-100"
+      >
+        <rect width="24" height="24" fill="none" />
+        <g fill="#fff">
+          <path
+            d="m14.829 11.948l1.414-1.414L12 6.29l-4.243 4.243l1.415 1.414L11 10.12v7.537h2V10.12z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M19.778 4.222c-4.296-4.296-11.26-4.296-15.556 0s-4.296 11.26 0 15.556s11.26 4.296 15.556 0s4.296-11.26 0-15.556m-1.414 1.414A9 9 0 1 0 5.636 18.364A9 9 0 0 0 18.364 5.636"
+            clip-rule="evenodd"
+          />
+        </g>
+      </svg>
+    </div>
+    <div class="swiper-scrollbar"></div>
+  </section>
+}
+@if (musicArtistResource.error()) {
+  <div role="alert" class="alert alert-error">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 shrink-0 stroke-current"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <span>Error al cargar Artista.</span>
+  </div>
+}

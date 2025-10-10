@@ -1,0 +1,19 @@
+<a
+  [routerLink]="routeNavigate()"
+  class="flex p-4 w-full rounded-lg group" [style]="'background-color: ' + music().bgColor"
+>
+  <article class="w-full flex flex-col gap-2 overflow-hidden">
+    <div class="w-full aspect-square overflow-hidden">
+      <img
+        [ngSrc]="music().urlImage"
+        width="300"
+        height="300"
+        [alt]="music().title"
+        class="w-full h-auto object-cover object-center transform group-hover:scale-110 transition-transform duration-300 user-select-none"
+        priority
+        draggable="false"
+      /> 
+    </div>
+    <h4 class="text-center text-xs leading-4 user-select-none group-hover:underline">{{ music().title }}</h4>
+  </article>
+</a> 

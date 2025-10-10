@@ -24,8 +24,8 @@ import { btnsReactions } from '@socialex/posts/helpers/reaction.helper';
 export class ModalReactionsComponent {
   postsService = inject(PostsService);
   postId = input<string>();
-  showReactionType = signal<keyof Reactions>('like');
   closeModalReactions = output<void>();
+  showReactionType = signal<keyof Reactions>('like');
 
   allReactionsResource = rxResource({
     params: () => ({ postId: `${this.postId()}` }),

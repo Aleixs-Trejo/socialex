@@ -1,12 +1,12 @@
 // Angular
 import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 // Interfaces
 import { NewsData, NewsResponse } from '../interfaces/response.interface';
 
 // Environment
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 
 const { newsApiUrl, newsApiKey, newsApiHost, alesisNewsHeader } = environment;

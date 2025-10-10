@@ -8,4 +8,8 @@ export const environment = {
 
   storageSessionKey: 'auth_user',
   storageUsersKey: 'auth_users',
+
+  spotifyApiUrl: 'https://spotify23.p.rapidapi.com',
+  spotifyApiKey: '95a22e9e0cmsh01dd5b29ba186c4p12d7e4jsn7b41cd453a33',
+  spotifyApiHost: 'spotify23.p.rapidapi.com',
 };
