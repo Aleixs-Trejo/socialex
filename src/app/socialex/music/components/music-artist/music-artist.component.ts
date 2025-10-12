@@ -29,7 +29,7 @@ export class MusicArtistComponent implements AfterViewInit, OnChanges {
 
   musicArtistResource = rxResource({
     params: () => ({ id: this.id() }),
-    stream: ({ params }) => this.musicSservice.getSpotifyArtist(params.id),
+    stream: ({ params }) => this.musicSservice.getSpotifyArtistSimplified(params.id),
   });
 
   ngOnChanges() {

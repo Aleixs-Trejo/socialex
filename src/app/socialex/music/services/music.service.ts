@@ -11,7 +11,7 @@ import { map, Observable, of, tap } from 'rxjs';
 // Environment
 import { environment } from 'src/environments/environment';
 import { ExploreMusic, SimplifiedArtistHome, SpotifyMapper } from '../mapper/music.mapper';
-import { ArtistResponse } from '../interfaces/spotify-artist.interface';
+import { Artist, ArtistResponse } from '../interfaces/spotify-artist.interface';
 
 const { spotifyApiUrl, spotifyApiKey, spotifyApiHost } = environment;
 
@@ -21,7 +21,8 @@ const { spotifyApiUrl, spotifyApiKey, spotifyApiHost } = environment;
 export class MusicService {
   private http = inject(HttpClient);
   private exploreSpotifyCache = new Map<string, ExploreMusic[]>();
-  private artistSpotifyCache = new Map<string, SimplifiedArtistHome>();
+  private artistSimplifiedSpotifyCache = new Map<string, SimplifiedArtistHome>();
+  private artistFullSpotifyCache = new Map<string, Artist>();
 
   getExploreSpotify(): Observable<ExploreMusic[]> {
     const cacheKey = 'explore-spotify';
@@ -54,9 +55,9 @@ export class MusicService {
     }).pipe(tap(res => console.log(res)));
   }
 
-  getSpotifyArtist(id: string): Observable<SimplifiedArtistHome> {
-    const cacheKey = `spotify-artist-${id}`;
-    const cachedArtist = this.artistSpotifyCache.get(cacheKey);
+  getSpotifyArtistSimplified(id: string): Observable<SimplifiedArtistHome> {
+    const cacheKey = `spotify-artist-simplified-${id}`;
+    const cachedArtist = this.artistSimplifiedSpotifyCache.get(cacheKey);
 
     if (cachedArtist) {
       return of(cachedArtist);
@@ -70,7 +71,28 @@ export class MusicService {
       }
     }).pipe(
       map(artist => SpotifyMapper.mapArtistHome(artist)),
-      tap(simpleArtist => this.artistSpotifyCache.set(cacheKey, simpleArtist)),
+      tap(simpleArtist => this.artistSimplifiedSpotifyCache.set(cacheKey, simpleArtist)),
+    );
+  }
+
+  getSpotifyArtistFull(id: string): Observable<Artist> {
+    const cacheKey = `spotify-artist-full-${id}`;
+    const cachedArtist = this.artistFullSpotifyCache.get(cacheKey);
+
+    if (cachedArtist) {
+      return of(cachedArtist);
+    }
+
+    return this.http.get<ArtistResponse>(`${spotifyApiUrl}/artist_overview`, {
+      params: { id },
+      headers: {
+        'x-rapidapi-key': spotifyApiKey,
+        'x-rapidapi-host': spotifyApiHost,
+      }
+    }).pipe(
+      map(artist => artist.data.artist),
+      tap(artist => console.log(artist)),
+      tap(artist => this.artistFullSpotifyCache.set(cacheKey, artist)),
     );
   }
 }

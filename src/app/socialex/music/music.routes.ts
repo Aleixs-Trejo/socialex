@@ -7,9 +7,9 @@ const musicRoutes: Routes = [
     title: 'Música',
   },
   {
-    path: ':type/:id',
-    loadComponent: () => import('./pages/music-detail-page/music-detail-page.component'),
-    title: 'Música'
+    path: 'artist/:id',
+    loadComponent: () => import('./pages/music-artist-page/music-artist-page.component'),
+    title: 'Artista'
   }
 ];
 

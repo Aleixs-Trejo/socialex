@@ -1,0 +1,220 @@
+<!-- <button type="button" (click)="goBack()" class="hover:underline cursor-pointer flex items-center gap-2">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="transform -rotate-90"
+  >
+    <rect width="24" height="24" fill="none" />
+    <path
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="m5 12l7-7l7 7m-7 7V5"
+    />
+  </svg>
+  <span class="text-white">Volver</span>
+</button> -->
+@if (artistResource.isLoading()) {
+  <div class="w-full min-h-[70dvh] flex items-center justify-center">
+    <span class="loading loading-spinner text-primary"></span>
+  </div>
+}
+@if (artistResource.hasValue()) {
+  <div class="w-full flex flex-col">
+    <div
+      class="h-[60dvh] w-full bg-cover bg-no-repeat flex bg-center"
+      [style.background-image]="
+        'linear-gradient(to bottom, transparent, rgba(41, 41, 41, 0.5) 50%,' + artistResource.value().visuals.avatarImage.extractedColors.colorRaw['hex'] + '),' + 
+        'url(' +
+        artistResource.value().visuals.headerImage.sources[0].url +
+        ')'
+      "
+    >
+      <div class="w-full mt-auto p-4">
+        <div class="container-alesis flex flex-col overflow-hidden">
+          @if (artistResource.value().profile.verified) {
+            <div class="flex gap-2 items-center">
+              <svg
+                data-encore-id="verifiedBadge"
+                role="img"
+                width="20"
+                height="20"
+                aria-hidden="false"
+                viewBox="0 0 24 24"
+                fill="#4cb3ff"
+              >
+                <title>Verified account</title>
+                <path
+                  d="M10.814.5a1.66 1.66 0 0 1 2.372 0l2.512 2.572 3.595-.043a1.66 1.66 0 0 1 1.678 1.678l-.043 3.595 2.572 2.512c.667.65.667 1.722 0 2.372l-2.572 2.512.043 3.595a1.66 1.66 0 0 1-1.678 1.678l-3.595-.043-2.512 2.572a1.66 1.66 0 0 1-2.372 0l-2.512-2.572-3.595.043a1.66 1.66 0 0 1-1.678-1.678l.043-3.595L.5 13.186a1.66 1.66 0 0 1 0-2.372l2.572-2.512-.043-3.595a1.66 1.66 0 0 1 1.678-1.678l3.595.043zm6.584 9.12a1 1 0 0 0-1.414-1.413l-6.011 6.01-1.894-1.893a1 1 0 0 0-1.414 1.414l3.308 3.308z"
+                ></path>
+              </svg>
+              <span class="text-white">Artista Verificado</span>
+            </div>
+          }
+          <h2 class="text-[60px] font-bold leading-15">{{artistResource.value().profile.name}}</h2>
+          <div class="flex flex-col sm:flex-row sm:gap-4">
+            <span class="font-semibold">{{artistResource.value().stats.followers | formatNumber}} seguidores</span>
+            <span class="hidden sm:inline">|</span>
+            <span class="font-semibold">{{artistResource.value().stats.monthlyListeners | formatNumber}} oyentes mensuales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full p-4">
+      <div class="container-alesis flex flex-col gap-4">
+        <div class="flex flex-col gap-4">
+          <h3>Síguelos en:</h3>
+          <div class="flex items-center gap-4">
+            <a [href]="artistResource.value().sharingInfo.shareUrl" class="flex flex-col items-center gap-1" target="_blank" rel="noopener noreferrer" draggable="false">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 256 256"
+                class="user-select-none"
+              >
+                <rect
+                  width="256"
+                  height="256"
+                  fill="none"
+                />
+                <path
+                  fill="#1ed760"
+                  d="M128 0C57.308 0 0 57.309 0 128c0 70.696 57.309 128 128 128c70.697 0 128-57.304 128-128C256 57.314 198.697.007 127.998.007zm58.699 184.614c-2.293 3.76-7.215 4.952-10.975 2.644c-30.053-18.357-67.885-22.515-112.44-12.335a7.98 7.98 0 0 1-9.552-6.007a7.97 7.97 0 0 1 6-9.553c48.76-11.14 90.583-6.344 124.323 14.276c3.76 2.308 4.952 7.215 2.644 10.975m15.667-34.853c-2.89 4.695-9.034 6.178-13.726 3.289c-34.406-21.148-86.853-27.273-127.548-14.92c-5.278 1.594-10.852-1.38-12.454-6.649c-1.59-5.278 1.386-10.842 6.655-12.446c46.485-14.106 104.275-7.273 143.787 17.007c4.692 2.89 6.175 9.034 3.286 13.72zm1.345-36.293C162.457 88.964 94.394 86.71 55.007 98.666c-6.325 1.918-13.014-1.653-14.93-7.978c-1.917-6.328 1.65-13.012 7.98-14.935C93.27 62.027 168.434 64.68 215.929 92.876c5.702 3.376 7.566 10.724 4.188 16.405c-3.362 5.69-10.73 7.565-16.4 4.187z"
+                />
+              </svg>
+              <span class="user-select-none text-xs">Spotify</span>
+            </a>
+            <!-- <a [href]="artistResource.value().profile.externalLinks.items[0].url" class="flex flex-col items-center gap-1" target="_blank" rel="noopener noreferrer" draggable="false">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 256 256"
+                class="user-select-none"
+              >
+                <rect
+                  width="256"
+                  height="256"
+                  fill="none"
+                />
+                <g
+                  fill="none"
+                >
+                  <rect
+                    width="256"
+                    height="256"
+                    fill="url(#SVGWRUqebek)"
+                    rx="60"
+                  />
+                  <rect
+                    width="256"
+                    height="256"
+                    fill="url(#SVGfkNpldMH)"
+                    rx="60"
+                  />
+                  <path
+                    fill="#fff"
+                    d="M128.009 28c-27.158 0-30.567.119-41.233.604c-10.646.488-17.913 2.173-24.271 4.646c-6.578 2.554-12.157 5.971-17.715 11.531c-5.563 5.559-8.98 11.138-11.542 17.713c-2.48 6.36-4.167 13.63-4.646 24.271c-.477 10.667-.602 14.077-.602 41.236s.12 30.557.604 41.223c.49 10.646 2.175 17.913 4.646 24.271c2.556 6.578 5.973 12.157 11.533 17.715c5.557 5.563 11.136 8.988 17.709 11.542c6.363 2.473 13.631 4.158 24.275 4.646c10.667.485 14.073.604 41.23.604c27.161 0 30.559-.119 41.225-.604c10.646-.488 17.921-2.173 24.284-4.646c6.575-2.554 12.146-5.979 17.702-11.542c5.563-5.558 8.979-11.137 11.542-17.712c2.458-6.361 4.146-13.63 4.646-24.272c.479-10.666.604-14.066.604-41.225s-.125-30.567-.604-41.234c-.5-10.646-2.188-17.912-4.646-24.27c-2.563-6.578-5.979-12.157-11.542-17.716c-5.562-5.562-11.125-8.979-17.708-11.53c-6.375-2.474-13.646-4.16-24.292-4.647c-10.667-.485-14.063-.604-41.23-.604zm-8.971 18.021c2.663-.004 5.634 0 8.971 0c26.701 0 29.865.096 40.409.575c9.75.446 15.042 2.075 18.567 3.444c4.667 1.812 7.994 3.979 11.492 7.48c3.5 3.5 5.666 6.833 7.483 11.5c1.369 3.52 3 8.812 3.444 18.562c.479 10.542.583 13.708.583 40.396s-.104 29.855-.583 40.396c-.446 9.75-2.075 15.042-3.444 18.563c-1.812 4.667-3.983 7.99-7.483 11.488c-3.5 3.5-6.823 5.666-11.492 7.479c-3.521 1.375-8.817 3-18.567 3.446c-10.542.479-13.708.583-40.409.583c-26.702 0-29.867-.104-40.408-.583c-9.75-.45-15.042-2.079-18.57-3.448c-4.666-1.813-8-3.979-11.5-7.479s-5.666-6.825-7.483-11.494c-1.369-3.521-3-8.813-3.444-18.563c-.479-10.542-.575-13.708-.575-40.413s.096-29.854.575-40.396c.446-9.75 2.075-15.042 3.444-18.567c1.813-4.667 3.983-8 7.484-11.5s6.833-5.667 11.5-7.483c3.525-1.375 8.819-3 18.569-3.448c9.225-.417 12.8-.542 31.437-.563zm62.351 16.604c-6.625 0-12 5.37-12 11.996c0 6.625 5.375 12 12 12s12-5.375 12-12s-5.375-12-12-12zm-53.38 14.021c-28.36 0-51.354 22.994-51.354 51.355s22.994 51.344 51.354 51.344c28.361 0 51.347-22.983 51.347-51.344c0-28.36-22.988-51.355-51.349-51.355zm0 18.021c18.409 0 33.334 14.923 33.334 33.334c0 18.409-14.925 33.334-33.334 33.334s-33.333-14.925-33.333-33.334c0-18.411 14.923-33.334 33.333-33.334"
+                  />
+                  <defs>
+                    <radialGradient
+                      id="SVGWRUqebek"
+                      cx="0"
+                      cy="0"
+                      r="1"
+                      gradientTransform="matrix(0 -253.715 235.975 0 68 275.717)"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop
+                        stop-color="#fd5"
+                      />
+                      <stop
+                        offset="0.1"
+                        stop-color="#fd5"
+                      />
+                      <stop
+                        offset="0.5"
+                        stop-color="#ff543e"
+                      />
+                      <stop
+                        offset="1"
+                        stop-color="#c837ab"
+                      />
+                    </radialGradient>
+                    <radialGradient
+                      id="SVGfkNpldMH"
+                      cx="0"
+                      cy="0"
+                      r="1"
+                      gradientTransform="matrix(22.25952 111.2061 -458.39518 91.75449 -42.881 18.441)"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop
+                        stop-color="#3771c8"
+                      />
+                      <stop
+                        offset="0.128"
+                        stop-color="#3771c8"
+                      />
+                      <stop
+                        offset="1"
+                        stop-color="#60f"
+                        stop-opacity="0"
+                      />
+                    </radialGradient>
+                  </defs>
+                </g>
+              </svg>
+              <span class="user-select-none text-xs">Instagram</span>
+            </a> -->
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-semibold">Popular</h3>
+          <ul class="flex flex-col gap-4">
+            @for (trackItem of artistResource.value().discography.topTracks.items | slice: 0:5; track trackItem.uid) {
+              <li class="px-2 sm:px-4 md:px-6 transition-colors hover:bg-zinc-700">
+                <div class="flex items-center gap-2 justify-between">
+                  <div class="flex items-center gap-2">
+                    <img
+                      [ngSrc]="trackItem.track.album.coverArt.sources.at(0)?.url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
+                      class="w-10 h-10 object-contain object-center"
+                      width="40"
+                      height="40"
+                      alt="Album Cover"
+                    />
+                    <span class="text-white font-semibold text-sm leading-4">{{trackItem.track.name}}</span>
+                  </div>
+                  <span class="text-gray-400 text-sm">{{trackItem.track.duration.totalMilliseconds | formatMilliseconds}}</span>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (artistResource.error()) {
+  <div role="alert" class="alert alert-error">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 shrink-0 stroke-current"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <span>Error al cargar Artista.</span>
+  </div>
+}

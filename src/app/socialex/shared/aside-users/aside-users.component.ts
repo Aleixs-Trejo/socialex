@@ -32,7 +32,6 @@ export class AsideUsersComponent {
 
   btnsOptions: FilterUsersStatus[] = ['all', 'online', 'offline'];
 
-
   filteredUsers = computed(() =>
     this.authService.allUsersAndAuthUsers()
       .filter((u) =>
