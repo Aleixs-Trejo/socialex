@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { ExploreMusic, SimplifiedArtistHome, SpotifyMapper } from '../mapper/music.mapper';
 import { Artist, ArtistResponse } from '../interfaces/spotify-artist.interface';
 
-const { spotifyApiUrl, spotifyApiKey, spotifyApiHost } = environment;
+const { spotifyApiUrl, spotifyApiKey2, spotifyApiHost } = environment;
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class MusicService {
     return this.http
       .get<Main>(`${spotifyApiUrl}/browse_all?limit=5&pageSize=5&offset=0`, {
         headers: {
-          'x-rapidapi-key': spotifyApiKey,
+          'x-rapidapi-key': spotifyApiKey2,
           'x-rapidapi-host': spotifyApiHost,
         }
       })
@@ -49,7 +49,7 @@ export class MusicService {
     return this.http.get<Main>(`${spotifyApiUrl}/page`, {
       params: { uri, limit: 4, offset: 0 },
       headers: {
-        'x-rapidapi-key': spotifyApiKey,
+        'x-rapidapi-key': spotifyApiKey2,
         'x-rapidapi-host': spotifyApiHost,
       }
     }).pipe(tap(res => console.log(res)));
@@ -66,7 +66,7 @@ export class MusicService {
     return this.http.get<ArtistResponse>(`${spotifyApiUrl}/artist_overview`, {
       params: { id },
       headers: {
-        'x-rapidapi-key': spotifyApiKey,
+        'x-rapidapi-key': spotifyApiKey2,
         'x-rapidapi-host': spotifyApiHost,
       }
     }).pipe(
@@ -86,11 +86,12 @@ export class MusicService {
     return this.http.get<ArtistResponse>(`${spotifyApiUrl}/artist_overview`, {
       params: { id },
       headers: {
-        'x-rapidapi-key': spotifyApiKey,
+        'x-rapidapi-key': spotifyApiKey2,
         'x-rapidapi-host': spotifyApiHost,
       }
     }).pipe(
       map(artist => artist.data.artist),
+      tap(artist => console.log(artist)),
       tap(artist => this.artistFullSpotifyCache.set(cacheKey, artist)),
     );
   }

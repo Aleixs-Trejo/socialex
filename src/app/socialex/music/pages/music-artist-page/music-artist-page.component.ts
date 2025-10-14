@@ -1,23 +1,60 @@
 // Angular
-import { NgOptimizedImage, SlicePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { NgClass, NgOptimizedImage, SlicePipe } from '@angular/common';
+import { AfterViewChecked, Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormatMillisecondsPipe } from '@socialex/music/pipes/format-milliseconds.pipe';
-import { FormatNumberPipe } from '@socialex/music/pipes/format-number.pipe';
+
+// Mapper
+import { SpotifyMapper } from '@socialex/music/mapper/music.mapper';
 
 // Services
 import { MusicService } from '@socialex/music/services/music.service';
 
+// Interfaces
+import { Latest } from '@socialex/music/interfaces/spotify-artist.interface';
+
+// Pipes
+import { FilterByDiscographyPipe } from '@socialex/music/pipes/filter-by-discography.pipe';
+import { FormatMillisecondsPipe } from '@socialex/music/pipes/format-milliseconds.pipe';
+import { FormatNumberPipe } from '@socialex/music/pipes/format-number.pipe';
+import { DecodeHtmlPipe } from '@socialex/pipes/decode-html.pipe';
+
+// Components
+import { DiscographyCardComponent } from "@socialex/music/components/discography-card/discography-card.component";
+
+// Swiper
+import Swiper from 'swiper';
+// import Swiper and modules styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Scrollbar, Navigation } from 'swiper/modules';
+import { ArtistsFansLikeComponent } from "@socialex/music/components/artists-fans-like/artists-fans-like.component";
+
+export type DiscographyType = 'popular' | 'albums' | 'singles';
+
+const btnsDiscography: { name: DiscographyType; text: string }[] = [
+  { name: 'popular', text: 'Lanzamientos populares' },
+  { name: 'albums', text: 'Álbumes' },
+  { name: 'singles', text: 'Sencillos y EP' },
+];
+
 @Component({
   selector: 'music-artist-page',
-  imports: [SlicePipe, FormatMillisecondsPipe, NgOptimizedImage, FormatNumberPipe],
+  imports: [SlicePipe, FormatMillisecondsPipe, NgOptimizedImage, FormatNumberPipe, NgClass, FilterByDiscographyPipe, DiscographyCardComponent, DecodeHtmlPipe, ArtistsFansLikeComponent],
   templateUrl: './music-artist-page.component.html',
 })
-export default class MusicArtistPageComponent {
+export default class MusicArtistPageComponent implements AfterViewChecked {
   musicService = inject(MusicService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+
+  btnsDiscography = btnsDiscography;
+  showByDiscography = signal<DiscographyType>('popular');
+  discographyArray = computed<Latest[]>(() => {
+    const artistData = this.artistResource.value();
+    return artistData ? SpotifyMapper.getDiscographyArray(artistData) : [];
+  })
 
   queryParamId = toSignal(this.activatedRoute.paramMap, { initialValue: null });
 
@@ -29,6 +66,46 @@ export default class MusicArtistPageComponent {
     },
     stream: ({ params }) => this.musicService.getSpotifyArtistFull(params.id),
   });
+
+  swiperDiscographyElement = viewChild<ElementRef>('swiperDiscography');
+  swiperDiscography: Swiper | undefined = undefined;
+  swiperInitialized = false;
+
+  async ngAfterViewChecked() {
+    await new Promise((res) => setTimeout(res, 2000));
+    const elementSwiperDiscography = this.swiperDiscographyElement()?.nativeElement;
+    if (!elementSwiperDiscography) return;
+
+    const slides = elementSwiperDiscography.querySelectorAll('.swiper-slide');
+    if (slides.length > 1 && !this.swiperInitialized) {
+      this.swiperInitialized = true;
+      this.swiperDiscographyInit(elementSwiperDiscography);
+    }
+  }
+
+  swiperDiscographyInit(element: HTMLElement) {
+    this.swiperDiscography = new Swiper(element, {
+      modules: [Scrollbar, Navigation],
+      slidesPerView: 1.2,
+      spaceBetween: 16,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        draggable: true,
+      },
+      breakpoints: {
+        450: {
+          slidesPerView: 2.2,
+        },
+        640: {
+          slidesPerView: 3.2
+        },
+      }
+    });
+  }
 
   goBack() {
     this.router.navigate(['/socialex/music']);

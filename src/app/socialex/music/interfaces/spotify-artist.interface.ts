@@ -120,6 +120,7 @@ export interface Tracks {
 export enum LatestType {
   Album = 'ALBUM',
   Single = 'SINGLE',
+  EP = "EP",
 }
 
 export interface Latest {
@@ -188,7 +189,7 @@ export interface UserLocation {
 }
 
 export enum URI {
-  SpotifyArtist5ECec6TOdcX7CIhshkDQxb = 'spotify:artist:5ECec6tOdcX7cIhshkDQxb',
+  SpotifyArtistUri = 'spotify:artist:5ECec6tOdcX7cIhshkDQxb',
 }
 
 export interface ContentRating {

@@ -1,4 +1,4 @@
-import { ArtistResponse } from "../interfaces/spotify-artist.interface";
+import { Artist, ArtistResponse, Latest } from "../interfaces/spotify-artist.interface";
 import { Main } from "../interfaces/spotify-explore.interface";
 
 export interface ExploreMusic {
@@ -60,5 +60,15 @@ export class SpotifyMapper {
       artistUri,
       singles: mappedSingles,
     }
+  }
+
+  static getDiscographyArray(artist: Artist): Latest[] {
+    const latest = artist?.discography.latest;
+    const popular = artist?.discography.popularReleases?.items.map(item => (item.releases.items[0]));
+
+    const uniquePopular = popular?.filter(item => item && latest && item.id !== latest.id);
+
+    const data = latest ? [latest, ...uniquePopular] : uniquePopular;
+    return data;
   }
 }

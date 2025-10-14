@@ -8,15 +8,15 @@
   <section class="swiper" #swiperExplore>
     <div class="swiper-wrapper w-full pb-4">
       @for (music of musicExploreResource.value(); track music.uri) {
-      <music-explore-card
-        class="swiper-slide"
-        [music]="music"
-        [routeNavigate]="[
-          '/socialex/music',
-          music.uri.split(':')[1],
-          music.uri.split(':')[2]
-        ]"
-      />
+        <music-explore-card
+          class="swiper-slide"
+          [music]="music"
+          [routeNavigate]="[
+            '/socialex/music',
+            music.uri.split(':')[1],
+            music.uri.split(':')[2]
+          ]"
+        />
       }
     </div>
     <div class="swiper-button-next rounded-full transition-colors duration-300 hover:bg-bg-primary rotate-90 group">

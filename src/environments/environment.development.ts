@@ -11,6 +11,7 @@ export const environment = {
 
   spotifyApiUrl: 'https://spotify23.p.rapidapi.com',
   spotifyApiKey: '95a22e9e0cmsh01dd5b29ba186c4p12d7e4jsn7b41cd453a33',
+  spotifyApiKey2: 'd854fad682msh21025c13b0bef29p1b51ddjsn9e676d2a7ba1',
   spotifyApiHost: 'spotify23.p.rapidapi.com',
 
   audioScrobblerApi: '359068a0c00cee1077c6b8250442f33a',

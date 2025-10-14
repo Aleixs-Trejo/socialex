@@ -36,7 +36,7 @@ export class AuthCarouselComponent implements AfterViewInit, OnChanges {
   }
 
   async ngAfterViewInit() {
-    await new Promise((res) => setTimeout(res, 100));
+    await new Promise((res) => setTimeout(res, 2000));
     this.swiperInit();
   }
 

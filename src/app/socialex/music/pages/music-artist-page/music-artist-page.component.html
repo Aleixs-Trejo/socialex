@@ -1,30 +1,12 @@
-<!-- <button type="button" (click)="goBack()" class="hover:underline cursor-pointer flex items-center gap-2">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    class="transform -rotate-90"
-  >
-    <rect width="24" height="24" fill="none" />
-    <path
-      fill="none"
-      stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="m5 12l7-7l7 7m-7 7V5"
-    />
-  </svg>
-  <span class="text-white">Volver</span>
-</button> -->
 @if (artistResource.isLoading()) {
-  <div class="w-full min-h-[70dvh] flex items-center justify-center">
-    <span class="loading loading-spinner text-primary"></span>
+  <div class="container-alesis py-6">
+    <div class="w-full min-h-[70dvh] flex items-center justify-center">
+      <span class="loading loading-spinner text-primary"></span>
+    </div>
   </div>
 }
 @if (artistResource.hasValue()) {
-  <div class="w-full flex flex-col">
+  <div class="w-full flex flex-col pb-6">
     <div
       class="h-[60dvh] w-full bg-cover bg-no-repeat flex bg-center"
       [style.background-image]="
@@ -55,7 +37,7 @@
               <span class="text-white">Artista Verificado</span>
             </div>
           }
-          <h2 class="text-[60px] font-bold leading-15">{{artistResource.value().profile.name}}</h2>
+          <h2 class="text-[60px] font-bold leading-20">{{artistResource.value().profile.name}}</h2>
           <div class="flex flex-col sm:flex-row sm:gap-4">
             <span class="font-semibold">{{artistResource.value().stats.followers | formatNumber}} seguidores</span>
             <span class="hidden sm:inline">|</span>
@@ -64,7 +46,27 @@
         </div>
       </div>
     </div>
-    <div class="w-full p-4">
+    <div class="w-full py-4">
+      <button type="button" (click)="goBack()" class="hover:underline cursor-pointer flex items-center gap-2 px-4 mb-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          class="transform -rotate-90"
+        >
+          <rect width="24" height="24" fill="none" />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m5 12l7-7l7 7m-7 7V5"
+          />
+        </svg>
+        <span class="text-white">Volver</span>
+      </button>
       <div class="container-alesis flex flex-col gap-4">
         <div class="flex flex-col gap-4">
           <h3>Síguelos en:</h3>
@@ -175,11 +177,12 @@
           </div>
         </div>
         <div class="flex flex-col gap-4">
-          <h3 class="font-semibold">Popular</h3>
-          <ul class="flex flex-col gap-4">
-            @for (trackItem of artistResource.value().discography.topTracks.items | slice: 0:5; track trackItem.uid) {
-              <li class="px-2 sm:px-4 md:px-6 transition-colors hover:bg-zinc-700">
-                <div class="flex items-center gap-2 justify-between">
+          <h3 class="text-xl font-semibold">Popular</h3>
+          <ul class="flex flex-col gap-2 overflow-hidden">
+            @for (trackItem of artistResource.value().discography.topTracks.items | slice: 0:5; track trackItem.uid; let idx = $index) {
+              <li class="flex items-center gap-4 rounded-lg py-2 px-4 transition-colors hover:bg-zinc-700">
+                <span class="flex-shrink-0">{{idx + 1}}</span>
+                <div class="w-full flex items-center gap-2 justify-between">
                   <div class="flex items-center gap-2">
                     <img
                       [ngSrc]="trackItem.track.album.coverArt.sources.at(0)?.url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
@@ -198,23 +201,127 @@
         </div>
       </div>
     </div>
+    <div class="w-full py-4">
+      <div class="container-alesis">
+        <h3 class="text-xl font-semibold">Discografía</h3>
+        <div class="flex flex-wrap gap-2 items-center my-4">
+          @for (btn of btnsDiscography; track btn.name) {
+            <button
+              type="button"
+              class="rounded-full text-sm px-4 py-2 w-max transition-colors cursor-pointer"
+              [ngClass]="{
+                'bg-white text-bg-secondary': showByDiscography() === btn.name,
+                'bg-bg-tertiary text-white': showByDiscography() !== btn.name
+              }"
+              (click)="showByDiscography.set(btn.name)"
+            >
+              {{btn.text}}
+            </button>
+          }
+        </div>
+        <section class="swiper" #swiperDiscography>
+          <div class="swiper-wrapper w-full pb-4">
+            @for (card of discographyArray() | filterByDiscography: showByDiscography(); track card.id; let idx = $index) {
+              <discography-card
+                class="swiper-slide"
+                [disc]="card"
+                [routeNavigate]="[
+                  '/socialex/music',
+                  card.uri.split(':')[1],
+                  card.uri.split(':')[2]
+                ]"
+                [firstEl]="idx === 0"
+              />
+            }
+          </div>
+          <div class="swiper-button-next rounded-full transition-colors duration-300 hover:bg-bg-primary rotate-90 group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              class="opacity-55 transition-opacity duration-300 group-hover:opacity-100"
+            >
+              <rect width="24" height="24" fill="none" />
+              <g fill="#fff">
+                <path
+                  d="m14.829 11.948l1.414-1.414L12 6.29l-4.243 4.243l1.415 1.414L11 10.12v7.537h2V10.12z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M19.778 4.222c-4.296-4.296-11.26-4.296-15.556 0s-4.296 11.26 0 15.556s11.26 4.296 15.556 0s4.296-11.26 0-15.556m-1.414 1.414A9 9 0 1 0 5.636 18.364A9 9 0 0 0 18.364 5.636"
+                  clip-rule="evenodd"
+                />
+              </g>
+            </svg>
+          </div>
+          <div class="swiper-button-prev rounded-full transition-colors duration-300 hover:bg-bg-primary -rotate-90 group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              class="opacity-55 transition-opacity duration-300 group-hover:opacity-100"
+            >
+              <rect width="24" height="24" fill="none" />
+              <g fill="#fff">
+                <path
+                  d="m14.829 11.948l1.414-1.414L12 6.29l-4.243 4.243l1.415 1.414L11 10.12v7.537h2V10.12z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M19.778 4.222c-4.296-4.296-11.26-4.296-15.556 0s-4.296 11.26 0 15.556s11.26 4.296 15.556 0s4.296-11.26 0-15.556m-1.414 1.414A9 9 0 1 0 5.636 18.364A9 9 0 0 0 18.364 5.636"
+                  clip-rule="evenodd"
+                />
+              </g>
+            </svg>
+          </div>
+          <div class="swiper-scrollbar"></div>
+        </section>
+      </div>
+    </div>
+    <div class="w-full py-4">
+      <div class="container-alesis flex flex-col gap-4">
+        <h3 class="text-xl font-semibold">Acerca de</h3>
+        <div class="w-full relative">
+          <img
+            class="img-artist-about w-full h-auto object-cover object-center transform group-hover:scale-110 transition-transform duration-300 user-select-none"
+            [ngSrc]="artistResource.value().visuals.gallery.items[0].sources[0].url"
+            width="300"
+            height="300"
+            alt="Artista"
+            draggable="false"
+          />
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="mt-auto max-h-3/5 overflow-y-auto">
+              <p class="text-base font-medium leading-5 text-white p-4 sm:p-6 md:p-8" [innerHTML]="artistResource.value().profile.biography.text | decodeHtml"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full py-4">
+      <artists-fans-like [artistsRelated]="artistResource.value().relatedContent.relatedArtists.items" />
+    </div>
   </div>
 }
 @if (artistResource.error()) {
-  <div role="alert" class="alert alert-error">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 shrink-0 stroke-current"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-    <span>Error al cargar Artista.</span>
+  <div class="container-alesis py-6">
+    <div role="alert" class="alert alert-error">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>Error al cargar Artista.</span>
+    </div>
   </div>
 }
