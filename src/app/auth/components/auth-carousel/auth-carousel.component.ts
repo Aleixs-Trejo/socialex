@@ -1,5 +1,5 @@
 // Angular
-import { AfterViewInit, Component, ElementRef, OnChanges, viewChild } from '@angular/core';
+import { AfterContentChecked, Component, ElementRef, viewChild } from '@angular/core';
 
 // Swiper
 import Swiper from 'swiper';
@@ -23,28 +23,26 @@ const images = [
   imports: [],
   templateUrl: './auth-carousel.component.html',
 })
-export class AuthCarouselComponent implements AfterViewInit, OnChanges {
+export class AuthCarouselComponent implements AfterContentChecked {
   imagesAuth = images;
+
   swiperAuthElement = viewChild.required<ElementRef>('swiperAuth');
+  swiperAuth: Swiper | undefined = undefined;
+  swiperInitialized = false;
 
-  swiper: Swiper | undefined = undefined;
-
-  ngOnChanges() {
-    if (!this.swiper) return;
-    this.swiper?.destroy(true, true);
-    this.swiperInit();
+  async ngAfterContentChecked() {
+    await new Promise((res) => setTimeout(res, 100));
+    const elementSwiperAuth = this.swiperAuthElement()?.nativeElement;
+    if (!elementSwiperAuth) return;
+    const slides = elementSwiperAuth.querySelectorAll('.swiper-slide');
+    if (slides.length > 1 && !this.swiperInitialized) {
+      this.swiperInitialized = true;
+      this.swiperAuthInit(elementSwiperAuth);
+    }
   }
 
-  async ngAfterViewInit() {
-    await new Promise((res) => setTimeout(res, 2000));
-    this.swiperInit();
-  }
-
-  swiperInit() {
-    const element = this.swiperAuthElement().nativeElement;
-    if (!element) return;
-
-    this.swiper = new Swiper(element, {
+  swiperAuthInit(element: HTMLElement) {
+    this.swiperAuth = new Swiper(element, {
       modules: [Navigation, Pagination, Scrollbar],
       scrollbar: {
         el: ".swiper-scrollbar",

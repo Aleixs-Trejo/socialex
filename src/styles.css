@@ -103,6 +103,9 @@
 
 .swiper-wrapper .swiper-slide {
   height: auto;
+}
+
+.card-music .siper-slide {
   max-width: 200px;
 }
 

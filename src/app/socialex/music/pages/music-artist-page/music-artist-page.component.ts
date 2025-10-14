@@ -21,6 +21,7 @@ import { DecodeHtmlPipe } from '@socialex/pipes/decode-html.pipe';
 
 // Components
 import { DiscographyCardComponent } from "@socialex/music/components/discography-card/discography-card.component";
+import { ArtistsFansLikeComponent } from "@socialex/music/components/artists-fans-like/artists-fans-like.component";
 
 // Swiper
 import Swiper from 'swiper';
@@ -29,7 +30,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Scrollbar, Navigation } from 'swiper/modules';
-import { ArtistsFansLikeComponent } from "@socialex/music/components/artists-fans-like/artists-fans-like.component";
 
 export type DiscographyType = 'popular' | 'albums' | 'singles';
 
