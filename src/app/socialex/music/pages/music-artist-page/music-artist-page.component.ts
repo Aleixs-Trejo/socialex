@@ -30,6 +30,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Scrollbar, Navigation } from 'swiper/modules';
+import { UiStateService } from '@socialex/shared/services/ui-state.service';
+import { LoaderComponent } from "@components/loader/loader.component";
+import { ResourceErrorComponent } from "@components/resource-error/resource-error.component";
 
 export type DiscographyType = 'popular' | 'albums' | 'singles';
 
@@ -41,11 +44,12 @@ const btnsDiscography: { name: DiscographyType; text: string }[] = [
 
 @Component({
   selector: 'music-artist-page',
-  imports: [SlicePipe, FormatMillisecondsPipe, NgOptimizedImage, FormatNumberPipe, NgClass, FilterByDiscographyPipe, DiscographyCardComponent, DecodeHtmlPipe, ArtistsFansLikeComponent],
+  imports: [SlicePipe, FormatMillisecondsPipe, NgOptimizedImage, FormatNumberPipe, NgClass, FilterByDiscographyPipe, DiscographyCardComponent, DecodeHtmlPipe, ArtistsFansLikeComponent, LoaderComponent, ResourceErrorComponent],
   templateUrl: './music-artist-page.component.html',
 })
 export default class MusicArtistPageComponent implements AfterViewChecked {
   musicService = inject(MusicService);
+  uiService = inject(UiStateService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -68,43 +72,19 @@ export default class MusicArtistPageComponent implements AfterViewChecked {
   });
 
   swiperDiscographyElement = viewChild<ElementRef>('swiperDiscography');
-  swiperDiscography: Swiper | undefined = undefined;
-  swiperInitialized = false;
+  swiperDiscography?: Swiper;
+  swiperDiscographyInitialized = false;
 
   async ngAfterViewChecked() {
-    await new Promise((res) => setTimeout(res, 2000));
-    const elementSwiperDiscography = this.swiperDiscographyElement()?.nativeElement;
+    await this.uiService.sleep(2000);
+    const elementSwiperDiscography = this.swiperDiscographyElement();
     if (!elementSwiperDiscography) return;
 
-    const slides = elementSwiperDiscography.querySelectorAll('.swiper-slide');
-    if (slides.length > 1 && !this.swiperInitialized) {
-      this.swiperInitialized = true;
-      this.swiperDiscographyInit(elementSwiperDiscography);
+    const slides = elementSwiperDiscography.nativeElement.querySelectorAll('.swiper-slide');
+    if (slides.length > 1 && !this.swiperDiscographyInitialized) {
+      this.swiperDiscographyInitialized = true;
+      this.swiperDiscography = this.uiService.initSwiper(elementSwiperDiscography.nativeElement);
     }
-  }
-
-  swiperDiscographyInit(element: HTMLElement) {
-    this.swiperDiscography = new Swiper(element, {
-      modules: [Scrollbar, Navigation],
-      slidesPerView: 1.2,
-      spaceBetween: 16,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        draggable: true,
-      },
-      breakpoints: {
-        450: {
-          slidesPerView: 2.2,
-        },
-        640: {
-          slidesPerView: 3.2
-        },
-      }
-    });
   }
 
   goBack() {

@@ -10,7 +10,7 @@
   <section class="swiper" #swiperArtist>
     <div class="swiper-wrapper w-full pb-4">
       @for (single of musicArtistResource.value().singles; track single.uri) {
-        <a class="swiper-slide flex p-4 w-full rounded-lg group bg-bg-tertiary" [routerLink]="['/socialex/music/', single.uri.split(':')[1], single.id]">
+        <a class="swiper-slide flex p-4 w-full rounded-lg group transition-colors duration-300 hover:bg-bg-tertiary" [routerLink]="['/socialex/music/', single.uri.split(':')[1], single.id]">
           <article class="w-full flex flex-col gap-2 overflow-hidden">
             <div class="w-full aspect-square overflow-hidden">
               <img

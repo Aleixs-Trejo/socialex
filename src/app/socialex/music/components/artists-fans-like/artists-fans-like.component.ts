@@ -1,9 +1,10 @@
 import { NgOptimizedImage } from '@angular/common';
-import { AfterContentChecked, Component, ElementRef, input, viewChild } from '@angular/core';
+import { AfterViewChecked as AfterViewChecked, Component, ElementRef, inject, input, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 // Interfaces
 import { RelatedArtistsItem } from '@socialex/music/interfaces/spotify-artist.interface';
+import { UiStateService } from '@socialex/shared/services/ui-state.service';
 
 // Swiper
 import Swiper from 'swiper';
@@ -18,46 +19,23 @@ import { Scrollbar, Navigation } from 'swiper/modules';
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './artists-fans-like.component.html',
 })
-export class ArtistsFansLikeComponent implements AfterContentChecked {
+export class ArtistsFansLikeComponent implements AfterViewChecked {
   artistsRelated = input.required<RelatedArtistsItem[]>();
+  uiService = inject(UiStateService);
 
   swiperArtistsRelatedElement = viewChild<ElementRef>('swiperArtistsRelated');
-  swiperArtistsRelated: Swiper | undefined = undefined;
+  swiperArtistsRelated?: Swiper;
   swiperArtistsRelatedInitialized = false;
 
-  async ngAfterContentChecked() {
-    await new Promise((res) => setTimeout(res, 2000));
-    const elementSwiperArtistsRelated = this.swiperArtistsRelatedElement()?.nativeElement;
-    if (!elementSwiperArtistsRelated) return;
+  async ngAfterViewChecked() {
+    await this.uiService.sleep(2000);
+    const el = this.swiperArtistsRelatedElement();
+    if (!el) return;
 
-    const slides = elementSwiperArtistsRelated.querySelectorAll('.swiper-slide');
+    const slides = el.nativeElement.querySelectorAll('.swiper-slide');
     if (slides.length > 1 && !this.swiperArtistsRelatedInitialized) {
       this.swiperArtistsRelatedInitialized = true;
-      this.swiperArtistsRelatedInit(elementSwiperArtistsRelated);
+      this.swiperArtistsRelated = this.uiService.initSwiper(el.nativeElement);
     }
-  }
-
-  swiperArtistsRelatedInit(element: HTMLElement) {
-    this.swiperArtistsRelated = new Swiper(element, {
-      modules: [Scrollbar, Navigation],
-      slidesPerView: 1.2,
-      spaceBetween: 16,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        draggable: true,
-      },
-      breakpoints: {
-        450: {
-          slidesPerView: 2.2,
-        },
-        640: {
-          slidesPerView: 3.2
-        },
-      }
-    });
   }
 }

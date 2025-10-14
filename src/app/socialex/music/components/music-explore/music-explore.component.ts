@@ -1,5 +1,5 @@
 // Angular
-import { AfterViewInit, Component, ElementRef, inject, OnChanges, viewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 // Services
@@ -11,60 +11,36 @@ import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Scrollbar, Navigation } from 'swiper/modules';
 
 // Components
 import { MusicExploreCardComponent } from "../music-explore-card/music-explore-card.component";
+import { UiStateService } from '@socialex/shared/services/ui-state.service';
 
 @Component({
   selector: 'music-explore',
   imports: [MusicExploreCardComponent],
   templateUrl: './music-explore.component.html',
 })
-export class MusicExploreComponent implements AfterViewInit, OnChanges {
+export class MusicExploreComponent implements AfterViewChecked {
   musicService = inject(MusicService);
+  uiService = inject(UiStateService);
+
   swiperBrowseElement = viewChild<ElementRef>('swiperExplore');
-  swiperBrowse: Swiper | undefined = undefined;
+  swiperBrowse?: Swiper;
+  swiperBrowseInitialized = false;
 
   musicExploreResource = rxResource({
     stream: () => this.musicService.getExploreSpotify(),
   });
 
-  ngOnChanges() {
-    if (!this.swiperBrowse) return;
-    this.swiperBrowse.destroy(true, true);
-    this.swiperBrowseInit();
-  }
-
-  async ngAfterViewInit() {
-    await new Promise((res) => setTimeout(res, 2000));
-    this.swiperBrowseInit();
-  }
-
-  swiperBrowseInit() {
+  async ngAfterViewChecked() {
+    await this.uiService.sleep(2000);
     const elementSwiperBrowse = this.swiperBrowseElement()?.nativeElement;
     if (!elementSwiperBrowse) return;
-
-    this.swiperBrowse = new Swiper(elementSwiperBrowse, {
-      modules: [Scrollbar, Navigation],
-      slidesPerView: 1.2,
-      spaceBetween: 16,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        draggable: true,
-      },
-      breakpoints: {
-        450: {
-          slidesPerView: 2.2,
-        },
-        640: {
-          slidesPerView: 3.2
-        },
-      }
-    });
+    const slides = elementSwiperBrowse.querySelectorAll('.swiper-slide');
+    if (slides.length > 1 && !this.swiperBrowseInitialized) {
+      this.swiperBrowseInitialized = true;
+      this.swiperBrowse = this.uiService.initSwiper(elementSwiperBrowse);
+    }
   }
 }
