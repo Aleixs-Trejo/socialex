@@ -95,7 +95,6 @@ export class MusicService {
       }
     }).pipe(
       map(artist => artist.data.artist),
-      tap(artist => console.log(artist)),
       tap(artist => this.artistFullSpotifyCache.set(cacheKey, artist)),
     );
   }
