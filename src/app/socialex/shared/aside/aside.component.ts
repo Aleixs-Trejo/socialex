@@ -5,6 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 // Services
 import { AsideService } from '../services/aside.service';
 import { AuthService } from '@auth/services/auth.service';
+import { NgClass } from '@angular/common';
 
 const asideList = [
   { title: 'Noticias', icon: 'assets/icon/icon-news-white.svg', route: '/socialex/news' },
@@ -15,7 +16,7 @@ const asideList = [
 
 @Component({
   selector: 'app-aside',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NgClass],
   templateUrl: './aside.component.html',
 })
 export class AsideComponent {

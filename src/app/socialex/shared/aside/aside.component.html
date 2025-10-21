@@ -26,8 +26,10 @@
       <a
         routerLink="/"
         class="text-2xl text-center px-2 font-semibold text-blue-500 transition-opacity md:px-4 lg:px-6"
-        [class.opacity-0]="!asideService.isAsideActiveService()"
-        [class.opacity-100]="asideService.isAsideActiveService()"
+        [ngClass]="{
+          'opacity-0 pointer-events-none': !asideService.isAsideActiveService(),
+          'opacity-100 pointer-events-auto': asideService.isAsideActiveService(),
+        }"
       >
         SociAlex
       </a>
@@ -50,8 +52,10 @@
                 />
                 <span
                   class="transition-opacity min-w-max w-max max-w-full"
-                  [class.opacity-100]="asideService.isAsideActiveService()"
-                  [class.opacity-0]="!asideService.isAsideActiveService()"
+                  [ngClass]="{
+                    'opacity-0 pointer-events-none': !asideService.isAsideActiveService(),
+                    'opacity-100 pointer-events-auto': asideService.isAsideActiveService(),
+                  }"
                 >
                   {{ currentUser.name }}
                 </span>
@@ -71,8 +75,10 @@
                 <img [srcset]="element.icon" [alt]="element.title" class="w-6 h-6 aspect-square" />
                 <span
                   class="transition-opacity"
-                  [class.opacity-100]="asideService.isAsideActiveService()"
-                  [class.opacity-0]="!asideService.isAsideActiveService()"
+                  [ngClass]="{
+                    'opacity-0 pointer-events-none': !asideService.isAsideActiveService(),
+                    'opacity-100 pointer-events-auto': asideService.isAsideActiveService(),
+                  }"
                 >
                   {{ element.title }}
                 </span>

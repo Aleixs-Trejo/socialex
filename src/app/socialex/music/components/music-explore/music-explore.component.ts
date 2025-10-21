@@ -15,10 +15,12 @@ import 'swiper/css/pagination';
 // Components
 import { MusicExploreCardComponent } from "../music-explore-card/music-explore-card.component";
 import { UiStateService } from '@socialex/shared/services/ui-state.service';
+import { LoaderComponent } from "@components/loader/loader.component";
+import { ResourceErrorComponent } from "@components/resource-error/resource-error.component";
 
 @Component({
   selector: 'music-explore',
-  imports: [MusicExploreCardComponent],
+  imports: [MusicExploreCardComponent, LoaderComponent, ResourceErrorComponent],
   templateUrl: './music-explore.component.html',
 })
 export class MusicExploreComponent implements AfterViewChecked {

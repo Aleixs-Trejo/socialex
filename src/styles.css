@@ -112,3 +112,7 @@
 .img-artist-about {
   mask-image: linear-gradient(black 10%, transparent);
 }
+
+.tracks-table {
+  grid-template-columns: 2rem 1fr 3rem 4rem;
+}

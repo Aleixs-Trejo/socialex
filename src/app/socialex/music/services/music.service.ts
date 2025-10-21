@@ -4,14 +4,17 @@ import { HttpClient } from '@angular/common/http';
 
 // Interfaces
 import { Main } from '../interfaces/spotify-explore.interface';
+import { Artist, ArtistResponse } from '../interfaces/spotify-artist.interface';
+import { AlbumResponse, Album } from '../interfaces/spotify-albums.interface';
 
 // RxJS
 import { map, Observable, of, tap } from 'rxjs';
 
+// Mapper
+import { ExploreMusic, SimplifiedArtistHome, SpotifyMapper } from '../mapper/music.mapper';
+
 // Environment
 import { environment } from 'src/environments/environment';
-import { ExploreMusic, SimplifiedArtistHome, SpotifyMapper } from '../mapper/music.mapper';
-import { Artist, ArtistResponse } from '../interfaces/spotify-artist.interface';
 
 const { spotifyApiUrl, spotifyApiKey2, spotifyApiHost } = environment;
 
@@ -23,6 +26,7 @@ export class MusicService {
   private exploreSpotifyCache = new Map<string, ExploreMusic[]>();
   private artistSimplifiedSpotifyCache = new Map<string, SimplifiedArtistHome>();
   private artistFullSpotifyCache = new Map<string, Artist>();
+  private albumSpotifyCache = new Map<string, Album>();
 
   getExploreSpotify(): Observable<ExploreMusic[]> {
     const cacheKey = 'explore-spotify';
@@ -93,6 +97,26 @@ export class MusicService {
       map(artist => artist.data.artist),
       tap(artist => console.log(artist)),
       tap(artist => this.artistFullSpotifyCache.set(cacheKey, artist)),
+    );
+  }
+
+  getSpotifyAlbum(ids: string): Observable<Album> {
+    const cacheKey = `spotify-album-${ids}`;
+    const cachedAlbum = this.albumSpotifyCache.get(cacheKey);
+
+    if (cachedAlbum) {
+      return of(cachedAlbum);
+    }
+
+    return this.http.get<AlbumResponse>(`${spotifyApiUrl}/albums`, {
+      params: { ids },
+      headers: {
+        'x-rapidapi-key': spotifyApiKey2,
+        'x-rapidapi-host': spotifyApiHost,
+      }
+    }).pipe(
+      map(album => album.albums[0]),
+      tap(album => this.albumSpotifyCache.set(cacheKey, album)),
     );
   }
 }

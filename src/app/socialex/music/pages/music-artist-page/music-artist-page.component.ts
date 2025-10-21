@@ -1,5 +1,5 @@
 // Angular
-import { NgClass, NgOptimizedImage, SlicePipe } from '@angular/common';
+import { Location, NgClass, NgOptimizedImage, SlicePipe } from '@angular/common';
 import { AfterViewChecked, Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { SpotifyMapper } from '@socialex/music/mapper/music.mapper';
 
 // Services
 import { MusicService } from '@socialex/music/services/music.service';
+import { UiStateService } from '@socialex/shared/services/ui-state.service';
 
 // Interfaces
 import { Latest } from '@socialex/music/interfaces/spotify-artist.interface';
@@ -22,6 +23,8 @@ import { DecodeHtmlPipe } from '@socialex/pipes/decode-html.pipe';
 // Components
 import { DiscographyCardComponent } from "@socialex/music/components/discography-card/discography-card.component";
 import { ArtistsFansLikeComponent } from "@socialex/music/components/artists-fans-like/artists-fans-like.component";
+import { LoaderComponent } from "@components/loader/loader.component";
+import { ResourceErrorComponent } from "@components/resource-error/resource-error.component";
 
 // Swiper
 import Swiper from 'swiper';
@@ -29,10 +32,6 @@ import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Scrollbar, Navigation } from 'swiper/modules';
-import { UiStateService } from '@socialex/shared/services/ui-state.service';
-import { LoaderComponent } from "@components/loader/loader.component";
-import { ResourceErrorComponent } from "@components/resource-error/resource-error.component";
 
 export type DiscographyType = 'popular' | 'albums' | 'singles';
 
@@ -52,6 +51,7 @@ export default class MusicArtistPageComponent implements AfterViewChecked {
   uiService = inject(UiStateService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  location = inject(Location);
 
   btnsDiscography = btnsDiscography;
   showByDiscography = signal<DiscographyType>('popular');
@@ -88,6 +88,6 @@ export default class MusicArtistPageComponent implements AfterViewChecked {
   }
 
   goBack() {
-    this.router.navigate(['/socialex/music']);
+    this.location.back();
   }
 }

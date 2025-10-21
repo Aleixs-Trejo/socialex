@@ -1,1 +1,240 @@
-<h2 class="text-2xl text-primary">Aún estoy trabajando en esto uwu paciencia porfi</h2>
+@if (albumResource.isLoading()) {
+  <app-loader />
+}
+@if (albumResource.hasValue()) {
+  <section>
+    <div class="w-full max-w-6xl mx-auto flex items-center justify-center pb-4 overflow-hidden" [style.background-color]="">
+      <div class="w-full p-4 relative">
+        <button class="absolute top-2 md:top-92/100 left-2 flex items-center gap-1 bg-black/50 py-2 px-4 rounded-md" (click)="goBack()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            class="transform -rotate-90"
+          >
+            <rect width="24" height="24" fill="none" />
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m5 12l7-7l7 7m-7 7V5"
+            />
+          </svg>
+          <span class="text-white text-xs">Volver</span>
+        </button>
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="w-1/2 mx-auto md:w-1/4 md:mx-0 aspect-square max-w-58 flex-shrink-0">
+            <img
+              [ngSrc]="albumResource.value().images[0].url"
+              width="300"
+              height="300"
+              alt="Album Cover"
+              class="w-full h-full object-cover object-center user-select-none"
+              priority
+              draggable="false"
+            />
+          </div>
+          <div class="flex-1">
+            <div class="flex flex-col text-start items-start justify-end h-full">
+              <span class="text-xs">{{albumResource.value().album_type}}</span>
+              <h2 class="text-[60px] font-bold leading-20">{{albumResource.value().name}}</h2>
+              <div class="flex items-center gap-2 w-max">
+                <a
+                  [routerLink]="['/socialex/music/', albumResource.value().artists[0].uri.split(':')[1],albumResource.value().artists[0].uri.split(':')[2]]"
+                >
+                  {{albumResource.value().artists[0].name}}
+                </a>
+                <span>•</span>
+                <span class="text-gray-300">{{albumResource.value().release_date.toString().split('-')[0]}}</span>
+                <span>•</span>
+                <span class="text-gray-300">{{albumResource.value().total_tracks}} canciones, {{(totalTimeTracks() / 60000).toFixed(0)}} min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full max-w-6xl mx-auto py-4 overflow-x-auto">
+      <div class="min-w-128 w-full px-4 pb-4">
+        <div class="w-full flex flex-col">
+          <article class="px-4 grid gap-4 tracks-table border-b border-gray-600">
+            <span class="p-2 text-center">#</span>
+            <span class="p-2">Título</span>
+            <div class="p-2 mx-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 32 32"
+                aria-label="Favoritos"
+              >
+                <rect
+                  width="32"
+                  height="32"
+                  fill="none"
+                />
+                <path
+                  fill="#fff"
+                  d="M27.303 12a2.66 2.66 0 0 0-1.908.806l-.393.405l-.397-.405a2.66 2.66 0 0 0-3.816 0a2.8 2.8 0 0 0 0 3.896L25.002 21l4.209-4.298a2.8 2.8 0 0 0 0-3.896A2.66 2.66 0 0 0 27.303 12M2 30h2v-5a5.006 5.006 0 0 1 5-5h6a5.006 5.006 0 0 1 5 5v5h2v-5a7.01 7.01 0 0 0-7-7H9a7.01 7.01 0 0 0-7 7zM12 4a5 5 0 1 1-5 5a5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7a7 7 0 0 0-7-7"
+                />
+              </svg>
+            </div>
+            <div class="p-2"> 
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                aria-label="Duración"
+              >
+                <rect
+                  width="24"
+                  height="24"
+                  fill="none"
+                />
+                <path
+                  fill="#fff"
+                  d="M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z"
+                />
+              </svg>
+            </div>
+          </article>
+          <div class="flex flex-col pt-3">
+            @for (music of albumResource.value().tracks.items; track music.id; let idx = $index) {
+              <article class="grid gap-4 tracks-table px-4 rounded-md h-14 hover:bg-white/50 transition-colors duration-200">
+                <div class="flex items-center justify-center">
+                  <span class="p-2 text-center text-gray-400">{{idx + 1}}</span>
+                </div>
+                <div class="flex flex-col justify-center">
+                  <span class="text-base text-white">{{music.name}}</span>
+                  <div class="flex items-center gap-6">
+                    @for (artist of music.artists; track artist.id) {
+                      <a [routerLink]="['/socialex/music/', artist.uri.split(':')[1],artist.uri.split(':')[2]]" class="text-xs text-gray-400 hover:underline">{{artist.name}}</a>
+                    }
+                  </div>
+                </div>
+                <div class="p-2 mx-2 relative flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 32 32"
+                    class="absolute m-auto"
+                  >
+                    <rect
+                      width="32"
+                      height="32"
+                      fill="none"
+                    />
+                    <path
+                      fill="#fff"
+                      d="M22.45 6a5.47 5.47 0 0 1 3.91 1.64a5.7 5.7 0 0 1 0 8L16 26.13L5.64 15.64a5.7 5.7 0 0 1 0-8a5.48 5.48 0 0 1 7.82 0l2.54 2.6l2.53-2.58A5.44 5.44 0 0 1 22.45 6m0-2a7.47 7.47 0 0 0-5.34 2.24L16 7.36l-1.11-1.12a7.49 7.49 0 0 0-10.68 0a7.72 7.72 0 0 0 0 10.82L16 29l11.79-11.94a7.72 7.72 0 0 0 0-10.82A7.5 7.5 0 0 0 22.45 4"
+                    />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 32 32"
+                    class="absolute m-auto opacity-0"
+                  >
+                    <rect
+                      width="32"
+                      height="32"
+                      fill="none"
+                    />
+                    <path
+                      fill="#fff"
+                      d="M22.5 4c-2 0-3.9.8-5.3 2.2L16 7.4l-1.1-1.1c-2.9-3-7.7-3-10.6-.1l-.1.1c-3 3-3 7.8 0 10.8L16 29l11.8-11.9c3-3 3-7.8 0-10.8C26.4 4.8 24.5 4 22.5 4"
+                    />
+                  </svg>
+                </div>
+                <span class="p-2 text-gray-300">{{music.duration_ms | formatMilliseconds}}</span>
+              </article>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full max-w-6xl mx-auto">
+      <div class="w-max flex flex-col gap-1 text-gray-300 text-xs p-4">
+        <span>{{albumResource.value().release_date | date: 'dd MMMM yyyy'}}</span>
+        @for (copyright of albumResource.value().copyrights; track copyright.type) {
+          <div class="flex items-center gap-1">
+            <div class="w-3 h-3 aspect-square flex-shrink-0 flex items-center justify-center border border-gray-300 rounded-full">
+              <span class="m-auto text-[8px]">{{copyright.type}}</span>
+            </div>
+            <span>{{copyright.text}}</span>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="w-full max-w-6xl mx-auto py-4">
+      <h3 class="text-xl font-semibold">Más de {{artistResource.value()?.profile?.name}}</h3>
+      <section class="swiper" #swiperDiscographyAlbum>
+        <div class="swiper-wrapper w-full pb-4">
+          @for (card of discographyArray(); track card.id;) {
+            <discography-card
+              class="swiper-slide"
+              [disc]="card"
+              [routeNavigate]="[
+                '/socialex/music',
+                card.uri.split(':')[1],
+                card.uri.split(':')[2]
+              ]"
+            />
+          }
+        </div>
+        <div class="swiper-button-next rounded-full transition-colors duration-300 hover:bg-bg-primary rotate-90 group">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            class="opacity-55 transition-opacity duration-300 group-hover:opacity-100"
+          >
+            <rect width="24" height="24" fill="none" />
+            <g fill="#fff">
+              <path
+                d="m14.829 11.948l1.414-1.414L12 6.29l-4.243 4.243l1.415 1.414L11 10.12v7.537h2V10.12z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M19.778 4.222c-4.296-4.296-11.26-4.296-15.556 0s-4.296 11.26 0 15.556s11.26 4.296 15.556 0s4.296-11.26 0-15.556m-1.414 1.414A9 9 0 1 0 5.636 18.364A9 9 0 0 0 18.364 5.636"
+                clip-rule="evenodd"
+              />
+            </g>
+          </svg>
+        </div>
+        <div class="swiper-button-prev rounded-full transition-colors duration-300 hover:bg-bg-primary -rotate-90 group">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            class="opacity-55 transition-opacity duration-300 group-hover:opacity-100"
+          >
+            <rect width="24" height="24" fill="none" />
+            <g fill="#fff">
+              <path
+                d="m14.829 11.948l1.414-1.414L12 6.29l-4.243 4.243l1.415 1.414L11 10.12v7.537h2V10.12z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M19.778 4.222c-4.296-4.296-11.26-4.296-15.556 0s-4.296 11.26 0 15.556s11.26 4.296 15.556 0s4.296-11.26 0-15.556m-1.414 1.414A9 9 0 1 0 5.636 18.364A9 9 0 0 0 18.364 5.636"
+                clip-rule="evenodd"
+              />
+            </g>
+          </svg>
+        </div>
+        <div class="swiper-scrollbar"></div>
+      </section>
+    </div>
+  </section>
+}
+@if (albumResource.error()) {
+  <app-resource-error />
+}
