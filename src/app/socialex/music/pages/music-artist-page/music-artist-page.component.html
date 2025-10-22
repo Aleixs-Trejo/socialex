@@ -4,7 +4,7 @@
 @if (artistResource.hasValue()) {
   <div class="w-full flex flex-col pb-6 card-music">
     <div
-      class="h-[60dvh] w-full bg-cover bg-no-repeat flex bg-center"
+      class="h-[60dvh] w-full bg-cover bg-no-repeat flex bg-center bg-fixed"
       [style.background-image]="
         'linear-gradient(to bottom, transparent, rgba(41, 41, 41, 0.5) 50%,' + artistResource.value().visuals.avatarImage.extractedColors.colorRaw['hex'] + '),' + 
         'url(' +

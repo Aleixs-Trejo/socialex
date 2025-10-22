@@ -1,33 +1,20 @@
 <app-section-component>
   <div class="w-full flex flex-col gap-4">
-    <div class="w-max mx-auto">
-      <label class="input">
-        <svg
-          class="h-[1em] opacity-50"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <g
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2.5"
-            fill="none"
-            stroke="currentColor"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input type="search" required placeholder="Search" />
-      </label>
-    </div>
+    <music-search-input />
     <h2 class="text-2xl text-left pb-6">
       Hola de nuevo,
-      <a routerLink="/socialex/profile/91" class="text-blue-500">Alesis</a>,
+      <a [routerLink]="['/socialex/profile', currentUser?.id]" class="text-blue-500">{{currentUser?.name!.split(' ')[0]}}</a>,
       ¿Qué te apetece hoy?
     </h2>
-    <music-artist id="5ECec6tOdcX7cIhshkDQxb" />
+    <music-artists id="0Sadg1vgvaPqGTOjxu0N6c" text="Lo mejor del K-POP clásico" />
+    <music-artists id="4SpbR6yFEvexJuaBpgAU5p" text="Lo mejor del K-POP actual" />
+    <music-artists id="01CPQQGyqdgTqtyLxPrPur" text="Lo mejor del Rock Peruano" />
+    <music-artists id="7An4yvF7hDYDolN4m5zKBp" text="Lo mejor del Rock Clásico" />
+    <music-artists id="5he5w2lnU9x7JFhnwcekXX" text="Lo mejor de la electrónica" />
+    <music-artists id="67ktO6WKPZ0h4cBxSBBoep" text="Lo mejor de la Cumbia Peruana" />
+    <music-artists id="4xCCHj0hE6EX42nCQCcL4F" text="Lo mejor pa los otakus" />
+    <!-- <music-artist id="5ECec6tOdcX7cIhshkDQxb" />
     <music-artist id="4SpbR6yFEvexJuaBpgAU5p" />
-    <music-artist id="36cgvBn0aadzOijnjjwqMN" />
+    <music-artist id="36cgvBn0aadzOijnjjwqMN" /> -->
   </div>
 </app-section-component>

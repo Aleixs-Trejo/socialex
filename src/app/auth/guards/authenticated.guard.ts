@@ -7,7 +7,7 @@ export const AuthenticatedGuard: CanMatchFn = async () => {
   const router = inject(Router);
 
   if (authService.authStatus() === 'not-authenticated') {
-    router.navigateByUrl('/socialex/auth/login');
+    router.navigateByUrl('/auth/login');
     return false;
   }
   return true;

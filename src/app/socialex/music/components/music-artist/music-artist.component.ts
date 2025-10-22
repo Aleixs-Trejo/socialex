@@ -14,13 +14,15 @@ import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { LoaderComponent } from "@components/loader/loader.component";
+import { ResourceErrorComponent } from "@components/resource-error/resource-error.component";
 
 @Component({
-  selector: 'music-artist',
-  imports: [RouterLink, NgOptimizedImage],
+  selector: 'music-artists',
+  imports: [RouterLink, NgOptimizedImage, LoaderComponent, ResourceErrorComponent],
   templateUrl: './music-artist.component.html',
 })
-export class MusicArtistComponent implements AfterViewChecked {
+export class MusicArtistsComponent implements AfterViewChecked {
   musicSservice = inject(MusicService);
   uiService = inject(UiStateService);
 
@@ -28,6 +30,7 @@ export class MusicArtistComponent implements AfterViewChecked {
   swiperArtist?: Swiper;
   swiperArtistInitialized = false;
 
+  text = input.required<string>();
   id = input.required<string>();
 
   musicArtistResource = rxResource({

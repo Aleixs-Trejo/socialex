@@ -1,0 +1,118 @@
+@if (searchMusicResource.isLoading()) {
+  <div class="w-full max-h-64 py-6 bg-bg-secondary rounded-br-sm rounded-bl-sm overflow-y-auto">
+    <div class="flex items-center justify-center">
+      <span class="loading loading-spinner text-primary"></span>
+    </div>
+  </div>
+}
+@if (searchMusicResource.hasValue()) {
+  @let results = searchMusicResource.value();
+
+  <div class="w-full max-h-64 bg-bg-secondary rounded-br-sm rounded-bl-sm overflow-y-auto container-scrollbar">
+    <div class="flex flex-col">
+      @if (!results.albums.totalCount && !results.artists.totalCount &&
+      !results.playlists.totalCount && !results.tracks.totalCount &&
+      !results.users.totalCount) {
+        <p class="text-error text-sm mt-4">No se encontraron resultados.</p>
+      }
+      @if (results.artists.items.length) {
+        @for (item of results.artists.items; track item.data.uri) {
+          <a [routerLink]="['/socialex/music/', item.data.uri.split(':')[1], item.data.uri.split(':')[2]]" class="rounded-lg px-2 py-1 hover:bg-bg-tertiary transition-colors" [title]="item.data.profile.name">
+            <div class="flex items-center gap-3">
+              <img
+                [ngSrc]="item.data.visuals ? item.data.visuals.avatarImage.sources[0].url : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
+                width="48"
+                height="48"
+                alt="Artista"
+                class="w-12 h-12 rounded-full object-cover object-center flex-shrink-0"
+              />
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-semibold">{{ item.data.profile.name }}</span>
+                <span class="text-sm text-gray-400">Artista</span>
+              </div>
+            </div>
+          </a>
+        }
+      }
+      @if (results.albums.items.length) {
+        @for (item of results.albums.items; track item.data.uri) {
+          <a [routerLink]="['/socialex/music/', item.data.uri.split(':')[1], item.data.uri.split(':')[2]]" class="rounded-lg px-2 py-1 hover:bg-bg-tertiary transition-colors" [title]="item.data.name">
+            <div class="flex items-center gap-3">
+              <img
+                [ngSrc]="item.data.coverArt.sources[0].url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
+                width="48"
+                height="48"
+                alt="Album"
+                class="w-12 h-12 rounded-full object-cover object-center flex-shrink-0"
+              />
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-semibold">{{ item.data.name }}</span>
+                <span class="text-sm text-gray-400">Album - {{ item.data.artists.items[0].profile.name }} - {{ item.data.date.year }}</span>
+              </div>
+            </div>
+          </a>
+        }
+      }
+      @if (results.tracks.items.length) {
+        @for (item of results.tracks.items; track item.data.uri) {
+          <a [routerLink]="['/socialex/music/', item.data.uri.split(':')[1], item.data.uri.split(':')[2]]" class="rounded-lg px-2 py-1 hover:bg-bg-tertiary transition-colors" [title]="item.data.name">
+            <div class="flex items-center gap-3">
+              <img
+                [ngSrc]="item.data.albumOfTrack.coverArt.sources[0].url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
+                width="48"
+                height="48"
+                alt="Album"
+                class="w-12 h-12 rounded-full object-cover object-center flex-shrink-0"
+              />
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-semibold">{{ item.data.name }}</span>
+                <span class="text-sm text-gray-400">Canción - {{ item.data.artists.items[0].profile.name }} - {{ item.data.duration.totalMilliseconds | formatMilliseconds }}</span>
+              </div>
+            </div>
+          </a>
+        }
+      }
+      @if (results.playlists.items.length) {
+        @for (item of results.playlists.items; track item.data.uri) {
+          <a [routerLink]="['/socialex/music/', item.data.uri.split(':')[1], item.data.uri.split(':')[2]]" class="rounded-lg px-2 py-1 hover:bg-bg-tertiary transition-colors" [title]="item.data.name">
+            <div class="flex items-center gap-3">
+              <img
+                [ngSrc]="item.data.images.items[0].sources[0].url || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
+                width="48"
+                height="48"
+                alt="Artista"
+                class="w-12 h-12 rounded-full object-cover object-center flex-shrink-0"
+              />
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-semibold">{{ item.data.name }}</span>
+                <span class="text-sm text-gray-400">Playlist</span>
+              </div>
+            </div>
+          </a>
+        }
+      }
+      @if (results.users.items.length) {
+        @for (item of results.users.items; track item.data.uri) {
+          <a [routerLink]="['/socialex/music/', item.data.uri.split(':')[1], item.data.uri.split(':')[2]]" class="rounded-lg px-2 py-1 hover:bg-bg-tertiary transition-colors" [title]="item.data.username">
+            <div class="flex items-center gap-3">
+              <img
+                [ngSrc]="item.data.image.smallImageUrl || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png'"
+                width="48"
+                height="48"
+                alt="Artista"
+                class="w-12 h-12 rounded-full object-cover object-center flex-shrink-0"
+              />
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-semibold">{{ item.data.username }}</span>
+                <span class="text-sm text-gray-400">Usuario</span>
+              </div>
+            </div>
+          </a>
+        }
+      }
+    </div>
+  </div>
+}
+@if (searchMusicResource.error()) {
+  <app-resource-error />
+}

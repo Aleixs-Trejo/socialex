@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 
 // Guards
 import { AuthenticatedGuard } from "@auth/guards/authenticated.guard";
+import { NotAuthenticatedGuard } from "@auth/guards/not-authenticated.guard";
 
 const socialexRoutes: Routes = [
   {
@@ -45,7 +46,8 @@ const socialexRoutes: Routes = [
       {
         path: 'music',
         title: 'Música',
-        loadChildren: () => import('./music/music.routes')
+        loadChildren: () => import('./music/music.routes'),
+        canMatch: [AuthenticatedGuard]
       },
       {
         path: 'watch',

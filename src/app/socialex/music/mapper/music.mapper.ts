@@ -11,14 +11,11 @@ export interface ExploreMusic {
 export interface SimplifiedArtistHome {
   artistName: string;
   artistUri: string;
-  singles: SimplifiedReleaseHome[];
+  avatarImage: string;
 }
 
-export interface SimplifiedReleaseHome {
-  id: string;
-  uri: string;
-  name: string;
-  urlImage: string;
+export interface ArtistsRelatedSimplified extends SimplifiedArtistHome {
+  artistsRelated: SimplifiedArtistHome[];
 }
 
 export class SpotifyMapper {
@@ -38,27 +35,22 @@ export class SpotifyMapper {
     }).filter(music => music.title !== '');
   }
 
-  static mapArtistHome(res: ArtistResponse): SimplifiedArtistHome {
+  static mapArtistHome(res: ArtistResponse): ArtistsRelatedSimplified {
     const artist = res?.data?.artist;
     const artistName = artist?.profile?.name ?? '';
     const artistUri = artist?.uri ?? '';
-    const singles = artist?.discography?.singles?.items ?? [];
-
-    const mappedSingles: SimplifiedReleaseHome[] = singles.map(single => {
-      const release = single.releases.items[0];
-
-      return {
-        id: release?.id ?? '',
-        uri: release?.uri ?? '',
-        name: release?.name ?? '',
-        urlImage: release?.coverArt?.sources?.[0]?.url ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png',
-      }
-    }).filter(single => single.name !== '');
+    const avatarImage = artist?.visuals?.avatarImage?.sources[0]?.url ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png';
+    const artistsRelated = artist?.relatedContent?.relatedArtists?.items.map(item => ({
+      artistName: item.profile?.name ?? '',
+      artistUri: item.uri ?? '',
+      avatarImage: item.visuals?.avatarImage?.sources[0]?.url ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png',
+    }))
 
     return {
       artistName,
       artistUri,
-      singles: mappedSingles,
+      avatarImage,
+      artistsRelated,
     }
   }
 

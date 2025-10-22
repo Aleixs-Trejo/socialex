@@ -1,0 +1,35 @@
+<div class="w-full relative">
+  <label class="w-full flex items-center border-b border-gray-600">
+    <div class="px-4 py-3 flex-shrink-0 flex items-center justify-center">
+      <svg
+        width="16"
+        height="16"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <g
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          stroke-width="2.5"
+          fill="none"
+          stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+    </div>
+    <input
+      type="text"
+      class="border-0 outline-0 grow placeholder:text-gray-400"
+      placeholder="¿Qué quieres escuchar?"
+      required
+      (input)="inputChange($event)"
+    />
+  </label>
+  @if (query().trim().length > 0) {
+    <div class="absolute top-full inset-x-0 w-full z-10">
+      <results-search-music [query]="query()" />
+    </div>
+  }
+</div>

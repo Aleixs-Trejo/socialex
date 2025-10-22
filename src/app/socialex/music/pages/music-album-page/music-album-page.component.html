@@ -104,15 +104,16 @@
           </article>
           <div class="flex flex-col pt-3">
             @for (music of albumResource.value().tracks.items; track music.id; let idx = $index) {
-              <article class="grid gap-4 tracks-table px-4 rounded-md h-14 hover:bg-white/50 transition-colors duration-200">
+              <article class="grid gap-4 tracks-table px-4 rounded-md h-14 hover:bg-gray-500/50 transition-colors duration-200">
                 <div class="flex items-center justify-center">
                   <span class="p-2 text-center text-gray-400">{{idx + 1}}</span>
                 </div>
                 <div class="flex flex-col justify-center">
                   <span class="text-base text-white">{{music.name}}</span>
-                  <div class="flex items-center gap-6">
+                  <div class="flex items-center gap-2">
                     @for (artist of music.artists; track artist.id) {
                       <a [routerLink]="['/socialex/music/', artist.uri.split(':')[1],artist.uri.split(':')[2]]" class="text-xs text-gray-400 hover:underline">{{artist.name}}</a>
+                      <span>•</span>
                     }
                   </div>
                 </div>
@@ -164,9 +165,6 @@
         <span>{{albumResource.value().release_date | date: 'dd MMMM yyyy'}}</span>
         @for (copyright of albumResource.value().copyrights; track copyright.type) {
           <div class="flex items-center gap-1">
-            <div class="w-3 h-3 aspect-square flex-shrink-0 flex items-center justify-center border border-gray-300 rounded-full">
-              <span class="m-auto text-[8px]">{{copyright.type}}</span>
-            </div>
             <span>{{copyright.text}}</span>
           </div>
         }

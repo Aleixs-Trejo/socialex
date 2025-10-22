@@ -1,29 +1,41 @@
 @if (musicArtistResource.isLoading()) {
-  <div class="container-alesis">
-    <div class="w-full min-h-[70dvh] flex items-center justify-center">
-      <span class="loading loading-spinner text-primary"></span>
-    </div>
-  </div>
+  <app-loader />
 }
 @if (musicArtistResource.hasValue()) {
-  <h2 class="text-lg text-start mb-2">Artista: <a class="text-primary underline" [routerLink]="['/socialex/music/', musicArtistResource.value().artistUri.split(':')[1], musicArtistResource.value().artistUri.split(':')[2]]">{{ musicArtistResource.value().artistName }}</a></h2>
+  <h2 class="text-lg text-start mb-2">{{text()}}</h2>
   <section class="swiper" #swiperArtist>
     <div class="swiper-wrapper w-full pb-4">
-      @for (single of musicArtistResource.value().singles; track single.uri) {
-        <a class="swiper-slide flex p-4 w-full rounded-lg group transition-colors duration-300 hover:bg-bg-tertiary" [routerLink]="['/socialex/music/', single.uri.split(':')[1], single.id]">
-          <article class="w-full flex flex-col gap-2 overflow-hidden">
+      <a class="swiper-slide flex p-4 w-full rounded-lg group transition-colors duration-300 hover:bg-bg-tertiary" [routerLink]="['/socialex/music/', musicArtistResource.value().artistUri.split(':')[1], musicArtistResource.value().artistUri.split(':')[2]]">
+        <article class="w-full flex flex-col gap-2 overflow-hidden select-none">
+          <div class="w-full aspect-square overflow-hidden">
+            <img
+              [ngSrc]="musicArtistResource.value().avatarImage"
+              width="300"
+              height="300"
+              [alt]="musicArtistResource.value().artistName"
+              class="w-full h-auto object-cover object-center transform group-hover:scale-110 transition-transform duration-300 select-none"
+              priority
+              draggable="false"
+            />
+          </div>
+          <h4 class="text-center text-xs leading-4 select-none group-hover:underline">{{ musicArtistResource.value().artistName }}</h4>
+        </article>
+      </a>
+      @for (artist of musicArtistResource.value().artistsRelated; track artist.artistUri) {
+        <a class="swiper-slide flex p-4 w-full rounded-lg group transition-colors duration-300 hover:bg-bg-tertiary" [routerLink]="['/socialex/music/', artist.artistUri.split(':')[1], artist.artistUri.split(':')[2]]">
+          <article class="w-full flex flex-col gap-2 overflow-hidden select-none">
             <div class="w-full aspect-square overflow-hidden">
               <img
-                [ngSrc]="single.urlImage"
+                [ngSrc]="artist.avatarImage"
                 width="300"
                 height="300"
-                [alt]="single.name"
-                class="w-full h-auto object-cover object-center transform group-hover:scale-110 transition-transform duration-300 user-select-none"
+                [alt]="artist.artistName"
+                class="w-full h-auto object-cover object-center transform group-hover:scale-110 transition-transform duration-300 select-none"
                 priority
                 draggable="false"
               />
             </div>
-            <h4 class="text-center text-xs leading-4 user-select-none group-hover:underline">{{ single.name }}</h4>
+            <h4 class="text-center text-xs leading-4 select-none group-hover:underline">{{ artist.artistName }}</h4>
           </article>
         </a>
       }
@@ -74,22 +86,5 @@
   </section>
 }
 @if (musicArtistResource.error()) {
-  <div class="container-alesis">
-    <div role="alert" class="alert alert-error">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 shrink-0 stroke-current"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-      <span>Error al cargar Artista.</span>
-    </div>
-  </div>
+  <app-resource-error />
 }
