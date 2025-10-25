@@ -58,7 +58,8 @@ export default class MusicArtistPageComponent implements AfterViewChecked {
   discographyArray = computed<Latest[]>(() => {
     const artistData = this.artistResource.value();
     return artistData ? SpotifyMapper.getDiscographyArray(artistData) : [];
-  })
+  });
+  
 
   queryParamId = toSignal(this.activatedRoute.paramMap, { initialValue: null });
 

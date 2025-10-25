@@ -8,7 +8,7 @@ export interface Data {
 
 export interface Artist {
   id: string;
-  uri: URI;
+  uri: string;
   following: boolean;
   sharingInfo: SharingInfo;
   profile: Profile;
@@ -20,7 +20,7 @@ export interface Artist {
 }
 
 export interface Discography {
-  latest: Latest;
+  latest: Latest | null;
   popularReleases: Albums;
   singles: Albums;
   albums: Albums;
@@ -47,10 +47,10 @@ export interface MerchItem {
   name: string;
   type: LatestType;
   copyright: Copyright;
-  date: ItemDate;
+  date: PurpleDate;
   coverArt: CoverArt;
   tracks: Tracks;
-  label: Name;
+  label: ItemLabel;
   playability: Playability;
   sharingInfo: SharingInfo;
 }
@@ -61,12 +61,7 @@ export interface Copyright {
 
 export interface CopyrightItem {
   type: PurpleType;
-  text: Text;
-}
-
-export enum Text {
-  The2024KO = '2024 K.O',
-  The2025KO = '2025 K.O',
+  text: string;
 }
 
 export enum PurpleType {
@@ -84,7 +79,7 @@ export interface ItemSource {
   height: number | null;
 }
 
-export interface ItemDate {
+export interface PurpleDate {
   year: number;
   month: number;
   day: number;
@@ -95,8 +90,13 @@ export enum Precision {
   Day = 'DAY',
 }
 
-export enum Name {
-  KO = 'K.O',
+export enum ItemLabel {
+  Dgc = 'DGC',
+  Geffen = 'Geffen',
+  PlushRecords = 'Plush Records',
+  SourceMusic = 'SOURCE MUSIC',
+  SubPopRecords = 'Sub Pop Records',
+  UniversalMusicLLC = 'Universal Music LLC',
 }
 
 export interface Playability {
@@ -119,8 +119,9 @@ export interface Tracks {
 
 export enum LatestType {
   Album = 'ALBUM',
+  Compilation = 'COMPILATION',
+  Ep = 'EP',
   Single = 'SINGLE',
-  EP = "EP",
 }
 
 export interface Latest {
@@ -132,7 +133,7 @@ export interface Latest {
   date: LatestDate;
   coverArt: CoverArt;
   tracks: Tracks;
-  label: Name;
+  label: ItemLabel;
   playability: Playability;
 }
 
@@ -158,7 +159,7 @@ export interface Track {
   duration: Duration;
   playability: Playability;
   contentRating: ContentRating;
-  artists: Artists;
+  artists: TrackArtists;
   album: Album;
 }
 
@@ -175,12 +176,12 @@ export interface PurpleSource {
   url: string;
 }
 
-export interface Artists {
-  items: ArtistsItem[];
+export interface TrackArtists {
+  items: PurpleItem[];
 }
 
-export interface ArtistsItem {
-  uri: URI;
+export interface PurpleItem {
+  uri: string;
   profile: UserLocation;
 }
 
@@ -188,15 +189,12 @@ export interface UserLocation {
   name: string;
 }
 
-export enum URI {
-  SpotifyArtistUri = 'spotify:artist:5ECec6tOdcX7cIhshkDQxb',
-}
-
 export interface ContentRating {
-  label: Label;
+  label: ContentRatingLabel;
 }
 
-export enum Label {
+export enum ContentRatingLabel {
+  Explicit = 'EXPLICIT',
   None = 'NONE',
 }
 
@@ -216,8 +214,58 @@ export interface Events {
 
 export interface Concerts {
   totalCount: number;
-  items: any[];
+  items: ConcertsItem[];
   pagingInfo: PagingInfo;
+}
+
+export interface ConcertsItem {
+  uri: string;
+  id: string;
+  title: string;
+  category: string;
+  festival: boolean;
+  nearUser: boolean;
+  venue: Venue;
+  artists: PurpleArtists;
+  partnerLinks: Merch;
+  date: FluffyDate;
+}
+
+export interface PurpleArtists {
+  items: RelatedArtistsItem[];
+}
+
+export interface RelatedArtistsItem {
+  uri: string;
+  id: string;
+  profile: UserLocation;
+  visuals?: ItemVisuals;
+}
+
+export interface ItemVisuals {
+  avatarImage: CoverArt;
+}
+
+export interface FluffyDate {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+  isoString: string;
+  precision: string;
+}
+
+export interface Venue {
+  name: string;
+  location: UserLocation;
+  coordinates: Coordinates;
+}
+
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
 }
 
 export interface PagingInfo {
@@ -225,12 +273,12 @@ export interface PagingInfo {
 }
 
 export interface Profile {
-  name: Name;
+  name: string;
   verified: boolean;
-  pinnedItem: null;
+  pinnedItem: PinnedItem | null;
   biography: Biography;
   externalLinks: ExternalLinks;
-  playlists: Albums;
+  playlists: Playlists;
 }
 
 export interface Biography {
@@ -246,19 +294,73 @@ export interface ExternalLinksItem {
   url: string;
 }
 
+export interface PinnedItem {
+  comment: string;
+  type: LatestType;
+  item: PinnedItemItem;
+}
+
+export interface PinnedItemItem {
+  uri: string;
+  name: string;
+  coverArt: CoverArt;
+  type: LatestType;
+}
+
+export interface Playlists {
+  totalCount: number;
+  items: PlaylistsItem[];
+}
+
+export interface PlaylistsItem {
+  uri: string;
+  name: string;
+  description: string;
+  owner: UserLocation;
+  images: Gallery;
+}
+
+export interface Gallery {
+  items: CoverArt[];
+}
+
 export interface RelatedContent {
-  appearsOn: Albums;
-  featuring: Featuring;
-  discoveredOn: Albums;
+  appearsOn: AppearsOn;
+  featuring: DiscoveredOn;
+  discoveredOn: DiscoveredOn;
   relatedArtists: RelatedArtists;
 }
 
-export interface Featuring {
+export interface AppearsOn {
   totalCount: number;
-  items: FeaturingItem[];
+  items: AppearsOnItem[];
 }
 
-export interface FeaturingItem {
+export interface AppearsOnItem {
+  releases: Releases;
+}
+
+export interface Releases {
+  totalCount: number;
+  items: FluffyItem[];
+}
+
+export interface FluffyItem {
+  uri: string;
+  id: string;
+  name: string;
+  artists: TrackArtists;
+  coverArt: CoverArt;
+  date: LatestDate;
+  sharingInfo: SharingInfo;
+}
+
+export interface DiscoveredOn {
+  totalCount: number;
+  items: DiscoveredOnItem[];
+}
+
+export interface DiscoveredOnItem {
   uri: string;
   id: string;
   owner: UserLocation;
@@ -275,17 +377,6 @@ export interface Images {
 export interface RelatedArtists {
   totalCount: number;
   items: RelatedArtistsItem[];
-}
-
-export interface RelatedArtistsItem {
-  id: string;
-  uri: string;
-  profile: UserLocation;
-  visuals: ItemVisuals;
-}
-
-export interface ItemVisuals {
-  avatarImage: CoverArt;
 }
 
 export interface Stats {
@@ -323,8 +414,4 @@ export interface ExtractedColors {
 
 export interface ColorRaw {
   hex: string;
-}
-
-export interface Gallery {
-  items: CoverArt[];
 }

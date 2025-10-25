@@ -44,7 +44,7 @@ export class SpotifyMapper {
       artistName: item.profile?.name ?? '',
       artistUri: item.uri ?? '',
       avatarImage: item.visuals?.avatarImage?.sources[0]?.url ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/400px-Spotify_App_Logo.svg.png',
-    }))
+    }));
 
     return {
       artistName,
@@ -58,6 +58,7 @@ export class SpotifyMapper {
     const latest = artist?.discography.latest;
     const popular = artist?.discography.popularReleases?.items.map(item => (item.releases.items[0]));
 
+    if (!latest) return popular;
     const uniquePopular = popular?.filter(item => item && latest && item.id !== latest.id);
 
     const data = latest ? [latest, ...uniquePopular] : uniquePopular;

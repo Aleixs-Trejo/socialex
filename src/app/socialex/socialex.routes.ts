@@ -47,7 +47,7 @@ const socialexRoutes: Routes = [
         path: 'music',
         title: 'Música',
         loadChildren: () => import('./music/music.routes'),
-        canMatch: [AuthenticatedGuard]
+        // canMatch: [AuthenticatedGuard]
       },
       {
         path: 'watch',

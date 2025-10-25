@@ -14,7 +14,6 @@ import { map, Observable, of, tap } from 'rxjs';
 import {
   ArtistsRelatedSimplified,
   ExploreMusic,
-  SimplifiedArtistHome,
   SpotifyMapper,
 } from '../mapper/music.mapper';
 
@@ -22,7 +21,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { SearchResponse } from '../interfaces/spotify-search.interface';
 
-const { spotifyApiUrl, spotifyApiKey2, spotifyApiHost } = environment;
+const { spotifyApiUrl, spotifyApiKey3, spotifyApiHost } = environment;
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +58,7 @@ export class MusicService {
     return this.http
       .get<Main>(`${spotifyApiUrl}/browse_all?limit=5&pageSize=5&offset=0`, {
         headers: {
-          'x-rapidapi-key': spotifyApiKey2,
+          'x-rapidapi-key': spotifyApiKey3,
           'x-rapidapi-host': spotifyApiHost,
         },
       })
@@ -96,7 +95,7 @@ export class MusicService {
       .get<ArtistResponse>(`${spotifyApiUrl}/artist_overview`, {
         params: { id },
         headers: {
-          'x-rapidapi-key': spotifyApiKey2,
+          'x-rapidapi-key': spotifyApiKey3,
           'x-rapidapi-host': spotifyApiHost,
         },
       })
@@ -117,17 +116,32 @@ export class MusicService {
       return of(cachedArtist);
     }
 
+    const localStorageData = localStorage.getItem(cacheKey);
+    if (localStorageData) {
+      try {
+        const parsedData =  JSON.parse(localStorageData) as Artist;
+        this.artistFullSpotifyCache.set(cacheKey, parsedData);
+        return of(parsedData);
+      } catch (error) {
+        console.error(error);
+        localStorage.removeItem(cacheKey);
+      }
+    }
+
     return this.http
       .get<ArtistResponse>(`${spotifyApiUrl}/artist_overview`, {
         params: { id },
         headers: {
-          'x-rapidapi-key': spotifyApiKey2,
+          'x-rapidapi-key': spotifyApiKey3,
           'x-rapidapi-host': spotifyApiHost,
         },
       })
       .pipe(
         map((artist) => artist.data.artist),
-        tap((artist) => this.artistFullSpotifyCache.set(cacheKey, artist))
+        tap((artist) => {
+          this.artistFullSpotifyCache.set(cacheKey, artist);
+          localStorage.setItem(cacheKey, JSON.stringify(artist));
+        }),
       );
   }
 
@@ -143,7 +157,7 @@ export class MusicService {
       .get<AlbumResponse>(`${spotifyApiUrl}/albums`, {
         params: { ids },
         headers: {
-          'x-rapidapi-key': spotifyApiKey2,
+          'x-rapidapi-key': spotifyApiKey3,
           'x-rapidapi-host': spotifyApiHost,
         },
       })
@@ -183,7 +197,7 @@ export class MusicService {
           numberTopOfResults: 2,
         },
         headers: {
-          'x-rapidapi-key': spotifyApiKey2,
+          'x-rapidapi-key': spotifyApiKey3,
           'x-rapidapi-host': spotifyApiHost,
         },
       })
