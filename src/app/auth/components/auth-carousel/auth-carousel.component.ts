@@ -1,5 +1,10 @@
 // Angular
-import { AfterContentChecked, Component, ElementRef, viewChild } from '@angular/core';
+import {
+  AfterContentChecked,
+  Component,
+  ElementRef,
+  viewChild,
+} from '@angular/core';
 
 // Swiper
 import Swiper from 'swiper';
@@ -11,11 +16,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const images = [
-  'assets/img/img-auth-carousel-1.jpg',
-  'assets/img/img-auth-carousel-2.jpg',
-  'assets/img/img-auth-carousel-3.jpg',
-  'assets/img/img-auth-carousel-4.jpg',
-  'assets/img/img-auth-carousel-5.jpg',
+  'assets/img/img-auth-carousel-1.webp',
+  'assets/img/img-auth-carousel-2.webp',
+  'assets/img/img-auth-carousel-3.webp',
+  'assets/img/img-auth-carousel-4.webp',
+  'assets/img/img-auth-carousel-5.webp',
 ];
 
 @Component({
@@ -45,10 +50,9 @@ export class AuthCarouselComponent implements AfterContentChecked {
     this.swiperAuth = new Swiper(element, {
       modules: [Navigation, Pagination, Scrollbar],
       scrollbar: {
-        el: ".swiper-scrollbar",
+        el: '.swiper-scrollbar',
         hide: true,
       },
     });
   }
-
 }
